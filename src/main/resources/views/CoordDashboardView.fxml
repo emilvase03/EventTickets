@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
 <?import io.github.palexdev.mfxcore.controls.Label?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.image.Image?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #f9fafb;" stylesheets="@../css/Gloal.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #f9fafb;" stylesheets="@../css/Style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CoordDashboardController">
    <top>
       <HBox fx:id="header" prefHeight="79.0" prefWidth="860.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -215,7 +216,7 @@
                   </VBox>
                   <HBox alignment="CENTER_RIGHT" fillHeight="false" prefHeight="88.0" prefWidth="721.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <MFXButton buttonType="RAISED" cancelButton="true" rippleColor="#7a0ed9" style="-fx-background-color: #228be6;" text="Create Event" textFill="WHITE">
+                        <MFXButton buttonType="RAISED" cancelButton="true" onAction="#onCreateEvent" rippleColor="#7a0ed9" style="-fx-background-color: #228be6;" text="Create Event" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="25.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -239,14 +240,15 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <children>
-                  <FlowPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f9fafb;" HBox.hgrow="ALWAYS">
-                     <HBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" />
-                     </HBox.margin>
-                     <padding>
-                        <Insets top="20.0" />
-                     </padding>
-                  </FlowPane>
+                  <MFXScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="254.0" prefWidth="1156.0" style="-fx-background-color: #f9fafb;" HBox.hgrow="ALWAYS">
+                     <content>
+                        <FlowPane fx:id="eventContainer" hgap="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f9fafb;" vgap="10.0">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </FlowPane>
+                     </content>
+                  </MFXScrollPane>
                </children>
             </HBox>
          </children>

@@ -43,6 +43,13 @@
             <artifactId>materialfx</artifactId>
             <version>11.17.0</version>
         </dependency>
+        <!-- Source: https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>12.8.2.jre11</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

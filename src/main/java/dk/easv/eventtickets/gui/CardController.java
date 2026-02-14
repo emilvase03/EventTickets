@@ -1,3 +1,5 @@
+package dk.easv.eventtickets.gui;
+
 import io.github.palexdev.mfxcore.controls.Label;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

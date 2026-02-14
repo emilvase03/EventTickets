@@ -3,6 +3,12 @@ package dk.easv.eventtickets.gui;
 import io.github.palexdev.mfxcore.controls.Label;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class CardController {
 
@@ -21,7 +27,7 @@ public class CardController {
     private void handleEdit(ActionEvent event) {
         /*
          *
-         * Open Tickets (update?) Window
+         * Open Tickets (update?) Window --- Does it need to be editable? - Is this method needed?
          *
          */
     }
@@ -33,6 +39,20 @@ public class CardController {
         * Open Tickets Window
         *
         */
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/NewTicketView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.show();
+
+        } catch (IOException e) {
+            // Show alert-box to user
+            throw new RuntimeException(e);
+        }
     }
 
     private void setTitle(/*Event Object*/) {

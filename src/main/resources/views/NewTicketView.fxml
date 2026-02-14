@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:controller="dk.easv.eventtickets.gui.NewTicketController" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="206.0" prefWidth="406.0" spacing="15.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="206.0" prefWidth="406.0" spacing="15.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.gui.NewTicketController">
    <children>
       <Label prefHeight="28.0" prefWidth="355.0" text="Issue Ticket(s)" VBox.vgrow="ALWAYS">
          <font>
@@ -27,7 +27,7 @@
             <MFXTextField fx:id="txtfieldAmountTickets" floatMode="ABOVE" prefHeight="29.0" prefWidth="250.0" />
          </children>
       </HBox>
-      <MFXButton buttonType="RAISED" onAction="#handlePrintTickets" prefHeight="25.0" prefWidth="224.0" text="Print Tickets" />
+      <MFXButton buttonType="RAISED" onAction="#handleConfirm" prefHeight="25.0" prefWidth="224.0" text="Confirm" />
    </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

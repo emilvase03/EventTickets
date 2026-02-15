@@ -1,9 +1,13 @@
 package dk.easv.eventtickets.gui;
 
+// MFX imports
 import io.github.palexdev.mfxcore.controls.Label;
+
+// Java imports
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -53,6 +57,29 @@ public class CardController {
             // Show alert-box to user
             throw new RuntimeException(e);
         }
+    }
+
+    public void lanchTicketsWindow(int ticketsAmount) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/PrintTicketsView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+
+            // for loop for tickets
+            for (int i = 0; i < ticketsAmount; i++) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Ticket.fxml"));
+                Parent ticketRoot = loader.load();
+                PrintTicketController controller = fxmlLoader.getController();
+                controller.getTicketsContainer().getChildren().add(ticketRoot);
+            }
+        } catch (Exception e) {
+            // Show alert-box to user
+            throw new RuntimeException("HandlePrintTickets() failed");
+        }
+
     }
 
     private void setTitle(/*Event Object*/) {

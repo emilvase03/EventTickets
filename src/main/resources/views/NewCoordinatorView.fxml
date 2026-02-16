@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="dk.easv.eventtickets.gui.NewCoordinatorController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="403.0" prefWidth="346.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.gui.AddedEventCoord.NewCoordinatorController">
+   <children>
+      <MFXButton layoutX="202.0" layoutY="352.0" onAction="#onBntSaveAddedCoordinator" prefHeight="29.0" prefWidth="118.0" rippleColor="#7a0ed9" style="-fx-background-color: #228be6;" text="Add Coordinator">
+         <font>
+            <Font name="Roboto" size="12.0" />
+         </font>
+      </MFXButton>
+      <Label layoutX="24.0" layoutY="97.0" text="Full Name">
+         <font>
+            <Font name="Roboto Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="22.0" layoutY="162.0" text="Username">
+         <font>
+            <Font name="Roboto Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="22.0" layoutY="225.0" text="Email">
+         <font>
+            <Font name="Roboto Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="21.0" layoutY="289.0" text="Password">
+         <font>
+            <Font name="Roboto Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="58.0" text="Create a new event coordinator account" textFill="#595858" />
+      <Label layoutX="14.0" layoutY="14.0" text="Add New Coordinator">
+         <font>
+            <Font name="Roboto" size="30.0" />
+         </font>
+      </Label>
+      <MFXTextField fx:id="fullNameField" floatMode="BORDER" layoutX="20.0" layoutY="113.0" prefHeight="15.0" prefWidth="300.0" />
+      <MFXTextField fx:id="passwordField" floatMode="BORDER" layoutX="20.0" layoutY="304.0" prefHeight="15.0" prefWidth="300.0" />
+      <MFXTextField fx:id="emailField" floatMode="BORDER" layoutX="20.0" layoutY="240.0" prefHeight="15.0" prefWidth="300.0" />
+      <MFXTextField fx:id="usernameField" floatMode="BORDER" layoutX="20.0" layoutY="180.0" prefHeight="15.0" prefWidth="300.0" />
+      <MFXButton layoutX="111.0" layoutY="352.0" prefHeight="17.0" prefWidth="79.0" rippleColor="#7a0ed9" style="-fx-background-color: #bebebe;" text="Cancel">
+         <font>
+            <Font name="Roboto" size="14.0" />
+         </font>
+      </MFXButton>
+   </children>
 </AnchorPane>

@@ -18,6 +18,14 @@ Coordinator Dashboard Styling
     -fx-background-color:  #f9fafb;
 }
 
+.roboto {
+    -fx-font-family: Roboto;
+}
+
+.boldRoboto {
+    -fx-font-family: "Roboto Black";
+}
+
 /**
 Card / Event Styling
  */

@@ -34,12 +34,12 @@
                         </ImageView>
                         <VBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="200.0">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="228.0" text="Event Coordinator">
+                              <Label prefHeight="18.0" prefWidth="228.0" styleClass="boldRoboto" text="Event Coordinator">
                                  <font>
-                                    <Font name="Roboto Bold" size="24.0" />
+                                    <Font size="24.0" />
                                  </font>
                               </Label>
-                              <Label prefHeight="18.0" prefWidth="254.0" text="Welcome, Name">
+                              <Label prefHeight="18.0" prefWidth="254.0" styleClass="roboto" text="Welcome, Name">
                                  <font>
                                     <Font name="Roboto Regular" size="12.0" />
                                  </font>
@@ -83,7 +83,7 @@
                      <children>
                         <HBox>
                            <children>
-                              <Label prefHeight="19.0" prefWidth="260.0" text="Total Events">
+                              <Label prefHeight="19.0" prefWidth="260.0" styleClass="roboto" text="Total Events">
                                  <font>
                                     <Font name="Roboto" size="15.0" />
                                  </font>
@@ -101,15 +101,15 @@
                               </ImageView>
                            </children>
                         </HBox>
-                        <Label text="0">
+                        <Label styleClass="boldRoboto" text="0">
                            <font>
-                              <Font name="Roboto Bold" size="24.0" />
+                              <Font size="24.0" />
                            </font>
                            <VBox.margin>
                               <Insets left="10.0" />
                            </VBox.margin>
                         </Label>
-                        <Label text="Active events managed">
+                        <Label styleClass="roboto" text="Active events managed">
                            <VBox.margin>
                               <Insets left="10.0" />
                            </VBox.margin>
@@ -120,7 +120,7 @@
                      <children>
                         <HBox>
                            <children>
-                              <Label prefHeight="19.0" prefWidth="260.0" text="Total Tickets">
+                              <Label prefHeight="19.0" prefWidth="260.0" styleClass="roboto" text="Total Tickets">
                                  <font>
                                     <Font name="Roboto" size="15.0" />
                                  </font>
@@ -138,15 +138,15 @@
                               </ImageView>
                            </children>
                         </HBox>
-                        <Label text="0">
+                        <Label styleClass="boldRoboto" text="0">
                            <font>
-                              <Font name="Roboto Bold" size="24.0" />
+                              <Font size="24.0" />
                            </font>
                            <VBox.margin>
                               <Insets left="10.0" />
                            </VBox.margin>
                         </Label>
-                        <Label text="Tickets issued">
+                        <Label styleClass="roboto" text="Tickets issued">
                            <VBox.margin>
                               <Insets left="10.0" />
                            </VBox.margin>
@@ -160,7 +160,7 @@
                      <children>
                         <HBox alignment="CENTER">
                            <children>
-                              <Label prefHeight="19.0" prefWidth="260.0" text="Total Events">
+                              <Label prefHeight="19.0" prefWidth="260.0" styleClass="roboto" text="Total Events">
                                  <font>
                                     <Font name="Roboto" size="15.0" />
                                  </font>
@@ -175,15 +175,15 @@
                               </Circle>
                            </children>
                         </HBox>
-                        <Label text="0">
+                        <Label styleClass="boldRoboto" text="0">
                            <font>
-                              <Font name="Roboto Bold" size="24.0" />
+                              <Font size="24.0" />
                            </font>
                            <VBox.margin>
                               <Insets left="10.0" />
                            </VBox.margin>
                         </Label>
-                        <Label text="Events scheduled">
+                        <Label styleClass="roboto" text="Events scheduled">
                            <VBox.margin>
                               <Insets left="10.0" />
                            </VBox.margin>
@@ -199,16 +199,12 @@
                <children>
                   <VBox alignment="CENTER_LEFT" prefHeight="88.0" prefWidth="215.0">
                      <children>
-                        <Label prefHeight="23.0" prefWidth="176.0" text="My Events">
+                        <Label prefHeight="23.0" prefWidth="176.0" styleClass="boldRoboto" text="My Events">
                            <font>
-                              <Font name="Roboto Bold" size="18.0" />
+                              <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="23.0" prefWidth="176.0" text="Create and manage your events">
-                           <font>
-                              <Font name="Roboto" size="12.0" />
-                           </font>
-                        </Label>
+                        <Label prefHeight="23.0" prefWidth="176.0" styleClass="roboto" text="Create and manage your events" />
                      </children>
                      <HBox.margin>
                         <Insets left="10.0" />

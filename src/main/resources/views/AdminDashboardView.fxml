@@ -3,6 +3,7 @@
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -17,7 +18,7 @@
       <Insets />
    </opaqueInsets>
    <center>
-      <HBox alignment="CENTER" fillHeight="false" prefHeight="180.0" prefWidth="668.0" spacing="40.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" fillHeight="false" spacing="40.0" BorderPane.alignment="CENTER">
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-color: #E5E7EB; -fx-border-radius: 15;" HBox.hgrow="ALWAYS">
                <children>
@@ -111,212 +112,61 @@
             <Insets />
          </opaqueInsets>
          <BorderPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
          </BorderPane.margin>
       </HBox>
    </center>
    <bottom>
-      <VBox prefHeight="341.0" prefWidth="668.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 15;" BorderPane.alignment="CENTER">
-         <children>
-            <HBox prefHeight="31.0" prefWidth="427.0" VBox.vgrow="ALWAYS">
-               <children>
-                  <VBox prefHeight="40.0" prefWidth="481.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Label prefHeight="23.0" prefWidth="178.0" text="Event Coordinators">
-                           <font>
-                              <Font name="Roboto Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <Label prefHeight="17.0" prefWidth="222.0" text="Manage Event Coordinator accounts" />
-                     </children>
-                  </VBox>
-                  <MFXButton buttonType="RAISED" cancelButton="true" rippleColor="#7a0ed9" style="-fx-background-color: #228be6;" text="Add Coordinator" textFill="WHITE" HBox.hgrow="ALWAYS">
-                     <graphic>
-                        <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../icons/add-user-3-128.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <font>
-                        <Font name="Roboto Bold" size="12.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets top="5.0" />
-                     </HBox.margin>
-                  </MFXButton>
-               </children>
-            </HBox>
-            <HBox prefHeight="103.0" prefWidth="600.0" style="-fx-border-color: #E5E7EB; -fx-border-radius: 15;" VBox.vgrow="ALWAYS">
-               <children>
-                  <Label alignment="CENTER" prefHeight="47.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-background-color: #afd5f6; -fx-font-weight: 800;" text="J" textFill="#228be6" HBox.hgrow="ALWAYS">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Label>
-                  <VBox prefHeight="81.0" prefWidth="311.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Label fx:id="lblCoordName2" prefHeight="25.0" prefWidth="385.0" text="Coordinators name">
-                           <font>
-                              <Font name="Roboto Bold" size="16.0" />
-                           </font>
-                        </Label>
-                        <Label text="Coordinators mail" VBox.vgrow="ALWAYS" />
-                     </children>
-                  </VBox>
-                  <HBox prefHeight="91.0" prefWidth="282.0" spacing="5.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <VBox alignment="TOP_CENTER" prefHeight="81.0" prefWidth="70.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label text="0 Events">
-                                 <font>
-                                    <Font name="Roboto Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                           <HBox.margin>
-                              <Insets top="10.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <MFXButton buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" prefHeight="40.0" prefWidth="36.0" rippleColor="#7a0ed9" style="-fx-background-radius: 15; -fx-border-color: #E5E7EB; -fx-border-radius: 15; -fx-text-fill: white;">
-                           <HBox.margin>
-                              <Insets right="15.0" top="5.0" />
-                           </HBox.margin>
-                           <graphic>
-                              <ImageView fitHeight="34.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../icons/delete-128.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MFXButton>
-                     </children>
-                  </HBox>
-               </children>
-               <padding>
-                  <Insets top="15.0" />
-               </padding>
-            </HBox>
-            <HBox prefHeight="103.0" prefWidth="600.0" style="-fx-border-color: #E5E7EB; -fx-border-radius: 15;" VBox.vgrow="ALWAYS">
-               <children>
-                  <Label alignment="CENTER" prefHeight="47.0" prefWidth="55.0" style="-fx-background-radius: 100; -fx-background-color: #afd5f6; -fx-font-weight: 800;" text="J" textFill="#228be6" HBox.hgrow="ALWAYS">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Label>
-                  <VBox prefHeight="81.0" prefWidth="311.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Label fx:id="lblCoordName21" prefHeight="25.0" prefWidth="385.0" text="Coordinators name">
-                           <font>
-                              <Font name="Roboto Bold" size="16.0" />
-                           </font>
-                        </Label>
-                        <Label text="Coordinators mail" VBox.vgrow="ALWAYS" />
-                     </children>
-                  </VBox>
-                  <HBox prefHeight="91.0" prefWidth="282.0" spacing="5.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <VBox alignment="TOP_CENTER" prefHeight="81.0" prefWidth="70.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label text="0 Events">
-                                 <font>
-                                    <Font name="Roboto Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                           <HBox.margin>
-                              <Insets top="10.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <MFXButton buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" prefHeight="40.0" prefWidth="36.0" rippleColor="#7a0ed9" style="-fx-background-radius: 15; -fx-border-color: #E5E7EB; -fx-border-radius: 15; -fx-text-fill: white;">
-                           <HBox.margin>
-                              <Insets right="15.0" top="5.0" />
-                           </HBox.margin>
-                           <graphic>
-                              <ImageView fitHeight="34.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../icons/delete-128.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MFXButton>
-                     </children>
-                  </HBox>
-               </children>
-               <padding>
-                  <Insets top="15.0" />
-               </padding>
-            </HBox>
-            <HBox prefHeight="103.0" prefWidth="600.0" style="-fx-border-color: #E5E7EB; -fx-border-radius: 15;">
-               <children>
-                  <Label alignment="CENTER" prefHeight="48.0" prefWidth="54.0" style="-fx-background-radius: 100; -fx-background-color: #afd5f6; -fx-font-weight: 800;" text="J" textFill="#228be6" HBox.hgrow="ALWAYS">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Label>
-                  <VBox prefHeight="81.0" prefWidth="311.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Label fx:id="lblCoordName22" prefHeight="25.0" prefWidth="385.0" text="Coordinators name">
-                           <font>
-                              <Font name="Roboto Bold" size="16.0" />
-                           </font>
-                        </Label>
-                        <Label text="Coordinators mail" VBox.vgrow="ALWAYS" />
-                     </children>
-                  </VBox>
-                  <HBox prefHeight="91.0" prefWidth="282.0" spacing="5.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <VBox alignment="TOP_CENTER" prefHeight="81.0" prefWidth="70.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label text="0 Events">
-                                 <font>
-                                    <Font name="Roboto Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                           <HBox.margin>
-                              <Insets top="10.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <MFXButton buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" prefHeight="40.0" prefWidth="36.0" rippleColor="#7a0ed9" style="-fx-background-radius: 15; -fx-border-color: #E5E7EB; -fx-border-radius: 15; -fx-text-fill: white;">
-                           <HBox.margin>
-                              <Insets right="15.0" top="5.0" />
-                           </HBox.margin>
-                           <graphic>
-                              <ImageView fitHeight="34.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../icons/delete-128.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MFXButton>
-                     </children>
-                  </HBox>
-               </children>
-               <padding>
-                  <Insets top="15.0" />
-               </padding>
-            </HBox>
-         </children>
+      <VBox BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="10.0" left="15.0" right="15.0" top="5.0" />
          </BorderPane.margin>
-         <padding>
-            <Insets bottom="10.0" left="20.0" right="20.0" />
-         </padding>
+         <children>
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-border-radius: 15; -fx-border-color: transperent;">
+               <content>
+                  <VBox fx:id="allCoordBox" maxHeight="1.7976931348623157E308" prefHeight="366.0" prefWidth="868.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 15;">
+                     <children>
+                        <HBox prefHeight="43.0" prefWidth="828.0" VBox.vgrow="NEVER">
+                           <children>
+                              <VBox prefHeight="40.0" prefWidth="481.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label prefHeight="23.0" prefWidth="178.0" text="Event Coordinators">
+                                       <font>
+                                          <Font name="Roboto Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="17.0" prefWidth="222.0" text="Manage Event Coordinator accounts" />
+                                 </children>
+                              </VBox>
+                              <MFXButton buttonType="RAISED" cancelButton="true" onAction="#onBtnAddCoord" rippleColor="#7a0ed9" style="-fx-background-color: #228be6;" text="Add Coordinator" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                 <graphic>
+                                    <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icons/add-user-3-128.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="Roboto Bold" size="12.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </MFXButton>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="20.0" right="20.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </children>
       </VBox>
    </bottom>
    <top>
-      <HBox alignment="CENTER" prefHeight="49.0" prefWidth="668.0" style="-fx-background-color: white; -fx-border-color: #E5E7EB;" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" style="-fx-background-color: white; -fx-border-color: #E5E7EB;" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="33.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                <image>

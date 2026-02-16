@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="62.0" prefWidth="600.0" spacing="10.0" style="-fx-border-radius: 15;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.gui.AddedEventCoord.EventCoordCardController">
+    <padding>
+        <Insets left="5.0" right="5.0" top="5.0" />
+    </padding>
+    <children>
+        <Label fx:id="lblCoordInitials" alignment="CENTER" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 100; -fx-background-color: #afd5f6; -fx-font-weight: 800;" text="J" textFill="#228be6" HBox.hgrow="ALWAYS">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <VBox prefHeight="81.0" prefWidth="311.0" HBox.hgrow="ALWAYS">
+            <children>
+                <Label fx:id="lblCoordName" prefHeight="25.0" prefWidth="385.0" text="Coordinators name">
+                    <font>
+                        <Font name="Roboto Bold" size="16.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lblCoordMail" text="Coordinators mail" VBox.vgrow="ALWAYS" />
+            </children>
+        </VBox>
+        <HBox prefHeight="91.0" prefWidth="282.0" spacing="5.0" HBox.hgrow="ALWAYS">
+            <children>
+                <VBox alignment="TOP_CENTER" prefHeight="81.0" prefWidth="70.0" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label fx:id="lblEventsPerCoord" text="0 Events">
+                            <font>
+                                <Font name="Roboto Bold" size="12.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <HBox.margin>
+                        <Insets top="10.0" />
+                    </HBox.margin>
+                </VBox>
+                <MFXButton buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" onAction="#onBtnDeleteCoord" prefHeight="40.0" prefWidth="36.0" rippleColor="#7a0ed9" style="-fx-background-radius: 15; -fx-border-color: #E5E7EB; -fx-border-radius: 15; -fx-text-fill: white;">
+                    <HBox.margin>
+                        <Insets right="15.0" top="5.0" />
+                    </HBox.margin>
+                    <graphic>
+                        <ImageView fitHeight="34.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../icons/delete-128.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </MFXButton>
+            </children>
+        </HBox>
+    </children>
+</HBox>

@@ -2,25 +2,56 @@ package dk.easv.eventtickets.gui;
 
 // MFX imports
 import dk.easv.eventtickets.gui.utils.AlertHelper;
-import io.github.palexdev.materialfx.controls.MFXTextField;
 
 // Java imports
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class NewTicketController {
+public class NewTicketController implements Initializable {
 
-    @FXML private MFXTextField txtfieldName;
-    @FXML private MFXTextField txtfieldAmountTickets;
+    @FXML private TextField txtfieldName;
+    @FXML private TextField txtfieldAmountTickets;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        txtfieldName.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("[a-zA-ZæøåÆØÅ ]*"))
+                return change;
+            return null;
+        }));
+
+        txtfieldAmountTickets.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("\\d{0,3}"))
+                return change;
+            return null;
+        }));
+    }
 
     @FXML
     private void handleConfirm(ActionEvent event) {
 
-        // Add safety check for data type
+        if (txtfieldName.getText().isBlank()) {
+            AlertHelper.showError("Error", "Please enter customer name");
+            return;
+        }
+
+        if (txtfieldAmountTickets.getText().isBlank()) {
+            AlertHelper.showError("Error", "Please enter number of tickets");
+            return;
+        }
+
         int ticketsAmount = Integer.parseInt(txtfieldAmountTickets.getText());
 
         try {

@@ -1,6 +1,7 @@
 package dk.easv.eventtickets.gui;
 
 // MFX imports
+import dk.easv.eventtickets.gui.utils.AlertHelper;
 import io.github.palexdev.mfxcore.controls.Label;
 
 // Java imports
@@ -54,8 +55,7 @@ public class CardController {
             stage.show();
 
         } catch (IOException e) {
-            // Show alert-box to user
-            throw new RuntimeException(e);
+            AlertHelper.showError("Error", "Failed to open tickets dialog.");
         }
     }
 
@@ -76,8 +76,7 @@ public class CardController {
                 controller.getTicketsContainer().getChildren().add(ticketRoot);
             }
         } catch (Exception e) {
-            // Show alert-box to user
-            throw new RuntimeException("HandlePrintTickets() failed");
+            AlertHelper.showError("Error", "Failed to display tickets.");
         }
 
     }

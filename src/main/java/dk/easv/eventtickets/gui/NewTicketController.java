@@ -1,6 +1,7 @@
 package dk.easv.eventtickets.gui;
 
 // MFX imports
+import dk.easv.eventtickets.gui.utils.AlertHelper;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 
 // Java imports
@@ -30,8 +31,7 @@ public class NewTicketController {
 
             handleClose();
         } catch (IOException e) {
-            // Show user alert-box instead
-            throw new RuntimeException(e);
+            AlertHelper.showError("Error", "Confirmation error - could not create tickets.");
         }
 
     }

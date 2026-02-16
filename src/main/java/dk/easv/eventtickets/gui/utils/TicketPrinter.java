@@ -1,5 +1,6 @@
 package dk.easv.eventtickets.gui.utils;
 
+// Java imports
 import javafx.geometry.Pos;
 import javafx.print.PageLayout;
 import javafx.print.PrinterJob;
@@ -56,7 +57,7 @@ public class TicketPrinter {
             job.endJob();
 
             if (!allSuccess) {
-                // show user alert-box for print-error
+                AlertHelper.showError("Error", "Failed to print ticket(s).");
             }
 
         }

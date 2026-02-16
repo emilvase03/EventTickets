@@ -1,5 +1,6 @@
 package dk.easv.eventtickets.gui;
 // Java imports
+import dk.easv.eventtickets.gui.utils.AlertHelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,19 +25,15 @@ public class CoordDashboardController {
         */
 
         try {
-            // Load the Card.fxml file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Card.fxml"));
             Parent cardRoot = loader.load();
 
-            // Optionally, get the controller if you need to pass data
             CardController cardController = loader.getController();
-            // cardController.setEventData(...);
 
-            // Add the card to the FlowPane
             eventContainer.getChildren().add(cardRoot);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            AlertHelper.showError("Error", "Failed to create new event.");
         }
 
     }

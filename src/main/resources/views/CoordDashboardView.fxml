@@ -63,6 +63,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="Roboto" size="12.0" />
+                     </font>
                   </MFXButton>
                </children>
                <padding>
@@ -212,7 +215,7 @@
                   </VBox>
                   <HBox alignment="CENTER_RIGHT" fillHeight="false" prefHeight="88.0" prefWidth="721.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <MFXButton buttonType="RAISED" cancelButton="true" onAction="#onCreateEvent" rippleColor="#7a0ed9" style="-fx-background-color: #228be6;" text="Create Event" textFill="WHITE">
+                        <MFXButton buttonType="RAISED" onAction="#onCreateEvent" rippleColor="#7a0ed9" style="-fx-background-color: #228be6;" text="Create Event" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="25.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -238,7 +241,7 @@
                <children>
                   <MFXScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="254.0" prefWidth="1156.0" styleClass="coordBackground" HBox.hgrow="ALWAYS">
                      <content>
-                        <FlowPane fx:id="eventContainer" hgap="10.0" prefHeight="200.0" prefWidth="200.0" styleClass="coordBackground" vgap="10.0">
+                        <FlowPane fx:id="eventContainer" alignment="TOP_CENTER" hgap="10.0" prefHeight="200.0" prefWidth="200.0" styleClass="coordBackground" vgap="10.0">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>

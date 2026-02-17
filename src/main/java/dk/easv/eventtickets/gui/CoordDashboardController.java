@@ -5,10 +5,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.FlowPane;
 
 // MaterialFX imports
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -25,17 +28,24 @@ public class CoordDashboardController {
         */
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Card.fxml"));
-            Parent cardRoot = loader.load();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/NewEventView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
 
-            CardController cardController = loader.getController();
+            NewEventController newEventController = fxmlLoader.getController();
+            newEventController.setDashboardController(this);
 
-            eventContainer.getChildren().add(cardRoot);
-
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
         } catch (IOException e) {
-            AlertHelper.showError("Error", "Failed to create new event.");
+            AlertHelper.showError("Error", "Unable to open NewEventView");
+            throw new RuntimeException(e);
         }
 
     }
 
+    public FlowPane getEventContainer() {
+        return eventContainer;
+    }
 }

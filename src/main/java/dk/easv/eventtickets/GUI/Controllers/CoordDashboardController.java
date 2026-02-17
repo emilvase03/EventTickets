@@ -1,6 +1,6 @@
-package dk.easv.eventtickets.gui;
+package dk.easv.eventtickets.GUI.Controllers;
 // Java imports
-import dk.easv.eventtickets.gui.utils.AlertHelper;
+import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

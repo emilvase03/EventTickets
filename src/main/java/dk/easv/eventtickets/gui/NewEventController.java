@@ -1,7 +1,11 @@
 package dk.easv.eventtickets.gui;
 
+// Project imports
+import dk.easv.eventtickets.GUI.Controllers.CoordDashboardController;
+import dk.easv.eventtickets.GUI.Controllers.CardController;
+
 // Java imports
-import dk.easv.eventtickets.gui.utils.AlertHelper;
+import dk.easv.eventtickets.gui.Utils.AlertHelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,7 +34,7 @@ public class NewEventController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Card.fxml"));
             Parent cardRoot = loader.load();
-            CardController cardController = loader.getController();
+            dk.easv.eventtickets.GUI.Controllers.CardController cardController = loader.getController();
 
             dashboardController.getEventContainer().getChildren().add(cardRoot);
 

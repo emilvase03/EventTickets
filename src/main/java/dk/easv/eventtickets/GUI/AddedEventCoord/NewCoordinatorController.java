@@ -1,4 +1,4 @@
-package dk.easv.eventtickets.gui.AddedEventCoord;
+package dk.easv.eventtickets.GUI.AddedEventCoord;
 
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;

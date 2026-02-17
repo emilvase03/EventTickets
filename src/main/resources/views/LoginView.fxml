@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="20.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="20.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.LoginController">
    <children>
       <VBox alignment="CENTER">
          <children>
@@ -35,7 +35,8 @@
                   <Insets right="235.0" />
                </VBox.margin>
             </Label>
-            <MFXTextField floatMode="BORDER" prefHeight="15.0" prefWidth="300.0" />
+            <MFXTextField floatMode="BORDER" prefHeight="15.0" prefWidth="300.0"
+                          fx:id="txtUsername" />
          </children>
       </VBox>
       <VBox alignment="CENTER">
@@ -45,7 +46,7 @@
                   <Insets right="240.0" />
                </VBox.margin>
             </Label>
-            <MFXPasswordField floatMode="BORDER" prefHeight="15.0" prefWidth="300.0" />
+            <MFXPasswordField floatMode="BORDER" prefHeight="15.0" prefWidth="300.0" fx:id="txtPassword" />
          </children>
       </VBox>
       <VBox alignment="CENTER">

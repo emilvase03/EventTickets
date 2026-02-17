@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="403.0" prefWidth="346.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.gui.AddedEventCoord.NewCoordinatorController">
+<AnchorPane prefHeight="403.0" prefWidth="346.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.AddedEventCoord.NewCoordinatorController">
    <children>
       <MFXButton layoutX="202.0" layoutY="352.0" onAction="#onBntSaveAddedCoordinator" prefHeight="29.0" prefWidth="118.0" rippleColor="#7a0ed9" style="-fx-background-color: #228be6;" text="Add Coordinator">
          <font>

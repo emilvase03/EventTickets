@@ -1,4 +1,4 @@
-package dk.easv.eventtickets.gui.AddedEventCoord;
+package dk.easv.eventtickets.GUI.AddedEventCoord;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

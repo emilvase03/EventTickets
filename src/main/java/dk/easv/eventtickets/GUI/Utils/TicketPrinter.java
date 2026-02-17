@@ -1,4 +1,4 @@
-package dk.easv.eventtickets.gui.utils;
+package dk.easv.eventtickets.GUI.Utils;
 
 // Java imports
 import javafx.geometry.Pos;

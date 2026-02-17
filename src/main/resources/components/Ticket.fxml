@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="266.0" prefWidth="666.0" styleClass="ticket" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.gui.TicketController">
+<VBox prefHeight="266.0" prefWidth="666.0" styleClass="ticket" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.TicketController">
    <children>
       <HBox fx:id="ticketHeader" alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="666.0">
          <children>

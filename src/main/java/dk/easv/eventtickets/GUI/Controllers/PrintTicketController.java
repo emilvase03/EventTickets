@@ -1,7 +1,7 @@
-package dk.easv.eventtickets.gui;
+package dk.easv.eventtickets.GUI.Controllers;
 
 // Project imports
-import dk.easv.eventtickets.gui.utils.TicketPrinter;
+import dk.easv.eventtickets.GUI.Utils.TicketPrinter;
 
 // Java imports
 import javafx.event.ActionEvent;

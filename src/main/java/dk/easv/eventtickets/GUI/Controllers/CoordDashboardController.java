@@ -61,7 +61,7 @@ public class CoordDashboardController {
         }
     }
 
-    public void launchTicketsWindow(int ticketsAmount) {
+    public void launchTicketsWindow(int ticketsAmount, boolean specialTicket) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/PrintTicketsView.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
@@ -70,10 +70,16 @@ public class CoordDashboardController {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
 
-            // for loop for tickets
+            Parent ticketRoot;
+            if (!specialTicket) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/NormalTicket.fxml"));
+                ticketRoot = loader.load();
+            } else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/SpecialTicket.fxml"));
+                ticketRoot = loader.load();
+            }
+
             for (int i = 0; i < ticketsAmount; i++) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Ticket.fxml"));
-                Parent ticketRoot = loader.load();
                 PrintTicketController controller = fxmlLoader.getController();
                 controller.getTicketsContainer().getChildren().add(ticketRoot);
             }

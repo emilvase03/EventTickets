@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<VBox prefHeight="290.0" prefWidth="405.0" spacing="10.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.SpecialTicketController">
+<VBox prefHeight="233.0" prefWidth="405.0" spacing="10.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.NewTicketController">
    <children>
       <HBox alignment="CENTER_LEFT">
          <children>

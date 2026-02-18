@@ -7,8 +7,8 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
@@ -257,11 +257,11 @@
                <children>
                   <MFXScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="254.0" prefWidth="1156.0" styleClass="coordBackground" HBox.hgrow="ALWAYS">
                      <content>
-                        <FlowPane fx:id="eventContainer" hgap="10.0" prefHeight="200.0" prefWidth="200.0" styleClass="coordBackground" vgap="10.0">
+                        <TilePane fx:id="eventContainer" hgap="10.0" prefHeight="200.0" prefWidth="200.0" styleClass="coordBackground" tileAlignment="TOP_LEFT" vgap="10.0">
                            <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                              <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
                            </padding>
-                        </FlowPane>
+                        </TilePane>
                      </content>
                   </MFXScrollPane>
                </children>

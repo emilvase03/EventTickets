@@ -8,6 +8,8 @@ import dk.easv.eventtickets.GUI.Utils.Validator;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.MFXToggleButton;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SpecialTicketController implements Initializable {
+public class NewTicketController implements Initializable {
     @FXML private MFXTextField txtTitle;
     @FXML private MFXTextField txtCustomerName;
     @FXML private MFXComboBox comboBoxEvent;
@@ -26,10 +28,17 @@ public class SpecialTicketController implements Initializable {
     @FXML private MFXTextField txtAmountTickets;
     @FXML private MFXToggleButton toggleSpecialTicket;
 
+    private int ticketsAmount;
+    ObservableList<String> discountOptions = FXCollections.observableArrayList(
+            "10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%", "50%", "Free"
+    );
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        comboBoxEvent.getItems().add("test"); // TEST TEST TEST TEST TEST TEST TEST
-        comboBoxDiscount.getItems().add("10%"); // TEST TEST TEST TEST TEST TEST TEST
+        comboBoxEvent.getItems().add("No Event");
+
+        comboBoxDiscount.setItems(discountOptions);
+
 
         txtTitle.managedProperty().bind(txtTitle.visibleProperty());
         txtCustomerName.managedProperty().bind(txtCustomerName.visibleProperty());
@@ -48,19 +57,16 @@ public class SpecialTicketController implements Initializable {
 
     @FXML
     private void handleConfirm(ActionEvent event) {
-
-        int ticketsAmount = Integer.parseInt(txtAmountTickets.getText());
-
-        if (txtAmountTickets.getText().isBlank()) {
-            AlertHelper.showError("Error", "Please enter number of tickets");
-            return;
-        }
-
         if (comboBoxEvent.getSelectionModel().getSelectedItem() == null) {
             AlertHelper.showError("Error", "Please choose an event");
             return;
         }
 
+        if (txtAmountTickets.getText().isBlank()) {
+            AlertHelper.showError("Error", "Please enter number of tickets");
+            return;
+        }
+        ticketsAmount = Integer.parseInt(txtAmountTickets.getText());
 
         if (toggleSpecialTicket.isSelected()) {
             handleSpecialTicket();
@@ -69,8 +75,6 @@ public class SpecialTicketController implements Initializable {
             handleNormalTicket();
         }
 
-
-
     }
 
     private void printTickets(int ticketsAmount) {
@@ -78,7 +82,7 @@ public class SpecialTicketController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/CoordDashboardView.fxml"));
             fxmlLoader.load();
             CoordDashboardController controller = fxmlLoader.getController();
-            controller.lanchTicketsWindow(ticketsAmount);
+            controller.launchTicketsWindow(ticketsAmount);
 
             handleClose();
         } catch (IOException e) {
@@ -91,7 +95,7 @@ public class SpecialTicketController implements Initializable {
             AlertHelper.showError("Error", "Please enter customer name");
             return;
         }
-        printTickets(Integer.parseInt(txtAmountTickets.getText()));
+        printTickets(ticketsAmount);
 
     }
 
@@ -106,7 +110,7 @@ public class SpecialTicketController implements Initializable {
             return;
         }
 
-        printTickets(Integer.parseInt(txtAmountTickets.getText()));
+        printTickets(ticketsAmount);
     }
 
     private void updateTicketState(boolean isSelected) {

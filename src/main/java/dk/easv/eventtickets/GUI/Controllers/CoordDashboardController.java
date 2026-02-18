@@ -1,15 +1,19 @@
 package dk.easv.eventtickets.GUI.Controllers;
-// Java imports
+
+// Project imports
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
+
+// MaterialFX imports
+import io.github.palexdev.materialfx.controls.MFXScrollPane;
+
+// Java imports
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.FlowPane;
 
-// MaterialFX imports
-import io.github.palexdev.materialfx.controls.MFXScrollPane;
+import javafx.scene.layout.TilePane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -18,14 +22,10 @@ import java.io.IOException;
 public class CoordDashboardController {
 
     @FXML private MFXScrollPane scrollPane;
-    @FXML private FlowPane eventContainer;
+    @FXML private TilePane eventContainer;
 
     @FXML
     private void onCreateEvent(ActionEvent event) {
-
-        /*
-        *  Open 'create event'-window
-        */
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/NewEventView.fxml"));
@@ -48,8 +48,8 @@ public class CoordDashboardController {
     @FXML
     private void onCreateTicket(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/SpecialTicketView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/NewTicketView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 405, 290);
             Stage stage = new Stage();
 
             stage.setScene(scene);
@@ -61,7 +61,7 @@ public class CoordDashboardController {
         }
     }
 
-    public void lanchTicketsWindow(int ticketsAmount) {
+    public void launchTicketsWindow(int ticketsAmount) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/PrintTicketsView.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
@@ -83,7 +83,7 @@ public class CoordDashboardController {
 
     }
 
-    public FlowPane getEventContainer() {
+    public TilePane getEventContainer() {
         return eventContainer;
     }
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXToggleButton?>
 <?import io.github.palexdev.mfxcore.controls.Label?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TextField?>
@@ -15,6 +16,7 @@
             <Font name="Roboto Bold" size="22.0" />
          </font>
       </Label>
+      <MFXToggleButton />
       <HBox alignment="CENTER">
          <children>
             <Label prefHeight="17.0" prefWidth="45.0" text="Name" />

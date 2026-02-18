@@ -71,4 +71,5 @@ public class NewTicketController implements Initializable {
         Stage stage = (Stage) txtfieldName.getScene().getWindow();
         stage.close();
     }
+
 }

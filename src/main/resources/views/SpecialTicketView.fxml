@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import io.github.palexdev.materialfx.controls.MFXToggleButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox prefHeight="233.0" prefWidth="405.0" spacing="10.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.SpecialTicketController">
+   <children>
+      <HBox alignment="CENTER_LEFT">
+         <children>
+            <Label prefHeight="30.0" prefWidth="232.0" styleClass="boldRoboto" text="Create Ticket(s)">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <MFXToggleButton fx:id="toggleSpecialTicket" text="Special Ticket" />
+         </children>
+      </HBox>
+      <MFXTextField fx:id="txtTitle" floatMode="ABOVE" prefHeight="50.0" prefWidth="666.0" promptText="Title *" />
+      <MFXTextField fx:id="txtCustomerName" floatMode="ABOVE" prefHeight="50.0" prefWidth="666.0" promptText="Customer name *" />
+      <MFXComboBox fx:id="comboBoxEvent" floatMode="ABOVE" prefHeight="50.0" prefWidth="389.0" promptText="Select Event *" />
+      <MFXComboBox fx:id="comboBoxDiscount" floatMode="ABOVE" prefHeight="50.0" prefWidth="389.0" promptText="Select Discount *" />
+      <MFXTextField fx:id="txtAmountTickets" floatMode="ABOVE" prefHeight="50.0" prefWidth="666.0" promptText="Number of Tickets *" />
+      <VBox alignment="CENTER_RIGHT">
+         <children>
+            <MFXButton buttonType="RAISED" onAction="#handleConfirm" prefHeight="26.0" prefWidth="75.0" text="Confim" />
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </VBox>
+   </children>
+   <padding>
+      <Insets bottom="30.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</VBox>

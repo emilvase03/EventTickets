@@ -37,50 +37,6 @@ public class CardController {
          */
     }
 
-    @FXML
-    private void handleTickets(ActionEvent event) {
-        /*
-        *
-        * Open Tickets Window
-        *
-        */
-
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/NewTicketView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setResizable(false);
-            stage.show();
-
-        } catch (IOException e) {
-            AlertHelper.showError("Error", "Failed to open tickets dialog.");
-        }
-    }
-
-    public void lanchTicketsWindow(int ticketsAmount) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/PrintTicketsView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
-
-            // for loop for tickets
-            for (int i = 0; i < ticketsAmount; i++) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Ticket.fxml"));
-                Parent ticketRoot = loader.load();
-                PrintTicketController controller = fxmlLoader.getController();
-                controller.getTicketsContainer().getChildren().add(ticketRoot);
-            }
-        } catch (Exception e) {
-            AlertHelper.showError("Error", "Failed to display tickets.");
-        }
-
-    }
-
     private void setTitle(/*Event Object*/) {
 
     }

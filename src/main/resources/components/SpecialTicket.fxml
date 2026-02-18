@@ -2,6 +2,8 @@
 
 <?import io.github.palexdev.mfxcore.controls.Label?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -50,6 +52,20 @@
                     </padding>
                     <children>
                         <Label prefHeight="17.0" prefWidth="85.0" styleClass="roboto" text="Unique ID" />
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <ImageView fitHeight="150.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/2D%20Barcode.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="150.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
+                           <image>
+                              <Image url="@../icons/1D%20Barcode.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
                     </children>
                 </VBox>
             </children>

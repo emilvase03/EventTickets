@@ -7,10 +7,13 @@ import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 // MaterialFX imports
 import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
+import io.github.palexdev.materialfx.filter.StringFilter;
 
 // Java imports
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,11 +32,53 @@ public class AdminDashboardController implements Initializable {
 
     @FXML private MFXPaginatedTableView coordContainer;
 
+    private MFXTableColumn<placeholder> colName;
+    private MFXTableColumn<placeholder> colEmail;
+    private MFXTableColumn<placeholder> colUsername;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        MFXTableColumn<placeholder> colName = new MFXTableColumn<>("Name");
-        MFXTableColumn<placeholder> colEmail = new MFXTableColumn<>("Email");
-        MFXTableColumn<placeholder> colUsername = new MFXTableColumn<>("Username");
+        setupTable();
+    }
+
+
+    @FXML
+    private void onBtnAddCoord(ActionEvent actionEvent) throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/NewCoordinatorView.fxml"));
+            Scene scene = new Scene(loader.load());
+            Stage stage = new Stage();
+            stage.setTitle("New Coordinator");
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.showAndWait();
+            addCard();
+
+
+        } catch (IOException e) {
+            AlertHelper.showError("Error", "Failed to open NewCoordinatorView");
+        }
+    }
+
+    private void addCard(){
+        try{
+            FXMLLoader cardLoader = new FXMLLoader(getClass().getResource("/components/EventCoordCard.fxml"));
+            Parent cardRoot = cardLoader.load();
+
+            // empty
+
+            coordContainer.getItems().add(cardRoot);
+
+        } catch (IOException e) {
+            AlertHelper.showError("Error", "Failed to add Coordinator.");
+        }
+    }
+
+    private void setupTable() {
+        colName = new MFXTableColumn<>("Name");
+        colEmail = new MFXTableColumn<>("Email");
+        colUsername = new MFXTableColumn<>("Username");
 
         colName.setRowCellFactory(name -> new MFXTableRowCell<>(placeholder::getName));
         colEmail.setRowCellFactory(email -> new MFXTableRowCell<>(placeholder::getEmail));
@@ -47,8 +92,21 @@ public class AdminDashboardController implements Initializable {
         // If TableView needs to be dynamic, in height (max height)
         //coordContainer.setMaxHeight(Double.MAX_VALUE);
 
+        setupTableFilters();
 
         coordContainer.setItems(testData());
+    }
+
+    private void setupTableFilters() {
+        coordContainer.getFilters().addAll(
+                new StringFilter<>("Name", placeholder::getName),
+                new StringFilter<>("Email", placeholder::getEmail),
+                new StringFilter<>("Username", placeholder::getUsername)
+        );
+
+        coordContainer.getFilters().addListener((ListChangeListener<Object>) change -> {
+            Platform.runLater(() -> coordContainer.setCurrentPage(1));
+        });
 
     }
 
@@ -67,37 +125,4 @@ public class AdminDashboardController implements Initializable {
         return test;
     }
 
-    @FXML
-    private void onBtnAddCoord(ActionEvent actionEvent) throws IOException {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/NewCoordinatorView.fxml"));
-            Scene scene = new Scene(loader.load());
-            Stage stage = new Stage();
-            stage.setTitle("New Coordinator");
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setResizable(false);
-            stage.showAndWait();
-            addCard();
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-    }
-
-    private void addCard(){
-        try{
-            FXMLLoader cardLoader = new FXMLLoader(getClass().getResource("/components/EventCoordCard.fxml"));
-            Parent cardRoot = cardLoader.load();
-
-            // empty
-
-            coordContainer.getItems().add(cardRoot);
-
-        } catch (IOException e) {
-            AlertHelper.showError("Error", "Failed to add Coordinator.");
-        }
-    }
 }

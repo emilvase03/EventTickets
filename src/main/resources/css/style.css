@@ -26,6 +26,11 @@ Coordinator Dashboard Styling
     -fx-font-family: "Roboto Black";
 }
 
+.boldItalicRoboto {
+    -fx-font-family: "Roboto Black";
+    -fx-font-style: italic;
+}
+
 /**
 Card / Event Styling
  */
@@ -66,4 +71,18 @@ Ticket Styling
     -fx-background-color: #ffffff;
     -fx-background-radius: 15 15 0 0;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 20, 0.3, 0, 2);
+}
+
+#specialTicketHeader {
+    -fx-background-color: #02343F;
+    -fx-background-radius: 15 15 0 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 20, 0.3, 0, 2);
+}
+
+#specialTicketHeaderText {
+    -fx-text-fill: white;
+}
+
+#specialTicketBg {
+    -fx-background-color: #F0EDCC;
 }

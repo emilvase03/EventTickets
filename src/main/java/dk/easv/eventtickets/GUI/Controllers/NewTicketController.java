@@ -77,12 +77,12 @@ public class NewTicketController implements Initializable {
 
     }
 
-    private void printTickets(int ticketsAmount) {
+    private void printTickets(int ticketsAmount, boolean specialTicket) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/CoordDashboardView.fxml"));
             fxmlLoader.load();
             CoordDashboardController controller = fxmlLoader.getController();
-            controller.launchTicketsWindow(ticketsAmount);
+            controller.launchTicketsWindow(ticketsAmount, specialTicket);
 
             handleClose();
         } catch (IOException e) {
@@ -95,7 +95,7 @@ public class NewTicketController implements Initializable {
             AlertHelper.showError("Error", "Please enter customer name");
             return;
         }
-        printTickets(ticketsAmount);
+        printTickets(ticketsAmount, false);
 
     }
 
@@ -110,7 +110,7 @@ public class NewTicketController implements Initializable {
             return;
         }
 
-        printTickets(ticketsAmount);
+        printTickets(ticketsAmount, true);
     }
 
     private void updateTicketState(boolean isSelected) {

@@ -27,11 +27,13 @@ public class NewTicketController implements Initializable {
     @FXML private MFXComboBox comboBoxDiscount;
     @FXML private MFXTextField txtAmountTickets;
     @FXML private MFXToggleButton toggleSpecialTicket;
+    @FXML private MFXTextField txtCustomerEmail;
+    @FXML private MFXTextField txtExtraOption;
 
     private int ticketsAmount;
-    ObservableList<String> discountOptions = FXCollections.observableArrayList(
-            "10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%", "50%", "Free"
-    );
+    private ObservableList<String> discountOptions = FXCollections.observableArrayList(
+            "10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%", "50%", "Free");
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -43,6 +45,8 @@ public class NewTicketController implements Initializable {
         txtTitle.managedProperty().bind(txtTitle.visibleProperty());
         txtCustomerName.managedProperty().bind(txtCustomerName.visibleProperty());
         comboBoxDiscount.managedProperty().bind(comboBoxDiscount.visibleProperty());
+        txtCustomerEmail.managedProperty().bind(txtCustomerEmail.visibleProperty());
+        txtExtraOption.managedProperty().bind(txtExtraOption.visibleProperty());
 
         updateTicketState(toggleSpecialTicket.isSelected());
 
@@ -51,7 +55,6 @@ public class NewTicketController implements Initializable {
         });
 
         Validator.numeric(txtAmountTickets, null, 3);
-        Validator.nonNumeric(txtTitle);
         Validator.nonNumeric(txtCustomerName);
     }
 
@@ -118,10 +121,14 @@ public class NewTicketController implements Initializable {
             txtTitle.setVisible(true);
             txtCustomerName.setVisible(false);
             comboBoxDiscount.setVisible(true);
+            txtCustomerEmail.setVisible(false);
+            txtExtraOption.setVisible(false);
         } else {
             txtTitle.setVisible(false);
             txtCustomerName.setVisible(true);
             comboBoxDiscount.setVisible(false);
+            txtCustomerEmail.setVisible(true);
+            txtExtraOption.setVisible(true);
         }
     }
 

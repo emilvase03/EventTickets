@@ -49,7 +49,7 @@ public class CoordDashboardController {
     private void onCreateTicket(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/NewTicketView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 405, 290);
+            Scene scene = new Scene(fxmlLoader.load(), 405, 320);
             Stage stage = new Stage();
 
             stage.setScene(scene);
@@ -70,21 +70,22 @@ public class CoordDashboardController {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
 
-            Parent ticketRoot;
+
+            String ticketPath;
             if (!specialTicket) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/NormalTicket.fxml"));
-                ticketRoot = loader.load();
+                ticketPath = "/components/NormalTicket.fxml";
             } else {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/SpecialTicket.fxml"));
-                ticketRoot = loader.load();
+                ticketPath = "/components/SpecialTicket.fxml";
             }
 
             for (int i = 0; i < ticketsAmount; i++) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(ticketPath));
+                Parent ticketRoot = loader.load();
                 PrintTicketController controller = fxmlLoader.getController();
                 controller.getTicketsContainer().getChildren().add(ticketRoot);
             }
         } catch (Exception e) {
-            AlertHelper.showError("Error", "Failed to display tickets.");
+            AlertHelper.showError("Error", "Failed to display tickets." + e.getMessage());
         }
 
     }

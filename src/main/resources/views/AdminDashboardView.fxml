@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -13,22 +13,34 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.AdminDashboardController">
+<BorderPane prefHeight="600.0" prefWidth="900.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.AdminDashboardController">
    <opaqueInsets>
       <Insets />
    </opaqueInsets>
    <center>
-      <HBox alignment="CENTER" fillHeight="false" spacing="40.0" BorderPane.alignment="CENTER">
+      <VBox BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
+         </BorderPane.margin>
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-color: #E5E7EB; -fx-border-radius: 15;" HBox.hgrow="ALWAYS">
+            <HBox alignment="CENTER" fillHeight="false" prefHeight="130.0" prefWidth="900.0">
                <children>
-                  <VBox prefHeight="111.0" prefWidth="187.0" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 15;" HBox.hgrow="ALWAYS">
+                  <VBox alignment="CENTER_LEFT" prefHeight="154.0" prefWidth="301.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 15;" styleClass="totalBoxes">
                      <children>
-                        <Label prefHeight="38.0" prefWidth="155.0" text="Total Coordinators">
-                           <font>
-                              <Font name="Roboto Bold" size="12.0" />
-                           </font>
-                        </Label>
+                        <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="216.0">
+                           <children>
+                              <Label prefHeight="19.0" prefWidth="260.0" text="Total Coordinators">
+                                 <font>
+                                    <Font name="Roboto Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="30.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/user-5-128.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </HBox>
                         <Label fx:id="lblStatus" prefHeight="45.0" prefWidth="131.0" text="0">
                            <font>
                               <Font name="Roboto Bold" size="24.0" />
@@ -37,28 +49,31 @@
                         <Label prefHeight="48.0" prefWidth="142.0" text="Active event coorditator" />
                      </children>
                      <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                        <Insets left="10.0" />
                      </padding>
-                  </VBox>
-                  <ImageView fitHeight="30.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
-                     <image>
-                        <Image url="@../icons/user-5-128.png" />
-                     </image>
                      <HBox.margin>
-                        <Insets right="10.0" top="15.0" />
+                        <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
                      </HBox.margin>
-                  </ImageView>
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-color: #E5E7EB; -fx-border-radius: 15;" HBox.hgrow="ALWAYS">
-               <children>
-                  <VBox prefHeight="111.0" prefWidth="187.0" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 15;" HBox.hgrow="ALWAYS">
+                  </VBox>
+                  <VBox alignment="CENTER_LEFT" prefHeight="154.0" prefWidth="301.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 15;" styleClass="totalBoxes">
                      <children>
-                        <Label prefHeight="38.0" prefWidth="155.0" text="Total events">
-                           <font>
-                              <Font name="Roboto Bold" size="12.0" />
-                           </font>
-                        </Label>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label prefHeight="19.0" prefWidth="260.0" text="Total Events">
+                                 <font>
+                                    <Font name="Roboto Bold" size="12.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                              <ImageView fitHeight="30.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/user-5-128.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </HBox>
                         <Label fx:id="lblStatus1" prefHeight="45.0" prefWidth="131.0" text="0">
                            <font>
                               <Font name="Roboto Bold" size="24.0" />
@@ -67,28 +82,30 @@
                         <Label prefHeight="48.0" prefWidth="142.0" text="Managed by coordinators" />
                      </children>
                      <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                        <Insets left="10.0" />
                      </padding>
-                  </VBox>
-                  <ImageView fitHeight="30.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../icons/user-5-128.png" />
-                     </image>
                      <HBox.margin>
-                        <Insets right="10.0" top="15.0" />
+                        <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
                      </HBox.margin>
-                  </ImageView>
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-color: #E5E7EB; -fx-border-radius: 15;" HBox.hgrow="ALWAYS">
-               <children>
-                  <VBox prefHeight="111.0" prefWidth="187.0" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 15;" HBox.hgrow="ALWAYS">
+                  </VBox>
+                  <VBox alignment="CENTER_LEFT" prefHeight="154.0" prefWidth="301.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 15;" styleClass="totalBoxes">
                      <children>
-                        <Label prefHeight="38.0" prefWidth="155.0" text="System status">
-                           <font>
-                              <Font name="Roboto Bold" size="12.0" />
-                           </font>
-                        </Label>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label prefHeight="19.0" prefWidth="260.0" text="System status">
+                                 <font>
+                                    <Font name="Roboto Bold" size="12.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                              <Circle fill="#00ff04" radius="5.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" />
+                           </children>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
+                        </HBox>
                         <Label fx:id="lblStatus2" prefHeight="45.0" prefWidth="131.0" text="Active">
                            <font>
                               <Font name="Roboto Bold" size="24.0" />
@@ -97,97 +114,82 @@
                         <Label prefHeight="48.0" prefWidth="142.0" text="All system operational" />
                      </children>
                      <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                        <Insets left="10.0" />
                      </padding>
-                  </VBox>
-                  <Circle fill="#1fff3d" radius="4.0" stroke="BLACK" strokeType="INSIDE" HBox.hgrow="ALWAYS">
                      <HBox.margin>
-                        <Insets right="15.0" top="25.0" />
+                        <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
                      </HBox.margin>
-                  </Circle>
+                  </VBox>
                </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </HBox>
+            <HBox prefHeight="43.0" prefWidth="828.0" VBox.vgrow="NEVER">
+               <children>
+                  <VBox prefHeight="40.0" prefWidth="481.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label prefHeight="23.0" prefWidth="178.0" text="Event Coordinators">
+                           <font>
+                              <Font name="Roboto Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="17.0" prefWidth="222.0" text="Manage Event Coordinator accounts" />
+                     </children>
+                  </VBox>
+                  <MFXButton buttonType="RAISED" cancelButton="true" onAction="#onBtnAddCoord" prefHeight="28.0" prefWidth="136.0" rippleColor="#7a0ed9" style="-fx-background-color: #228be6;" text="Add Coordinator" textFill="WHITE" HBox.hgrow="ALWAYS">
+                     <graphic>
+                        <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/add-user-3-128.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </MFXButton>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" top="10.0" />
+               </padding>
+            </HBox>
+            <MFXPaginatedTableView prefHeight="251.0" prefWidth="879.0" />
          </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <BorderPane.margin>
-            <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
-         </BorderPane.margin>
-      </HBox>
+      </VBox>
    </center>
    <bottom>
       <VBox BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="10.0" left="15.0" right="15.0" top="5.0" />
          </BorderPane.margin>
-         <children>
-            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-border-radius: 15; -fx-border-color: transperent;">
-               <content>
-                  <VBox fx:id="allCoordBox" maxHeight="1.7976931348623157E308" prefHeight="366.0" prefWidth="868.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 15;">
-                     <children>
-                        <HBox prefHeight="43.0" prefWidth="828.0" VBox.vgrow="NEVER">
-                           <children>
-                              <VBox prefHeight="40.0" prefWidth="481.0" HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <Label prefHeight="23.0" prefWidth="178.0" text="Event Coordinators">
-                                       <font>
-                                          <Font name="Roboto Bold" size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="17.0" prefWidth="222.0" text="Manage Event Coordinator accounts" />
-                                 </children>
-                              </VBox>
-                              <MFXButton buttonType="RAISED" cancelButton="true" onAction="#onBtnAddCoord" rippleColor="#7a0ed9" style="-fx-background-color: #228be6;" text="Add Coordinator" textFill="WHITE" HBox.hgrow="ALWAYS">
-                                 <graphic>
-                                    <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../icons/add-user-3-128.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <font>
-                                    <Font name="Roboto Bold" size="12.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets top="5.0" />
-                                 </HBox.margin>
-                              </MFXButton>
-                           </children>
-                        </HBox>
-                     </children>
-                     <padding>
-                        <Insets bottom="10.0" left="20.0" right="20.0" />
-                     </padding>
-                  </VBox>
-               </content>
-            </ScrollPane>
-         </children>
       </VBox>
    </bottom>
    <top>
-      <HBox alignment="CENTER" style="-fx-background-color: white; -fx-border-color: #E5E7EB;" BorderPane.alignment="CENTER">
+      <HBox fx:id="header" alignment="CENTER" style="-fx-background-color: white; -fx-border-color: #E5E7EB;" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="33.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../icons/shield-128.png" />
                </image>
             </ImageView>
-            <VBox prefHeight="61.0" prefWidth="607.0" spacing="5.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS">
+            <VBox alignment="CENTER_LEFT" prefHeight="61.0" prefWidth="607.0" spacing="5.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS">
                <children>
                   <Label prefHeight="29.0" prefWidth="202.0" text="Admin Dashboard">
                      <font>
                         <Font name="Roboto Bold" size="24.0" />
                      </font>
                   </Label>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox prefHeight="17.0" prefWidth="581.0">
                      <children>
-                        <Label prefHeight="17.0" prefWidth="58.0" text="Welcome,">
+                        <Label prefHeight="18.0" prefWidth="226.0" text="Welcome, Name">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="lblAdminName" text="userName" />
                      </children>
                   </HBox>
                </children>
@@ -216,6 +218,9 @@
                </padding>
             </HBox>
          </children>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
       </HBox>
    </top>
 </BorderPane>

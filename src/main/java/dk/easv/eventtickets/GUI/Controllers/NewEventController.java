@@ -4,6 +4,8 @@ package dk.easv.eventtickets.GUI.Controllers;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 
 // Java imports
+import io.github.palexdev.materialfx.controls.MFXDatePicker;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,14 +18,14 @@ public class NewEventController {
 
     private CoordDashboardController dashboardController;
 
-    @FXML private TextField txtName;
-    @FXML private DatePicker txtStartDate;
-    @FXML private TextField txtStartTime;
-    @FXML private DatePicker txtEndDate;
-    @FXML private TextField txtEndTime;
-    @FXML private TextField txtLocation;
-    @FXML private TextField txtLocationGuidance;
-    @FXML private TextField txtNotes;
+    @FXML private MFXTextField txtName;
+    @FXML private MFXDatePicker txtStartDate;
+    @FXML private MFXDatePicker txtEndDate;
+    @FXML private MFXTextField txtStartTime;
+    @FXML private MFXTextField txtEndTime;
+    @FXML private MFXTextField txtLocation;
+    @FXML private MFXTextField txtLocationGuidance;
+    @FXML private MFXTextField txtNotes;
 
     @FXML
     private void handleConfirmEvent(ActionEvent event) {

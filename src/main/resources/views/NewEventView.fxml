@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="607.0" prefWidth="468.0" spacing="10.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.NewEventController">
+<VBox alignment="CENTER" prefHeight="607.0" prefWidth="468.0" spacing="10.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.NewEventController">
     <children>
         <HBox alignment="CENTER">
             <children>
@@ -39,53 +39,56 @@
                         <Insets top="10.0" />
                     </padding>
                 </Label>
-                <TextField fx:id="txtName" promptText="Dog Show Championship" />
+                <MFXTextField fx:id="txtName" floatMode="BORDER" prefWidth="390.0" promptText="Dog Show Championship" />
             </children>
         </VBox>
         <HBox alignment="CENTER" prefHeight="60.0" prefWidth="468.0" spacing="5.0">
             <children>
-                <VBox prefHeight="78.0" prefWidth="190.0">
+                <VBox prefHeight="63.0" prefWidth="290.0">
                     <children>
                         <Label styleClass="boldRoboto" text="Start date *">
                             <padding>
                                 <Insets top="10.0" />
                             </padding>
                         </Label>
-                        <DatePicker fx:id="txtStartDate" />
+                        <MFXDatePicker fx:id="txtStartDate" prefHeight="38.0" prefWidth="250.0" promptText="4. feb 2026" />
                     </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
                 </VBox>
-                <VBox prefHeight="78.0" prefWidth="190.0">
+                <VBox prefHeight="78.0" prefWidth="130.0">
                     <children>
                         <Label styleClass="boldRoboto" text="Start time *">
                             <padding>
                                 <Insets top="10.0" />
                             </padding>
                         </Label>
-                        <TextField fx:id="txtStartTime" promptText="1700" />
+                        <MFXTextField fx:id="txtStartTime" floatMode="BORDER" prefHeight="38.0" prefWidth="123.0" promptText="17:00" />
                     </children>
                 </VBox>
             </children>
         </HBox>
-        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="388.0" spacing="5.0">
+        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="468.0" spacing="5.0">
             <children>
-                <VBox prefHeight="78.0" prefWidth="190.0">
+                <VBox prefHeight="63.0" prefWidth="284.0">
                     <children>
                         <Label styleClass="boldRoboto" text="End date (Optional)">
                             <padding>
                                 <Insets top="10.0" />
                             </padding>
                         </Label>
-                        <DatePicker fx:id="txtEndDate" />
+                        <MFXDatePicker fx:id="txtEndDate" prefHeight="38.0" prefWidth="250.0" promptText="6. feb 2026" />
                     </children>
                 </VBox>
-                <VBox prefHeight="78.0" prefWidth="190.0">
+                <VBox prefHeight="78.0" prefWidth="130.0">
                     <children>
                         <Label styleClass="boldRoboto" text="End time (Optional)">
                             <padding>
                                 <Insets top="10.0" />
                             </padding>
                         </Label>
-                        <TextField fx:id="txtEndTime" promptText="1900" />
+                        <MFXTextField fx:id="txtEndTime" floatMode="BORDER" prefHeight="38.0" prefWidth="129.0" promptText="19:00" />
                     </children>
                 </VBox>
             </children>
@@ -99,7 +102,7 @@
                                 <Insets top="10.0" />
                             </padding>
                         </Label>
-                        <TextField fx:id="txtLocation" promptText="Central Park Arene, 123 Main St." />
+                        <MFXTextField fx:id="txtLocation" floatMode="BORDER" prefWidth="390.0" promptText="Central Park Arene, 123 Main St." />
                     </children>
                 </VBox>
             </children>
@@ -113,7 +116,7 @@
                                 <Insets top="10.0" />
                             </padding>
                         </Label>
-                        <TextField fx:id="txtLocationGuidance" promptText="Parking available at Lot B" />
+                        <MFXTextField fx:id="txtLocationGuidance" floatMode="BORDER" prefWidth="390.0" promptText="Parking available at Lot B" />
                     </children>
                 </VBox>
             </children>
@@ -127,16 +130,16 @@
                                 <Insets top="10.0" />
                             </padding>
                         </Label>
-                        <TextField fx:id="txtNotes" promptText="Additional information about the event..." />
+                        <MFXTextField fx:id="txtNotes" floatMode="BORDER" prefWidth="390.0" promptText="Additional information about the event..." />
                     </children>
                 </VBox>
             </children>
         </HBox>
-        <HBox alignment="CENTER_RIGHT">
+        <HBox alignment="CENTER_RIGHT" prefHeight="37.0" prefWidth="388.0">
             <children>
-                <MFXButton buttonType="RAISED" onAction="#handleConfirmEvent" rippleColor="#7a0ed9" style="-fx-background-color: #228be6;" text="Confirm Event" textFill="WHITE">
+                <MFXButton buttonType="RAISED" onAction="#handleConfirmEvent" prefHeight="28.0" prefWidth="133.0" rippleColor="#7a0ed9" style="-fx-background-color: #228be6;" styleClass="boldRoboto" text="Confirm Event" textFill="WHITE">
                     <font>
-                        <Font name="Roboto Bold" size="12.0" />
+                        <Font name="System Bold" size="12.0" />
                     </font>
                 </MFXButton>
             </children>

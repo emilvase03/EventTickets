@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="607.0" prefWidth="468.0" spacing="10.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.EditEventController">
+    <children>
+        <HBox alignment="CENTER">
+            <children>
+                <VBox prefHeight="93.0" prefWidth="468.0" spacing="10.0">
+                    <children>
+                        <Label styleClass="boldRoboto" text="Edit Event">
+                            <font>
+                                <Font size="25.0" />
+                            </font>
+                        </Label>
+                        <Label styleClass="roboto" text="Edit information for eventName">
+                            <font>
+                                <Font name="Roboto" size="14.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets top="15.0" />
+                    </padding>
+                </VBox>
+            </children>
+        </HBox>
+        <VBox spacing="5.0">
+            <children>
+                <Label alignment="TOP_CENTER" styleClass="boldRoboto" text="Event name *">
+                    <padding>
+                        <Insets top="10.0" />
+                    </padding>
+                </Label>
+                <MFXTextField fx:id="txtName" floatMode="BORDER" prefWidth="390.0" promptText="Dog Show Championship" />
+            </children>
+        </VBox>
+        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="468.0" spacing="5.0">
+            <children>
+                <VBox prefHeight="63.0" prefWidth="290.0">
+                    <children>
+                        <Label styleClass="boldRoboto" text="Start date *">
+                            <padding>
+                                <Insets top="10.0" />
+                            </padding>
+                        </Label>
+                        <MFXDatePicker fx:id="txtStartDate" prefHeight="38.0" prefWidth="250.0" promptText="4. feb 2026" />
+                    </children>
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                </VBox>
+                <VBox prefHeight="78.0" prefWidth="130.0">
+                    <children>
+                        <Label styleClass="boldRoboto" text="Start time *">
+                            <padding>
+                                <Insets top="10.0" />
+                            </padding>
+                        </Label>
+                        <MFXTextField fx:id="txtStartTime" floatMode="BORDER" prefHeight="38.0" prefWidth="123.0" promptText="17:00" />
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="468.0" spacing="5.0">
+            <children>
+                <VBox prefHeight="63.0" prefWidth="284.0">
+                    <children>
+                        <Label styleClass="boldRoboto" text="End date (Optional)">
+                            <padding>
+                                <Insets top="10.0" />
+                            </padding>
+                        </Label>
+                        <MFXDatePicker fx:id="txtEndDate" prefHeight="38.0" prefWidth="250.0" promptText="6. feb 2026" />
+                    </children>
+                </VBox>
+                <VBox prefHeight="78.0" prefWidth="130.0">
+                    <children>
+                        <Label styleClass="boldRoboto" text="End time (Optional)">
+                            <padding>
+                                <Insets top="10.0" />
+                            </padding>
+                        </Label>
+                        <MFXTextField fx:id="txtEndTime" floatMode="BORDER" prefHeight="38.0" prefWidth="129.0" promptText="19:00" />
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+        <HBox alignment="CENTER">
+            <children>
+                <VBox prefHeight="70.0" prefWidth="388.0">
+                    <children>
+                        <Label styleClass="boldRoboto" text="Location *">
+                            <padding>
+                                <Insets top="10.0" />
+                            </padding>
+                        </Label>
+                        <MFXTextField fx:id="txtLocation" floatMode="BORDER" prefWidth="390.0" promptText="Central Park Arene, 123 Main St." />
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+        <HBox alignment="CENTER">
+            <children>
+                <VBox prefHeight="60.0" prefWidth="388.0">
+                    <children>
+                        <Label styleClass="boldRoboto" text="Location guidance (Optional)">
+                            <padding>
+                                <Insets top="10.0" />
+                            </padding>
+                        </Label>
+                        <MFXTextField fx:id="txtLocationGuidance" floatMode="BORDER" prefWidth="390.0" promptText="Parking available at Lot B" />
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+        <HBox>
+            <children>
+                <VBox prefHeight="60.0" prefWidth="388.0">
+                    <children>
+                        <Label styleClass="boldRoboto" text="Event notes/description *">
+                            <padding>
+                                <Insets top="10.0" />
+                            </padding>
+                        </Label>
+                        <MFXTextField fx:id="txtNotes" floatMode="BORDER" prefWidth="390.0" promptText="Additional information about the event..." />
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+        <HBox alignment="CENTER_RIGHT" prefHeight="37.0" prefWidth="388.0">
+            <children>
+                <MFXButton buttonType="RAISED" onAction="#handleEditEvent" prefHeight="28.0" prefWidth="133.0" rippleColor="#7a0ed9" style="-fx-background-color: #228be6;" styleClass="boldRoboto" text="Edit Event" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </MFXButton>
+            </children>
+        </HBox>
+    </children>
+    <padding>
+        <Insets bottom="20.0" left="40.0" right="40.0" />
+    </padding>
+</VBox>

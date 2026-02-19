@@ -30,11 +30,18 @@ public class CardController {
 
     @FXML
     private void handleEdit(ActionEvent event) {
-        /*
-         *
-         * Open Tickets (update?) Window --- Does it need to be editable? - Is this method needed?
-         *
-         */
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/EditEventView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        } catch (IOException e) {
+            AlertHelper.showError("Error", "Unable to open SpecialTicketView");
+            throw new RuntimeException(e);
+        }
     }
 
     private void setTitle(/*Event Object*/) {

@@ -3,10 +3,15 @@ package dk.easv.eventtickets.GUI.Controllers;
 // Project imports
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 
-// Java imports
+// MaterialFX imports
 import io.github.palexdev.materialfx.controls.MFXTextField;
+
+// Java imports
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class LoginController {
@@ -32,6 +37,27 @@ public class LoginController {
         // proceed to login logic
         // here
 
+        openCoordDashboard();
+
+    }
+
+    private void openCoordDashboard() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/CoordDashboardView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+
+            handleClose();
+        } catch (Exception e) {
+            AlertHelper.showError("Error", "Failed to open XYZView"); // <- Edit this error message!
+        }
+    }
+
+    private void handleClose() {
         Stage stage = (Stage) txtUsername.getScene().getWindow();
         stage.close();
     }

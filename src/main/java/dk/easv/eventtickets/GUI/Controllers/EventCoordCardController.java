@@ -1,5 +1,6 @@
 package dk.easv.eventtickets.GUI.Controllers;
 
+// Java imports
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 

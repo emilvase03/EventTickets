@@ -1,19 +1,11 @@
 package dk.easv.eventtickets.GUI.Controllers;
 
 // MFX imports
-import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 import io.github.palexdev.mfxcore.controls.Label;
 
 // Java imports
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class CardController {
 

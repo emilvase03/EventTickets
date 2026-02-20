@@ -1,6 +1,9 @@
 package dk.easv.eventtickets.GUI.Controllers;
 
+// MaterialFX imports
 import io.github.palexdev.materialfx.controls.MFXTextField;
+
+// Java imports
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;

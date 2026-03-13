@@ -21,6 +21,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -35,12 +37,12 @@ public class AdminDashboardController implements Initializable {
     private MFXTableColumn<placeholder> colName;
     private MFXTableColumn<placeholder> colEmail;
     private MFXTableColumn<placeholder> colUsername;
+    private MFXTableColumn<placeholder> colOptions;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setupTable();
     }
-
 
     @FXML
     private void onBtnAddCoord(ActionEvent actionEvent) throws IOException {
@@ -55,7 +57,6 @@ public class AdminDashboardController implements Initializable {
             stage.showAndWait();
             addCard();
 
-
         } catch (IOException e) {
             AlertHelper.showError("Error", "Failed to open NewCoordinatorView");
         }
@@ -66,8 +67,6 @@ public class AdminDashboardController implements Initializable {
             FXMLLoader cardLoader = new FXMLLoader(getClass().getResource("/components/EventCoordCard.fxml"));
             Parent cardRoot = cardLoader.load();
 
-            // empty
-
             coordContainer.getItems().add(cardRoot);
 
         } catch (IOException e) {
@@ -76,25 +75,51 @@ public class AdminDashboardController implements Initializable {
     }
 
     private void setupTable() {
+        // These four lines needs to be FXML instead!!
         colName = new MFXTableColumn<>("Name");
         colEmail = new MFXTableColumn<>("Email");
         colUsername = new MFXTableColumn<>("Username");
+        colOptions = new MFXTableColumn<>("Options");
+        // ^^^^^^^^^^
 
         colName.setRowCellFactory(name -> new MFXTableRowCell<>(placeholder::getName));
         colEmail.setRowCellFactory(email -> new MFXTableRowCell<>(placeholder::getEmail));
         colUsername.setRowCellFactory(username -> new MFXTableRowCell<>(placeholder::getUsername));
 
-        colName.prefWidthProperty().bind(coordContainer.widthProperty().divide(3));
-        colEmail.prefWidthProperty().bind(coordContainer.widthProperty().divide(3));
-        colUsername.prefWidthProperty().bind(coordContainer.widthProperty().divide(3));
-        coordContainer.getTableColumns().addAll(colName, colEmail, colUsername);
+        colOptions.setRowCellFactory(user -> new MFXTableRowCell<>(u -> "") {
 
-        // If TableView needs to be dynamic, in height (max height)
-        //coordContainer.setMaxHeight(Double.MAX_VALUE);
+            final MenuButton menu;
+
+            {
+                MenuItem edit = new MenuItem("Edit");
+                MenuItem delete = new MenuItem("Delete");
+
+                edit.setOnAction(e -> editUser(user));
+                delete.setOnAction(e -> deleteUser(user));
+
+                menu = new MenuButton("⋮");
+                menu.getItems().addAll(edit, delete);
+
+                setGraphic(menu);
+            }
+        });
+
+        colName.prefWidthProperty().bind(coordContainer.widthProperty().divide(4));
+        colEmail.prefWidthProperty().bind(coordContainer.widthProperty().divide(4));
+        colUsername.prefWidthProperty().bind(coordContainer.widthProperty().divide(4));
+        colOptions.prefWidthProperty().bind(coordContainer.widthProperty().divide(4));
+
+        coordContainer.getTableColumns().addAll(colName, colEmail, colUsername, colOptions);
 
         setupTableFilters();
 
         coordContainer.setItems(testData());
+    }
+
+    private void deleteUser(Object user) {
+    }
+
+    private void editUser(Object user) {
     }
 
     private void setupTableFilters() {
@@ -124,5 +149,4 @@ public class AdminDashboardController implements Initializable {
 
         return test;
     }
-
 }

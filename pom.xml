@@ -50,6 +50,11 @@
             <version>12.8.2.jre11</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>de.mkammerer</groupId>
+            <artifactId>argon2-jvm</artifactId>
+            <version>2.12</version>
+        </dependency>
     </dependencies>
 
     <build>

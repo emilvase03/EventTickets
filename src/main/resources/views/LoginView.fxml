@@ -26,15 +26,15 @@
       </VBox>
       <VBox alignment="CENTER">
          <children>
-            <Label text="Username">
+            <Label text="Email">
                <font>
                   <Font name="Roboto" size="14.0" />
                </font>
                <VBox.margin>
-                  <Insets right="235.0" />
+                  <Insets right="258.0" />
                </VBox.margin>
             </Label>
-            <MFXTextField fx:id="txtUsername" floatMode="BORDER" prefHeight="15.0" prefWidth="300.0" />
+            <MFXTextField fx:id="txtEmail" floatMode="BORDER" prefHeight="15.0" prefWidth="300.0" />
          </children>
       </VBox>
       <VBox alignment="CENTER">

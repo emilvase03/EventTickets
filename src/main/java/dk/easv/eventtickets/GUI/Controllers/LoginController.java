@@ -1,64 +1,73 @@
 package dk.easv.eventtickets.GUI.Controllers;
 
 // Project imports
+import dk.easv.eventtickets.BE.Role;
+import dk.easv.eventtickets.BLL.UserSession;
+import dk.easv.eventtickets.GUI.Models.UserModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 
 // MaterialFX imports
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 
-// Java imports
+// JavaFX imports
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import static dk.easv.eventtickets.GUI.Utils.ViewHandler.*;
 
 public class LoginController {
 
-    @FXML private MFXTextField txtUsername;
-    @FXML private MFXTextField txtPassword;
+    @FXML
+    private MFXTextField txtEmail;
+
+    @FXML
+    private MFXTextField txtPassword;
+
+    @FXML
+    private MFXButton btnLogin;
+
+    private final UserModel userModel = new UserModel();
+
+    @FXML
+    private void initialize() {
+        btnLogin.disableProperty().bind(userModel.loadingProperty());
+
+        userModel.loginFailedProperty().addListener((obs, wasFailed, isFailed) -> {
+            if (isFailed) {
+                AlertHelper.showError("Login failed", "Invalid email or password.");
+            }
+        });
+
+        userModel.loggedInUserProperty().addListener((obs, oldUser, newUser) -> {
+            if (newUser != null) {
+                UserSession.setCurrentUser(newUser);
+                if (newUser.getRole() == Role.ADMIN) {
+                    ADMIN_DASHBOARD.show();
+                } else {
+                    COORD_DASHBOARD.show();
+                }
+                closeWindow();
+            }
+        });
+    }
 
     @FXML
     private void handleLogin(ActionEvent event) {
-        String username = txtUsername.getText() == null ? "" : txtUsername.getText().trim();
-        String password = txtPassword.getText() == null ? "" : txtPassword.getText();
+        String email = txtEmail.getText().trim();
+        String password = txtPassword.getText();
 
-        if (username.isEmpty()) {
-            AlertHelper.showError("Login error", "Please enter a username.");
+        if (email.isEmpty() || password.isEmpty()) {
+            AlertHelper.showError("Login error", "Please fill in all fields.");
             return;
         }
 
-        if (password.isEmpty()) {
-            AlertHelper.showError("Login error", "Please enter a password.");
-            return;
-        }
-
-        // proceed to login logic
-        // here
-
-        openCoordDashboard();
-
+        userModel.loginUser(email, password);
     }
 
-    private void openCoordDashboard() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/CoordDashboardView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = new Stage();
-
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
-
-            handleClose();
-        } catch (Exception e) {
-            AlertHelper.showError("Error", "Failed to open XYZView"); // <- Edit this error message!
-        }
-    }
-
-    private void handleClose() {
-        Stage stage = (Stage) txtUsername.getScene().getWindow();
+    private void closeWindow() {
+        Stage stage = (Stage) txtEmail.getScene().getWindow();
         stage.close();
     }
 }

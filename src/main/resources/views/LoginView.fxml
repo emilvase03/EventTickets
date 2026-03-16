@@ -26,15 +26,15 @@
       </VBox>
       <VBox alignment="CENTER">
          <children>
-            <Label text="Username">
+            <Label text="Email">
                <font>
                   <Font name="Roboto" size="14.0" />
                </font>
                <VBox.margin>
-                  <Insets right="235.0" />
+                  <Insets right="258.0" />
                </VBox.margin>
             </Label>
-            <MFXTextField fx:id="txtUsername" floatMode="BORDER" prefHeight="15.0" prefWidth="300.0" />
+            <MFXTextField fx:id="txtEmail" floatMode="BORDER" prefHeight="15.0" prefWidth="300.0" />
          </children>
       </VBox>
       <VBox alignment="CENTER">
@@ -49,20 +49,12 @@
       </VBox>
       <VBox alignment="CENTER">
          <children>
-            <MFXButton onAction="#handleLogin" prefHeight="35.0" prefWidth="300.0" rippleColor="#7a0ed9" style="-fx-background-color: #bebebe;" text="Sign in">
+            <MFXButton fx:id="btnLogin" onAction="#handleLogin" prefHeight="35.0" prefWidth="300.0" rippleColor="#7a0ed9" style="-fx-background-color: #bebebe;" text="Sign in">
                <font>
                   <Font name="Roboto" size="14.0" />
                </font>
             </MFXButton>
          </children>
       </VBox>
-      <Label text="Sign up here" textAlignment="CENTER" underline="true">
-         <font>
-            <Font name="Roboto" size="14.0" />
-         </font>
-         <VBox.margin>
-            <Insets top="20.0" />
-         </VBox.margin>
-      </Label>
    </children>
 </VBox>

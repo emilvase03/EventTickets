@@ -39,3 +39,4 @@ build/
 .DS_Store
 
 config/database.settings
+database.settings

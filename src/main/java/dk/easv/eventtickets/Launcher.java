@@ -1,18 +1,16 @@
 package dk.easv.eventtickets;
 
+import dk.easv.eventtickets.GUI.Utils.ViewHandler;
 import io.github.palexdev.materialfx.theming.UserAgentBuilder;
 import io.github.palexdev.materialfx.theming.JavaFXThemes;
 import io.github.palexdev.materialfx.theming.MaterialFXStylesheets;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import java.io.IOException;
 
 public class Launcher extends Application {
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         UserAgentBuilder.builder()
                 .themes(JavaFXThemes.MODENA)
                 .themes(MaterialFXStylesheets.forAssemble(true))
@@ -21,11 +19,7 @@ public class Launcher extends Application {
                 .build()
                 .setGlobal();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/CoordDashboardView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("TITLE");
-        stage.setScene(scene);
-        stage.show();
+        ViewHandler.LOGIN.show();
     }
 
     public static void main(String[] args) {

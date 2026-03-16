@@ -17,7 +17,8 @@
                <font>
                   <Font size="18.0" />
                </font></Label>
-            <Label fx:id="lblDateAndTime" prefHeight="18.0" prefWidth="138.0" styleClass="roboto" text="Event Date + Time" />
+            <Label fx:id="lblStartDateAndTime" prefHeight="18.0" prefWidth="138.0" styleClass="roboto" text="Event Date + Time" />
+            <Label fx:id="lblEndDateAndTime" prefHeight="18.0" prefWidth="138.0" styleClass="roboto" text="Event Date + Time" />
             <Label fx:id="lblAddress" prefHeight="18.0" prefWidth="138.0" styleClass="roboto" text="Event Address">
             </Label>
          </children>

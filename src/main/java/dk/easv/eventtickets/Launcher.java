@@ -1,6 +1,6 @@
 package dk.easv.eventtickets;
 
-import dk.easv.eventtickets.GUI.Utils.Views;
+import dk.easv.eventtickets.GUI.Utils.ViewHandler;
 import io.github.palexdev.materialfx.theming.UserAgentBuilder;
 import io.github.palexdev.materialfx.theming.JavaFXThemes;
 import io.github.palexdev.materialfx.theming.MaterialFXStylesheets;
@@ -19,7 +19,7 @@ public class Launcher extends Application {
                 .build()
                 .setGlobal();
 
-        Views.LOGIN.show();
+        ViewHandler.LOGIN.show();
     }
 
     public static void main(String[] args) {

@@ -15,7 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
-import static dk.easv.eventtickets.GUI.Utils.Views.*;
+import static dk.easv.eventtickets.GUI.Utils.ViewHandler.*;
 
 public class LoginController {
 

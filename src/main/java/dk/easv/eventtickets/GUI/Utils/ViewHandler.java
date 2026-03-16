@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public enum Views {
+public enum ViewHandler {
 
     LOGIN("/views/LoginView.fxml", "Login", Modality.NONE),
     ADMIN_DASHBOARD("/views/AdminDashboardView.fxml", "Dashboard", Modality.NONE),
@@ -30,7 +30,7 @@ public enum Views {
     private Stage stage;
     private FXMLLoader loader;
 
-    Views(String path, String title, Modality modality) {
+    ViewHandler(String path, String title, Modality modality) {
         this.path = path;
         this.title = title;
         this.modality = modality;
@@ -63,8 +63,6 @@ public enum Views {
         }
     }
 
-    // Only call this when you genuinely need a brand new controller
-    // e.g. an edit form where you don't want old data lingering
     public void reset() {
         scene = null;
         stage = null;

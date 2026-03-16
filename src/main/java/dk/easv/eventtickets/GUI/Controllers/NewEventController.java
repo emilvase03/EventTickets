@@ -1,45 +1,93 @@
 package dk.easv.eventtickets.GUI.Controllers;
 
 // Project imports
+import dk.easv.eventtickets.BE.Event;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 
-// Java imports
+// MaterialFX imports
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+
+// Java imports
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class NewEventController {
 
     private CoordDashboardController dashboardController;
 
     @FXML private MFXTextField txtName;
+    @FXML private MFXTextField txtTickets;
     @FXML private MFXDatePicker txtStartDate;
     @FXML private MFXDatePicker txtEndDate;
     @FXML private MFXTextField txtStartTime;
     @FXML private MFXTextField txtEndTime;
-    @FXML private MFXTextField txtLocation;
+    @FXML private MFXTextField txtStreet;
+    @FXML private MFXTextField txtPostalCode;
     @FXML private MFXTextField txtLocationGuidance;
-    @FXML private MFXTextField txtNotes;
+    @FXML private MFXTextField txtDescription;
 
     @FXML
     private void handleConfirmEvent(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Card.fxml"));
-            Parent cardRoot = loader.load();
-            dk.easv.eventtickets.GUI.Controllers.CardController cardController = loader.getController();
 
-            dashboardController.getEventContainer().getChildren().add(cardRoot);
+            if (
+                    txtName.getText().isBlank() ||
+                    txtTickets.getText().isBlank() ||
+                    txtStartDate.getText().isBlank() ||
+                    txtStartTime.getText().isBlank() ||
+                    txtStreet.getText().isBlank() ||
+                    txtPostalCode.getText().isBlank() ||
+                    txtDescription.getText().isBlank()
+            ) {
+                AlertHelper.showError("Error", "Please fill out all required fields.");
+                return;
+            }
+
+            String title = txtName.getText().trim();
+            int tickets = Integer.parseInt(txtTickets.getText().trim());
+
+            LocalDate startDate = txtStartDate.getValue();
+
+            String startTimeInput = txtStartTime.getText().trim();
+            String[] startTimeParts = startTimeInput.split(":");
+            int startHour = Integer.parseInt(startTimeParts[0]);
+            int startMin = Integer.parseInt(startTimeParts[1]);
+            LocalTime startTime = LocalTime.of(startHour, startMin);
+
+            LocalDate endDate = txtEndDate.getValue();
+
+            LocalTime endTime = null;
+            if (!txtEndTime.getText().isBlank()) {
+                String[] endTimeParts = txtEndTime.getText().trim().split(":");
+                int endHour = Integer.parseInt(endTimeParts[0]);
+                int endMin = Integer.parseInt(endTimeParts[1]);
+                endTime = LocalTime.of(endHour, endMin);
+            }
+
+            String street = txtStreet.getText().trim();
+            String zipCode = txtPostalCode.getText().trim();
+            String locGuidance = txtLocationGuidance.getText().isBlank() ? "" : txtLocationGuidance.getText().trim();
+            String description = txtDescription.getText().trim();
+
+            Event newEvent = new Event(
+                    title, tickets, startDate, startTime, endDate, endTime, street, zipCode, locGuidance, description);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Card.fxml"));
+            loader.load();
+            CardController cardController = loader.getController();
+
+            dashboardController.getEventContainer().getChildren().add(cardController.createEvent(newEvent));
 
             handleClose();
 
         } catch (Exception e) {
             AlertHelper.showError("Error", "Failed to create new event. " +e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 

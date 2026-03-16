@@ -21,7 +21,7 @@ public class Launcher extends Application {
                 .build()
                 .setGlobal();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/AdminDashboardView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/CoordDashboardView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("TITLE");
         stage.setScene(scene);

@@ -56,13 +56,5 @@
             </MFXButton>
          </children>
       </VBox>
-      <Label text="Sign up here" textAlignment="CENTER" underline="true">
-         <font>
-            <Font name="Roboto" size="14.0" />
-         </font>
-         <VBox.margin>
-            <Insets top="20.0" />
-         </VBox.margin>
-      </Label>
    </children>
 </VBox>

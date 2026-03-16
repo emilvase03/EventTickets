@@ -24,6 +24,19 @@ public class CoordDashboardController {
     @FXML private MFXScrollPane scrollPane;
     @FXML private TilePane eventContainer;
 
+    private FXMLLoader newEventLoader;
+
+    @FXML
+    private void initialize() {
+        // Preload once when dashboard opens, not when button is clicked
+        newEventLoader = new FXMLLoader(getClass().getResource("/views/NewEventView.fxml"));
+        try {
+            newEventLoader.load();
+        } catch (IOException e) {
+            AlertHelper.showError("Error", "Failed to pre-load NewEventView");
+        }
+    }
+
     @FXML
     private void onCreateEvent(ActionEvent event) {
 

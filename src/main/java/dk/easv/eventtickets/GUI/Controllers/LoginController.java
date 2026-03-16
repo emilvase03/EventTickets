@@ -2,7 +2,6 @@ package dk.easv.eventtickets.GUI.Controllers;
 
 // Project imports
 import dk.easv.eventtickets.BE.Role;
-import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.BLL.UserSession;
 import dk.easv.eventtickets.GUI.Models.UserModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
@@ -14,10 +13,9 @@ import io.github.palexdev.materialfx.controls.MFXTextField;
 // JavaFX imports
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import static dk.easv.eventtickets.GUI.Utils.Views.*;
 
 public class LoginController {
 
@@ -46,10 +44,11 @@ public class LoginController {
             if (newUser != null) {
                 UserSession.setCurrentUser(newUser);
                 if (newUser.getRole() == Role.ADMIN) {
-                    openDashboard("/views/AdminDashboardView.fxml");
+                    ADMIN_DASHBOARD.show();
                 } else {
-                    openDashboard("/views/UserDashboardView.fxml");
+                    COORD_DASHBOARD.show();
                 }
+                closeWindow();
             }
         });
     }
@@ -65,23 +64,6 @@ public class LoginController {
         }
 
         userModel.loginUser(email, password);
-    }
-
-    private void openDashboard(String fxmlPath) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Scene scene = new Scene(loader.load());
-            Stage stage = new Stage();
-
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
-
-            closeWindow();
-
-        } catch (Exception e) {
-            AlertHelper.showError("Error", "Failed to open dashboard.");
-        }
     }
 
     private void closeWindow() {

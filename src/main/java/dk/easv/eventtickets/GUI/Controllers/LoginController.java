@@ -8,10 +8,10 @@ import dk.easv.eventtickets.GUI.Models.UserModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 
 // MaterialFX imports
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 
 // JavaFX imports
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,15 +27,35 @@ public class LoginController {
     @FXML
     private MFXTextField txtPassword;
 
-    private final UserModel userModel;
+    @FXML
+    private MFXButton btnLogin;
 
-    public LoginController() {
-        userModel = new UserModel();
+    private final UserModel userModel = new UserModel();
+
+    @FXML
+    private void initialize() {
+        btnLogin.disableProperty().bind(userModel.loadingProperty());
+
+        userModel.loginFailedProperty().addListener((obs, wasFailed, isFailed) -> {
+            if (isFailed) {
+                AlertHelper.showError("Login failed", "Invalid email or password.");
+            }
+        });
+
+        userModel.loggedInUserProperty().addListener((obs, oldUser, newUser) -> {
+            if (newUser != null) {
+                UserSession.setCurrentUser(newUser);
+                if (newUser.getRole() == Role.ADMIN) {
+                    openDashboard("/views/AdminDashboardView.fxml");
+                } else {
+                    openDashboard("/views/UserDashboardView.fxml");
+                }
+            }
+        });
     }
 
     @FXML
     private void handleLogin(ActionEvent event) {
-
         String email = txtEmail.getText().trim();
         String password = txtPassword.getText();
 
@@ -44,37 +64,7 @@ public class LoginController {
             return;
         }
 
-        Task<User> loginTask = new Task<>() {
-            @Override
-            protected User call() throws Exception {
-                return userModel.loginUser(email, password);
-            }
-        };
-
-        loginTask.setOnSucceeded(workerStateEvent -> {
-            User user = loginTask.getValue();
-
-            if (user == null) {
-                AlertHelper.showError("Login failed", "Invalid email or password.");
-                return;
-            }
-
-            UserSession.setCurrentUser(user);
-
-            if (user.getRole() == Role.ADMIN) {
-                openDashboard("/views/AdminDashboardView.fxml");
-            } else {
-                openDashboard("/views/UserDashboardView.fxml");
-            }
-        });
-
-        loginTask.setOnFailed(workerStateEvent -> {
-            AlertHelper.showError("Error", "Login failed due to system error.");
-        });
-
-        Thread thread = new Thread(loginTask);
-        thread.setDaemon(true);
-        thread.start();
+        userModel.loginUser(email, password);
     }
 
     private void openDashboard(String fxmlPath) {

@@ -49,7 +49,7 @@
       </VBox>
       <VBox alignment="CENTER">
          <children>
-            <MFXButton onAction="#handleLogin" prefHeight="35.0" prefWidth="300.0" rippleColor="#7a0ed9" style="-fx-background-color: #bebebe;" text="Sign in">
+            <MFXButton fx:id="btnLogin" onAction="#handleLogin" prefHeight="35.0" prefWidth="300.0" rippleColor="#7a0ed9" style="-fx-background-color: #bebebe;" text="Sign in">
                <font>
                   <Font name="Roboto" size="14.0" />
                </font>

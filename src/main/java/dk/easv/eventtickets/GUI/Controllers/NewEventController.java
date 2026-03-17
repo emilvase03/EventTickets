@@ -2,6 +2,9 @@ package dk.easv.eventtickets.GUI.Controllers;
 
 // Project imports
 import dk.easv.eventtickets.BE.Event;
+import dk.easv.eventtickets.BLL.UTIL.UserSession;
+import dk.easv.eventtickets.GUI.Models.EventModel;
+import dk.easv.eventtickets.GUI.Models.UserModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 
 // MaterialFX imports
@@ -18,7 +21,8 @@ import java.time.LocalTime;
 
 public class NewEventController {
 
-    private CoordDashboardController dashboardController;
+    private EventModel eventModel;
+    private UserModel userModel;
 
     @FXML private MFXTextField txtName;
     @FXML private MFXTextField txtTickets;
@@ -30,6 +34,14 @@ public class NewEventController {
     @FXML private MFXTextField txtPostalCode;
     @FXML private MFXTextField txtLocationGuidance;
     @FXML private MFXTextField txtDescription;
+
+    public NewEventController() {
+        try {
+            eventModel = new EventModel();
+        } catch (Exception e) {
+            AlertHelper.showError("Error", "EventModel failed");
+        }
+    }
 
     @FXML
     private void handleConfirmEvent(ActionEvent event) {
@@ -74,25 +86,22 @@ public class NewEventController {
             String locGuidance = txtLocationGuidance.getText().isBlank() ? "" : txtLocationGuidance.getText().trim();
             String description = txtDescription.getText().trim();
 
-            Event newEvent = new Event(
-                    title, tickets, startDate, startTime, endDate, endTime, street, zipCode, locGuidance, description);
+            int userId = UserSession.getInstance().getCurrentUser().getId();
+
+            Event newEvent = new Event(-1, userId, title, tickets, 0, startDate, startTime, endDate, endTime, street, zipCode, locGuidance, description);
+            eventModel.createEvent(newEvent);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Card.fxml"));
             loader.load();
             CardController cardController = loader.getController();
 
-            dashboardController.getEventContainer().getChildren().add(cardController.createEvent(newEvent));
+            CoordDashboardController.getInstance().getEventContainer().getChildren().add(cardController.createEventCard(newEvent));
 
             handleClose();
 
         } catch (Exception e) {
             AlertHelper.showError("Error", "Failed to create new event. " +e.getMessage());
-            System.out.println(e.getMessage());
         }
-    }
-
-    public void setDashboardController(CoordDashboardController controller) {
-        this.dashboardController = controller;
     }
 
     private void handleClose() {

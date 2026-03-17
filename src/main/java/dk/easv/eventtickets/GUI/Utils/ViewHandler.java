@@ -13,7 +13,6 @@ public enum ViewHandler {
 
     LOGIN("/views/LoginView.fxml", "Login", Modality.NONE),
     ADMIN_DASHBOARD("/views/AdminDashboardView.fxml", "Dashboard", Modality.NONE),
-    USER_DASHBOARD("/views/UserDashboardView.fxml", "Dashboard", Modality.NONE),
     COORD_DASHBOARD("/views/CoordDashboardView.fxml", "Dashboard", Modality.NONE),
     NEW_EVENT("/views/NewEventView.fxml", "New Event", Modality.APPLICATION_MODAL),
     NEW_TICKET("/views/NewTicketView.fxml", "New Ticket", Modality.APPLICATION_MODAL),
@@ -51,6 +50,7 @@ public enum ViewHandler {
             return stage;
         } catch (Exception e) {
             AlertHelper.showError("Error", "Failed to open: " + title);
+            System.out.println(e.getMessage());
             return null;
         }
     }

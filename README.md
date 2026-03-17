@@ -50,7 +50,6 @@ Database connection settings (JDBC URL, username, password) should be provided t
 - Log in as an Admin to create and manage events and coordinators.
 - Log in as a Coordinator to create tickets for events and open the Print Tickets view to generate printable tickets.
 
-
 ## Project structure (high level)
 - `src/main/java` - application code (controllers, business logic, data access, models)
 - `src/main/resources` - FXML views, CSS, icons and components

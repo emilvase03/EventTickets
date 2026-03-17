@@ -2,9 +2,11 @@ package dk.easv.eventtickets.GUI.Controllers;
 
 // Project imports
 import dk.easv.eventtickets.BE.Role;
-import dk.easv.eventtickets.BLL.UserSession;
+import dk.easv.eventtickets.BLL.UTIL.UserSession;
 import dk.easv.eventtickets.GUI.Models.UserModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
+
+import static dk.easv.eventtickets.GUI.Utils.ViewHandler.*;
 
 // MaterialFX imports
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -15,20 +17,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
-import static dk.easv.eventtickets.GUI.Utils.ViewHandler.*;
 
 public class LoginController {
 
-    @FXML
-    private MFXTextField txtEmail;
-
-    @FXML
-    private MFXTextField txtPassword;
-
-    @FXML
-    private MFXButton btnLogin;
-
     private final UserModel userModel = new UserModel();
+
+    @FXML private MFXTextField txtEmail;
+    @FXML private MFXTextField txtPassword;
+    @FXML private MFXButton btnLogin;
 
     @FXML
     private void initialize() {
@@ -42,7 +38,7 @@ public class LoginController {
 
         userModel.loggedInUserProperty().addListener((obs, oldUser, newUser) -> {
             if (newUser != null) {
-                UserSession.setCurrentUser(newUser);
+                UserSession.getInstance().setCurrentUser(newUser);
                 if (newUser.getRole() == Role.ADMIN) {
                     ADMIN_DASHBOARD.show();
                 } else {

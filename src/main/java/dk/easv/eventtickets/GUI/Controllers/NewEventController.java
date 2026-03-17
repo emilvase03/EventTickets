@@ -2,7 +2,10 @@ package dk.easv.eventtickets.GUI.Controllers;
 
 // Project imports
 import dk.easv.eventtickets.BE.Event;
+import dk.easv.eventtickets.BLL.UTIL.UserSession;
+import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
+import dk.easv.eventtickets.GUI.Utils.Validator;
 
 // MaterialFX imports
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
@@ -12,13 +15,16 @@ import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.stage.Stage;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ResourceBundle;
 
-public class NewEventController {
+public class NewEventController implements Initializable {
 
-    private CoordDashboardController dashboardController;
+    private EventModel eventModel;
 
     @FXML private MFXTextField txtName;
     @FXML private MFXTextField txtTickets;
@@ -31,18 +37,31 @@ public class NewEventController {
     @FXML private MFXTextField txtLocationGuidance;
     @FXML private MFXTextField txtDescription;
 
+    public NewEventController() {
+        try {
+            eventModel = new EventModel();
+        } catch (Exception e) {
+            AlertHelper.showError("Error", "EventModel failed");
+        }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Validator.numeric(txtTickets, null, 4);
+        Validator.numeric(txtPostalCode, null, 10);
+    }
+
     @FXML
     private void handleConfirmEvent(ActionEvent event) {
         try {
-
             if (
-                    txtName.getText().isBlank() ||
-                    txtTickets.getText().isBlank() ||
-                    txtStartDate.getText().isBlank() ||
-                    txtStartTime.getText().isBlank() ||
-                    txtStreet.getText().isBlank() ||
-                    txtPostalCode.getText().isBlank() ||
-                    txtDescription.getText().isBlank()
+                txtName.getText().isBlank() ||
+                txtTickets.getText().isBlank() ||
+                txtStartDate.getText().isBlank() ||
+                txtStartTime.getText().isBlank() ||
+                txtStreet.getText().isBlank() ||
+                txtPostalCode.getText().isBlank() ||
+                txtDescription.getText().isBlank()
             ) {
                 AlertHelper.showError("Error", "Please fill out all required fields.");
                 return;
@@ -74,25 +93,21 @@ public class NewEventController {
             String locGuidance = txtLocationGuidance.getText().isBlank() ? "" : txtLocationGuidance.getText().trim();
             String description = txtDescription.getText().trim();
 
-            Event newEvent = new Event(
-                    title, tickets, startDate, startTime, endDate, endTime, street, zipCode, locGuidance, description);
+            int userId = UserSession.getInstance().getCurrentUser().getId();
+
+            Event newEvent = new Event(-1, userId, title, tickets, 0, startDate, startTime, endDate, endTime, street, zipCode, locGuidance, description);
+            eventModel.createEvent(newEvent);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Card.fxml"));
             loader.load();
             CardController cardController = loader.getController();
 
-            dashboardController.getEventContainer().getChildren().add(cardController.createEvent(newEvent));
+            CoordDashboardController.getInstance().getEventContainer().getChildren().add(cardController.createEventCard(newEvent));
 
             handleClose();
-
         } catch (Exception e) {
             AlertHelper.showError("Error", "Failed to create new event. " +e.getMessage());
-            System.out.println(e.getMessage());
         }
-    }
-
-    public void setDashboardController(CoordDashboardController controller) {
-        this.dashboardController = controller;
     }
 
     private void handleClose() {

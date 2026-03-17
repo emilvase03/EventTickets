@@ -104,7 +104,7 @@
                               </ImageView>
                            </children>
                         </HBox>
-                        <Label styleClass="boldRoboto" text="0">
+                        <Label fx:id="lblNumOfEvents" styleClass="boldRoboto" text="0">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -163,7 +163,7 @@
                      <children>
                         <HBox alignment="CENTER">
                            <children>
-                              <Label prefHeight="19.0" prefWidth="260.0" styleClass="roboto" text="Total Events">
+                              <Label prefHeight="19.0" prefWidth="260.0" styleClass="roboto" text="Upcoming">
                                  <font>
                                     <Font name="Roboto" size="15.0" />
                                  </font>
@@ -178,7 +178,7 @@
                               </Circle>
                            </children>
                         </HBox>
-                        <Label fx:id="lblNumOfEvents" styleClass="boldRoboto" text="0">
+                        <Label styleClass="boldRoboto" text="0">
                            <font>
                               <Font size="24.0" />
                            </font>

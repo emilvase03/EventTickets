@@ -159,13 +159,26 @@ public class EventDAO implements IEventDataAccess {
 
     @Override
     public void deleteEvent(Event event) throws Exception {
-        String sql = "DELETE FROM Event WHERE id = ?;";
+        String sqlDeleteUserEvents = "DELETE FROM UserEvent WHERE EventId = ?;";
+        String sqlDeleteEvent = "DELETE FROM Event WHERE id = ?;";
 
-        try (Connection conn = databaseConnector.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, event.getId());
+        try (Connection conn = databaseConnector.getConnection()) {
+            conn.setAutoCommit(false);
 
-            stmt.executeUpdate();
+            try (PreparedStatement stmt1 = conn.prepareStatement(sqlDeleteUserEvents);
+                 PreparedStatement stmt2 = conn.prepareStatement(sqlDeleteEvent)) {
+
+                stmt1.setInt(1, event.getId());
+                stmt1.executeUpdate();
+
+                stmt2.setInt(1, event.getId());
+                stmt2.executeUpdate();
+
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                throw e;
+            }
         }
 
     }

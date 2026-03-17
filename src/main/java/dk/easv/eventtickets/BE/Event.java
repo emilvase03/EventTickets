@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Event {
+    private int id = -1;
     private String title;
     private LocalDate startDate;
     private LocalTime startTime;
@@ -17,9 +18,10 @@ public class Event {
     private int totalTickets = -1;
     private int ticketsIssued;
 
-    public Event(String title, int tickets, LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime, String street, String zipCode, String locationGuidance, String eventDescription) {
+    public Event(int id, String title, int totalTickets, int ticketsIssued, LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime, String street, String zipCode, String locationGuidance, String eventDescription) {
         setTitle(title);
-        setTotalTickets(tickets);
+        setTotalTickets(totalTickets);
+        setTicketsIssued(ticketsIssued);
         setStartDate(startDate);
         setStartTime(startTime);
         setEndDate(endDate);
@@ -28,6 +30,15 @@ public class Event {
         setZipCode(zipCode);
         setLocationGuidance(locationGuidance);
         setEventDescription(eventDescription);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        if (id != -1)
+            this.id = id;
     }
 
     public String getTitle() {
@@ -122,7 +133,6 @@ public class Event {
     }
 
     private void setTicketsIssued(int ticketsIssued) {
-        if (ticketsIssued != -1)
             this.ticketsIssued = ticketsIssued;
     }
 }

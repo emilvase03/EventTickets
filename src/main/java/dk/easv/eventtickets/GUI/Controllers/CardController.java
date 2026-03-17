@@ -2,6 +2,7 @@ package dk.easv.eventtickets.GUI.Controllers;
 
 // Project imports
 import dk.easv.eventtickets.BE.Event;
+import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 
 // MFX imports
@@ -20,6 +21,12 @@ import java.io.IOException;
 
 public class CardController {
 
+    private EventModel eventModel;
+    private Event currentEvent;
+    private CoordDashboardController dashboardController;
+    private CardController cardController;
+
+    @FXML private VBox card;
     @FXML private Label lblTitle;
     @FXML private Label lblStartDateAndTime;
     @FXML private Label lblEndDateAndTime;
@@ -27,18 +34,36 @@ public class CardController {
     @FXML private Label lblDescription;
     @FXML private Label lblTicketsIssuedNum;
 
-    public VBox createEvent(Event event) throws IOException {
+    public CardController() {
+        try {
+            eventModel = new EventModel();
+        } catch (Exception e) {
+            AlertHelper.showError("Error", "EventModel failed in CardController.");
+        }
+    }
+
+    public VBox createEventCard(Event event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Card.fxml"));
         VBox root = loader.load();
-        CardController controller  = loader.getController();
-        controller.setData(event);
+        cardController  = loader.getController();
+        cardController.setData(event);
+
+        cardController.currentEvent = event;
 
         return root;
     }
 
     @FXML
     private void handleDelete(ActionEvent event) {
-        // Delete event
+        if (AlertHelper.showConfirmation("Are you sure?", "Are you sure you want to delete this event?")) {
+            try {
+                eventModel.deleteEvent(currentEvent);
+                CoordDashboardController.getInstance().getEventContainer().getChildren().remove(card);
+
+            } catch (Exception e) {
+                AlertHelper.showError("Error", "Failed to delete event.");
+            }
+        }
     }
 
     @FXML

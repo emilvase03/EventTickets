@@ -19,7 +19,7 @@ public class Launcher extends Application {
                 .build()
                 .setGlobal();
 
-        ViewHandler.LOGIN.show();
+        ViewHandler.COORD_DASHBOARD.show();
     }
 
     public static void main(String[] args) {

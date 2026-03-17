@@ -21,6 +21,8 @@ import java.io.IOException;
 
 public class CoordDashboardController {
 
+    private static CoordDashboardController instance;
+
     @FXML private MFXScrollPane scrollPane;
     @FXML private TilePane eventContainer;
 
@@ -28,6 +30,7 @@ public class CoordDashboardController {
 
     @FXML
     private void initialize() {
+        instance = this;
         // Preload once when dashboard opens, not when button is clicked
         newEventLoader = new FXMLLoader(getClass().getResource("/views/NewEventView.fxml"));
         try {
@@ -44,9 +47,6 @@ public class CoordDashboardController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/NewEventView.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
-
-            NewEventController newEventController = fxmlLoader.getController();
-            newEventController.setDashboardController(this);
 
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -107,5 +107,8 @@ public class CoordDashboardController {
         return eventContainer;
     }
 
+    public static CoordDashboardController getInstance() {
+        return instance;
+    }
 
 }

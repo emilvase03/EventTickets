@@ -6,7 +6,7 @@ import java.time.LocalTime;
 
 public class Event {
     private int id = -1;
-    private int userId = -1;
+    private int createdByUserId = -1;
     private String title;
     private LocalDate startDate;
     private LocalTime startTime;
@@ -19,9 +19,9 @@ public class Event {
     private int totalTickets = -1;
     private int ticketsIssued;
 
-    public Event(int id, int userId, String title, int totalTickets, int ticketsIssued, LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime, String street, String zipCode, String locationGuidance, String eventDescription) {
+    public Event(int id, int createdByUserId, String title, int totalTickets, int ticketsIssued, LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime, String street, String zipCode, String locationGuidance, String eventDescription) {
         setId(id);
-        setUserId(userId);
+        setCreatedByUserId(createdByUserId);
         setTitle(title);
         setTotalTickets(totalTickets);
         setTicketsIssued(ticketsIssued);
@@ -44,13 +44,13 @@ public class Event {
             this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getCreatedByUserId() {
+        return createdByUserId;
     }
 
-    private void setUserId(int userId) {
-        if (userId != -1)
-            this.userId = userId;
+    private void setCreatedByUserId(int createdByUserId) {
+        if (createdByUserId != -1)
+            this.createdByUserId = createdByUserId;
     }
 
     public String getTitle() {

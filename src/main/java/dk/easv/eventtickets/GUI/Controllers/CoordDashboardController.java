@@ -8,8 +8,12 @@ import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 
 // MaterialFX imports
+import dk.easv.eventtickets.GUI.Utils.Validator;
+import dk.easv.eventtickets.GUI.Utils.ViewHandler;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import io.github.palexdev.mfxcore.controls.Label;
+import static dk.easv.eventtickets.GUI.Utils.ViewHandler.COORD_DASHBOARD;
+import static dk.easv.eventtickets.GUI.Utils.ViewHandler.NEW_EVENT;
 
 // Java imports
 import javafx.collections.ListChangeListener;
@@ -19,13 +23,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
+
 
 public class CoordDashboardController {
 
@@ -37,12 +40,14 @@ public class CoordDashboardController {
     @FXML private MFXScrollPane scrollPane;
     @FXML private TilePane eventContainer;
     @FXML private Label lblNumOfEvents;
+    @FXML private Label lblUsername;
 
 
     @FXML
     private void initialize() {
         instance = this;
         currentUser = UserSession.getInstance().getCurrentUser();
+        lblUsername.setText("Welcome, " + currentUser.getFirstName());
 
         try {
             eventModel = new EventModel();
@@ -64,19 +69,7 @@ public class CoordDashboardController {
 
     @FXML
     private void onCreateEvent(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/NewEventView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = new Stage();
-
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
-        } catch (IOException e) {
-            AlertHelper.showError("Error", "Unable to open NewEventView");
-            throw new RuntimeException(e);
-        }
-
+            NEW_EVENT.show();
     }
 
     @FXML

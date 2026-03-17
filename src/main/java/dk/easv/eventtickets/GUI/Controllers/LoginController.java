@@ -20,16 +20,11 @@ import javafx.stage.Stage;
 
 public class LoginController {
 
-    @FXML
-    private MFXTextField txtEmail;
-
-    @FXML
-    private MFXTextField txtPassword;
-
-    @FXML
-    private MFXButton btnLogin;
-
     private final UserModel userModel = new UserModel();
+
+    @FXML private MFXTextField txtEmail;
+    @FXML private MFXTextField txtPassword;
+    @FXML private MFXButton btnLogin;
 
     @FXML
     private void initialize() {

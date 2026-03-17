@@ -4,11 +4,10 @@ package dk.easv.eventtickets.GUI.Controllers;
 import dk.easv.eventtickets.BE.Event;
 import dk.easv.eventtickets.BLL.UTIL.UserSession;
 import dk.easv.eventtickets.GUI.Models.EventModel;
-import dk.easv.eventtickets.GUI.Models.UserModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
+import dk.easv.eventtickets.GUI.Utils.Validator;
 
 // MaterialFX imports
-import dk.easv.eventtickets.GUI.Utils.Validator;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 
@@ -18,7 +17,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
-
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -27,7 +25,6 @@ import java.util.ResourceBundle;
 public class NewEventController implements Initializable {
 
     private EventModel eventModel;
-    private UserModel userModel;
 
     @FXML private MFXTextField txtName;
     @FXML private MFXTextField txtTickets;
@@ -50,23 +47,21 @@ public class NewEventController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Validator.nonNumeric(txtName);
         Validator.numeric(txtTickets, null, 4);
-        Validator.numeric(txtPostalCode);
+        Validator.numeric(txtPostalCode, null, 10);
     }
 
     @FXML
     private void handleConfirmEvent(ActionEvent event) {
         try {
-
             if (
-                    txtName.getText().isBlank() ||
-                    txtTickets.getText().isBlank() ||
-                    txtStartDate.getText().isBlank() ||
-                    txtStartTime.getText().isBlank() ||
-                    txtStreet.getText().isBlank() ||
-                    txtPostalCode.getText().isBlank() ||
-                    txtDescription.getText().isBlank()
+                txtName.getText().isBlank() ||
+                txtTickets.getText().isBlank() ||
+                txtStartDate.getText().isBlank() ||
+                txtStartTime.getText().isBlank() ||
+                txtStreet.getText().isBlank() ||
+                txtPostalCode.getText().isBlank() ||
+                txtDescription.getText().isBlank()
             ) {
                 AlertHelper.showError("Error", "Please fill out all required fields.");
                 return;
@@ -110,7 +105,6 @@ public class NewEventController implements Initializable {
             CoordDashboardController.getInstance().getEventContainer().getChildren().add(cardController.createEventCard(newEvent));
 
             handleClose();
-
         } catch (Exception e) {
             AlertHelper.showError("Error", "Failed to create new event. " +e.getMessage());
         }

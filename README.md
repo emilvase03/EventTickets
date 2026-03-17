@@ -10,7 +10,7 @@ EventTickets is a JavaFX desktop application for managing events and tickets. It
 
 ## Tech stack
 - Java 24
-- JavaFX 21
+- JavaFX
 - MaterialFX
 - Microsoft SQL Server (JDBC)
 - Maven (build and dependency management)
@@ -49,13 +49,6 @@ Database connection settings (JDBC URL, username, password) should be provided t
 ## Examples
 - Log in as an Admin to create and manage events and coordinators.
 - Log in as a Coordinator to create tickets for events and open the Print Tickets view to generate printable tickets.
-
-## Running tests
-Run unit tests with Maven:
-
-```bash
-./mvnw test
-```
 
 ## Project structure (high level)
 - `src/main/java` - application code (controllers, business logic, data access, models)

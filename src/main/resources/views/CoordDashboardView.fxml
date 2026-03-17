@@ -178,7 +178,7 @@
                               </Circle>
                            </children>
                         </HBox>
-                        <Label styleClass="boldRoboto" text="0">
+                        <Label fx:id="lblNumOfEvents" styleClass="boldRoboto" text="0">
                            <font>
                               <Font size="24.0" />
                            </font>

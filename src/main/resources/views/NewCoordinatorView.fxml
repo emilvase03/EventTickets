@@ -13,12 +13,12 @@
             <Font name="Roboto" size="12.0" />
          </font>
       </MFXButton>
-      <Label layoutX="24.0" layoutY="97.0" text="Full Name">
+      <Label layoutX="24.0" layoutY="97.0" text="First Name">
          <font>
             <Font name="Roboto Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="22.0" layoutY="162.0" text="Username">
+      <Label layoutX="22.0" layoutY="162.0" text="Last Name">
          <font>
             <Font name="Roboto Bold" size="12.0" />
          </font>
@@ -39,10 +39,10 @@
             <Font name="Roboto" size="30.0" />
          </font>
       </Label>
-      <MFXTextField fx:id="fullNameField" floatMode="BORDER" layoutX="20.0" layoutY="113.0" prefHeight="15.0" prefWidth="300.0" />
+      <MFXTextField fx:id="firstNameField" floatMode="BORDER" layoutX="20.0" layoutY="113.0" prefHeight="15.0" prefWidth="300.0" />
       <MFXTextField fx:id="passwordField" floatMode="BORDER" layoutX="20.0" layoutY="304.0" prefHeight="15.0" prefWidth="300.0" />
       <MFXTextField fx:id="emailField" floatMode="BORDER" layoutX="20.0" layoutY="240.0" prefHeight="15.0" prefWidth="300.0" />
-      <MFXTextField fx:id="usernameField" floatMode="BORDER" layoutX="20.0" layoutY="180.0" prefHeight="15.0" prefWidth="300.0" />
+      <MFXTextField fx:id="lastNameField" floatMode="BORDER" layoutX="20.0" layoutY="180.0" prefHeight="15.0" prefWidth="300.0" />
       <MFXButton layoutX="111.0" layoutY="352.0" prefHeight="17.0" prefWidth="79.0" rippleColor="#7a0ed9" style="-fx-background-color: #bebebe;" text="Cancel">
          <font>
             <Font name="Roboto" size="14.0" />

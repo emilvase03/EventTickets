@@ -1,28 +1,28 @@
 package dk.easv.eventtickets.BE;
 
 public class placeholder {
-    private String name;
+    private String firstName;
     private String email;
-    private String username;
+    private String lastName;
     private String password;
 
     public placeholder(String name, String email, String username, String password) {
-        this.name = name;
+        this.firstName = name;
         this.email = email;
-        this.username = username;
+        this.lastName = username;
         this.password = password;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public String getUsername() {
-        return username;
+    public String getLastName() {
+        return lastName;
     }
 
     public String getPassword() {

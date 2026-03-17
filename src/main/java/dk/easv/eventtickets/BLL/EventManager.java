@@ -2,6 +2,7 @@ package dk.easv.eventtickets.BLL;
 
 // Project imports
 import dk.easv.eventtickets.BE.Event;
+import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.DAL.DAO.EventDAO;
 import dk.easv.eventtickets.DAL.IEventDataAccess;
 
@@ -19,6 +20,10 @@ public class EventManager {
         return eventDAO.getAllEvents();
     }
 
+    public List<Event> getMyEvents(User currentUser) throws Exception {
+        return eventDAO.getMyEvents(currentUser);
+    }
+
     public Event createEvent(Event newEvent) throws Exception {
         return eventDAO.createEvent(newEvent);
     }
@@ -30,5 +35,4 @@ public class EventManager {
     public void deleteEvent(Event event) throws Exception {
         eventDAO.deleteEvent(event);
     }
-
 }

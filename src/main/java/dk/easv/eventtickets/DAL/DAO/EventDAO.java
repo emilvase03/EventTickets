@@ -2,6 +2,7 @@ package dk.easv.eventtickets.DAL.DAO;
 
 // Project imports
 import dk.easv.eventtickets.BE.Event;
+import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.DAL.DB.DBConnector;
 import dk.easv.eventtickets.DAL.IEventDataAccess;
 
@@ -28,9 +29,7 @@ public class EventDAO implements IEventDataAccess {
         try (Connection conn = databaseConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-
             ResultSet rs = stmt.executeQuery();
-
 
             while (rs.next()) {
 
@@ -40,15 +39,50 @@ public class EventDAO implements IEventDataAccess {
                 int ticketsIssued = rs.getInt("TicketsIssued");
                 LocalDate startDate = rs.getDate("StartDate").toLocalDate();
                 LocalTime startTime = rs.getTime("StartTime").toLocalTime();
-                LocalDate endDate = rs.getDate("EndDate").toLocalDate();
-                LocalTime endTime = rs.getTime("EndTime").toLocalTime();
+                LocalDate endDate = rs.getDate("EndDate") != null ? rs.getDate("EndDate").toLocalDate() : null;
+                LocalTime endTime = rs.getTime("EndTime") != null ? rs.getTime("EndTime").toLocalTime() : null;
                 String street = rs.getString("Street");
                 String zipCode = rs.getString("ZipCode");
                 String locationGuidance = rs.getString("LocationGuidance");
                 String description = rs.getString("Description");
+                int userId = rs.getInt("UserId");
 
+                Event event = new Event(id, userId, title, totalTickets, ticketsIssued, startDate, startTime, endDate, endTime, street, zipCode, locationGuidance, description);
+                allEvents.add(event);
+            }
+            return allEvents;
+        }
+    }
 
-                Event event = new Event(id, title, totalTickets, ticketsIssued, startDate, startTime, endDate, endTime, street, zipCode, locationGuidance, description);
+    @Override
+    public List<Event> getMyEvents(User currentUser) throws Exception {
+        ArrayList<Event> allEvents = new ArrayList<>();
+
+        String sql = "SELECT * FROM Event WHERE UserId=?;";
+        try (Connection conn = databaseConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, currentUser.getId());
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                int id = rs.getInt("Id");
+                String title = rs.getString("Title");
+                int totalTickets = rs.getInt("TotalTickets");
+                int ticketsIssued = rs.getInt("TicketsIssued");
+                LocalDate startDate = rs.getDate("StartDate").toLocalDate();
+                LocalTime startTime = rs.getTime("StartTime").toLocalTime();
+                LocalDate endDate = rs.getDate("EndDate") != null ? rs.getDate("EndDate").toLocalDate() : null;
+                LocalTime endTime = rs.getTime("EndTime") != null ? rs.getTime("EndTime").toLocalTime() : null;
+                String street = rs.getString("Street");
+                String zipCode = rs.getString("ZipCode");
+                String locationGuidance = rs.getString("LocationGuidance");
+                String description = rs.getString("Description");
+                int userId = rs.getInt("UserId");
+
+                Event event = new Event(id, userId, title, totalTickets, ticketsIssued, startDate, startTime, endDate, endTime, street, zipCode, locationGuidance, description);
                 allEvents.add(event);
             }
             return allEvents;
@@ -57,7 +91,7 @@ public class EventDAO implements IEventDataAccess {
 
     @Override
     public Event createEvent(Event newEvent) throws Exception {
-        String sql = "INSERT INTO Event (Title, StartDate, StartTime, EndDate, EndTime, Street, ZipCode, LocationGuidance, Description, TotalTickets, TicketsIssued) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
+        String sql = "INSERT INTO Event (Title, StartDate, StartTime, EndDate, EndTime, Street, ZipCode, LocationGuidance, Description, TotalTickets, TicketsIssued, UserId) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
 
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -73,6 +107,7 @@ public class EventDAO implements IEventDataAccess {
             stmt.setString(9, newEvent.getEventDescription());
             stmt.setInt(10, newEvent.getTotalTickets());
             stmt.setInt(11, newEvent.getTicketsIssued());
+            stmt.setInt(12, newEvent.getUserId());
 
             stmt.executeUpdate();
 
@@ -81,10 +116,9 @@ public class EventDAO implements IEventDataAccess {
 
             if (rs.next()) {
                 id = rs.getInt(1);
-                newEvent.setId(id); // <-- Ask Søren about this
             }
 
-            Event createdEvent = new Event(id, newEvent.getTitle(), newEvent.getTotalTickets(), newEvent.getTicketsIssued(), newEvent.getStartDate(), newEvent.getStartTime(), newEvent.getEndDate(), newEvent.getEndTime(), newEvent.getStreet(), newEvent.getZipCode(), newEvent.getLocationGuidance(), newEvent.getEventDescription());
+            Event createdEvent = new Event(id, newEvent.getUserId(), newEvent.getTitle(), newEvent.getTotalTickets(), newEvent.getTicketsIssued(), newEvent.getStartDate(), newEvent.getStartTime(), newEvent.getEndDate(), newEvent.getEndTime(), newEvent.getStreet(), newEvent.getZipCode(), newEvent.getLocationGuidance(), newEvent.getEventDescription());
             return createdEvent;
         }
     }

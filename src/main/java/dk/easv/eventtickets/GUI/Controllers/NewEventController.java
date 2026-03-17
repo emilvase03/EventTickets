@@ -2,7 +2,9 @@ package dk.easv.eventtickets.GUI.Controllers;
 
 // Project imports
 import dk.easv.eventtickets.BE.Event;
+import dk.easv.eventtickets.BLL.UTIL.UserSession;
 import dk.easv.eventtickets.GUI.Models.EventModel;
+import dk.easv.eventtickets.GUI.Models.UserModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 
 // MaterialFX imports
@@ -20,6 +22,7 @@ import java.time.LocalTime;
 public class NewEventController {
 
     private EventModel eventModel;
+    private UserModel userModel;
 
     @FXML private MFXTextField txtName;
     @FXML private MFXTextField txtTickets;
@@ -83,7 +86,9 @@ public class NewEventController {
             String locGuidance = txtLocationGuidance.getText().isBlank() ? "" : txtLocationGuidance.getText().trim();
             String description = txtDescription.getText().trim();
 
-            Event newEvent = new Event(-1, title, tickets, 0, startDate, startTime, endDate, endTime, street, zipCode, locGuidance, description);
+            int userId = UserSession.getInstance().getCurrentUser().getId();
+
+            Event newEvent = new Event(-1, userId, title, tickets, 0, startDate, startTime, endDate, endTime, street, zipCode, locGuidance, description);
             eventModel.createEvent(newEvent);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Card.fxml"));

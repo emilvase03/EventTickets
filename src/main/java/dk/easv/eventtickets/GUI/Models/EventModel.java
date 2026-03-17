@@ -2,8 +2,10 @@ package dk.easv.eventtickets.GUI.Models;
 
 // Project imports
 import dk.easv.eventtickets.BE.Event;
+import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.BLL.EventManager;
 
+// Java imports
 import java.util.List;
 
 public class EventModel {
@@ -15,6 +17,10 @@ public class EventModel {
 
     public List<Event> getAllEvents() throws Exception {
         return eventManager.getAllEvents();
+    }
+
+    public List<Event> getMyEvents(User currentUser) throws Exception {
+        return eventManager.getMyEvents(currentUser);
     }
 
     public Event createEvent(Event newEvent) throws Exception {

@@ -1,6 +1,11 @@
 package dk.easv.eventtickets.GUI.Controllers;
 
 // Project imports
+import dk.easv.eventtickets.BE.Event;
+import dk.easv.eventtickets.BE.User;
+import dk.easv.eventtickets.BLL.UTIL.UserSession;
+import dk.easv.eventtickets.GUI.Models.EventModel;
+import dk.easv.eventtickets.GUI.Models.UserModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 
 // MaterialFX imports
@@ -14,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -22,6 +28,9 @@ import java.io.IOException;
 public class CoordDashboardController {
 
     private static CoordDashboardController instance;
+    private User currentUser;
+    private UserModel userModel = new UserModel();
+    private EventModel eventModel;
 
     @FXML private MFXScrollPane scrollPane;
     @FXML private TilePane eventContainer;
@@ -31,6 +40,15 @@ public class CoordDashboardController {
     @FXML
     private void initialize() {
         instance = this;
+        currentUser = UserSession.getInstance().getCurrentUser();
+        try {
+            eventModel = new EventModel();
+        } catch (Exception e) {
+            AlertHelper.showError("Error", "EventModel failed in CoordDashboardController.");
+        }
+
+        setupEventPool(currentUser);
+
         // Preload once when dashboard opens, not when button is clicked
         newEventLoader = new FXMLLoader(getClass().getResource("/views/NewEventView.fxml"));
         try {
@@ -71,6 +89,24 @@ public class CoordDashboardController {
         } catch (IOException e) {
             AlertHelper.showError("Error", "Unable to open SpecialTicketView");
             throw new RuntimeException(e);
+        }
+    }
+
+    private void setupEventPool(User currentUser) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Card.fxml"));
+            VBox root = loader.load();
+            CardController cardController = loader.getController();
+
+            for (Event e : eventModel.getMyEvents(currentUser)) {
+                getEventContainer().getChildren().add(cardController.createEventCard(e));
+            }
+
+        } catch (IOException e) {
+            AlertHelper.showError("Error","Failed to get CardController.");
+        } catch (Exception e) {
+            AlertHelper.showError("Error","Failed to get my events from event model.");
+            System.out.println(e.getMessage());
         }
     }
 

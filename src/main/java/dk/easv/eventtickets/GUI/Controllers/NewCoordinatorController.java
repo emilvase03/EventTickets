@@ -10,21 +10,24 @@ import javafx.scene.Node;
 import javafx.stage.Stage;
 
 public class NewCoordinatorController {
-    @FXML
-    private MFXTextField usernameField;
+
     @FXML
     private MFXTextField emailField;
     @FXML
     private MFXTextField passwordField;
     @FXML
-    private MFXTextField fullNameField;
-
+    private MFXTextField firstNameField;
     @FXML
+    private MFXTextField lastNameField;
+    @FXML
+
     private void onBntSaveAddedCoordinator(ActionEvent actionEvent) {
-     String fullName = fullNameField.getText();
+
+     String firstName =firstNameField.getText();
+     String lastName = lastNameField.getText();
+
      String password = passwordField.getText();
      String email = emailField.getText();
-     String username = usernameField.getText();
 
 
         // CLOSE POPUP

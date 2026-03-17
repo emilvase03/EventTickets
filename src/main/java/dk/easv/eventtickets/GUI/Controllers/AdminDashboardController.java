@@ -7,7 +7,7 @@ import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 // MaterialFX imports
 import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
-import io.github.palexdev.materialfx.filter.StringFilter;
+
 
 // Java imports
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
@@ -19,25 +19,32 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 
 public class AdminDashboardController implements Initializable {
 
     @FXML private MFXPaginatedTableView coordContainer;
 
-    private MFXTableColumn<placeholder> colName;
+    @FXML
+    private MFXTableColumn<placeholder> colFirstName;
+    @FXML
     private MFXTableColumn<placeholder> colEmail;
-    private MFXTableColumn<placeholder> colUsername;
+    @FXML
+    private MFXTableColumn<placeholder> colLastName;
+    @FXML
     private MFXTableColumn<placeholder> colOptions;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -55,36 +62,33 @@ public class AdminDashboardController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
             stage.showAndWait();
-            addCard();
+            //addCard();
 
         } catch (IOException e) {
             AlertHelper.showError("Error", "Failed to open NewCoordinatorView");
         }
     }
 
-    private void addCard(){
-        try{
-            FXMLLoader cardLoader = new FXMLLoader(getClass().getResource("/components/EventCoordCard.fxml"));
-            Parent cardRoot = cardLoader.load();
-
-            coordContainer.getItems().add(cardRoot);
-
-        } catch (IOException e) {
-            AlertHelper.showError("Error", "Failed to add Coordinator.");
-        }
-    }
+//    private void addCard(){
+//        try{
+//            FXMLLoader cardLoader = new FXMLLoader(getClass().getResource("/components/EventCoordCard.fxml"));
+//            Parent cardRoot = cardLoader.load();
+//
+//            coordContainer.getItems().add(cardRoot);
+//
+//        } catch (IOException e) {
+//            AlertHelper.showError("Error", "Failed to add Coordinator.");
+//        }
+//    }
 
     private void setupTable() {
-        // These four lines needs to be FXML instead!!
-        colName = new MFXTableColumn<>("Name");
-        colEmail = new MFXTableColumn<>("Email");
-        colUsername = new MFXTableColumn<>("Username");
-        colOptions = new MFXTableColumn<>("Options");
-        // ^^^^^^^^^^
 
-        colName.setRowCellFactory(name -> new MFXTableRowCell<>(placeholder::getName));
+
+        colFirstName.setRowCellFactory(name -> new MFXTableRowCell<>(placeholder::getFirstName));
+        colLastName.setRowCellFactory(username -> new MFXTableRowCell<>(placeholder::getLastName));
+
         colEmail.setRowCellFactory(email -> new MFXTableRowCell<>(placeholder::getEmail));
-        colUsername.setRowCellFactory(username -> new MFXTableRowCell<>(placeholder::getUsername));
+
 
         colOptions.setRowCellFactory(user -> new MFXTableRowCell<>(u -> "") {
 
@@ -104,12 +108,11 @@ public class AdminDashboardController implements Initializable {
             }
         });
 
-        colName.prefWidthProperty().bind(coordContainer.widthProperty().divide(4));
-        colEmail.prefWidthProperty().bind(coordContainer.widthProperty().divide(4));
-        colUsername.prefWidthProperty().bind(coordContainer.widthProperty().divide(4));
-        colOptions.prefWidthProperty().bind(coordContainer.widthProperty().divide(4));
 
-        coordContainer.getTableColumns().addAll(colName, colEmail, colUsername, colOptions);
+        var available = coordContainer.widthProperty().subtract(colOptions.widthProperty());
+        colFirstName.prefWidthProperty().bind(available.multiply(0.32));
+        colLastName.prefWidthProperty().bind(available.multiply(0.35));
+        colEmail.prefWidthProperty().bind(available.multiply(0.27));
 
         setupTableFilters();
 
@@ -123,10 +126,9 @@ public class AdminDashboardController implements Initializable {
     }
 
     private void setupTableFilters() {
+
         coordContainer.getFilters().addAll(
-                new StringFilter<>("Name", placeholder::getName),
-                new StringFilter<>("Email", placeholder::getEmail),
-                new StringFilter<>("Username", placeholder::getUsername)
+
         );
 
         coordContainer.getFilters().addListener((ListChangeListener<Object>) change -> {

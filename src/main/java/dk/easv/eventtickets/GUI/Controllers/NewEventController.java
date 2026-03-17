@@ -8,6 +8,7 @@ import dk.easv.eventtickets.GUI.Models.UserModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 
 // MaterialFX imports
+import dk.easv.eventtickets.GUI.Utils.Validator;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 
@@ -15,11 +16,15 @@ import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.stage.Stage;
+
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ResourceBundle;
 
-public class NewEventController {
+public class NewEventController implements Initializable {
 
     private EventModel eventModel;
     private UserModel userModel;
@@ -41,6 +46,13 @@ public class NewEventController {
         } catch (Exception e) {
             AlertHelper.showError("Error", "EventModel failed");
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Validator.nonNumeric(txtName);
+        Validator.numeric(txtTickets, null, 4);
+        Validator.numeric(txtPostalCode);
     }
 
     @FXML

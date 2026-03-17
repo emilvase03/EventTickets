@@ -45,9 +45,9 @@ public class EventDAO implements IEventDataAccess {
                 String zipCode = rs.getString("ZipCode");
                 String locationGuidance = rs.getString("LocationGuidance");
                 String description = rs.getString("Description");
-                int userId = rs.getInt("UserId");
+                int createdByUserId = rs.getInt("CreatedByUserId");
 
-                Event event = new Event(id, userId, title, totalTickets, ticketsIssued, startDate, startTime, endDate, endTime, street, zipCode, locationGuidance, description);
+                Event event = new Event(id, createdByUserId, title, totalTickets, ticketsIssued, startDate, startTime, endDate, endTime, street, zipCode, locationGuidance, description);
                 allEvents.add(event);
             }
             return allEvents;
@@ -58,7 +58,12 @@ public class EventDAO implements IEventDataAccess {
     public List<Event> getMyEvents(User currentUser) throws Exception {
         ArrayList<Event> allEvents = new ArrayList<>();
 
-        String sql = "SELECT * FROM Event WHERE UserId=?;";
+        String sql = """
+            SELECT e.* FROM Event e
+            INNER JOIN UserEvent ue ON e.Id = ue.EventId
+            WHERE ue.UserId = ?
+            """;
+
         try (Connection conn = databaseConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -80,9 +85,9 @@ public class EventDAO implements IEventDataAccess {
                 String zipCode = rs.getString("ZipCode");
                 String locationGuidance = rs.getString("LocationGuidance");
                 String description = rs.getString("Description");
-                int userId = rs.getInt("UserId");
+                int createdByUserId = rs.getInt("CreatedByUserId");
 
-                Event event = new Event(id, userId, title, totalTickets, ticketsIssued, startDate, startTime, endDate, endTime, street, zipCode, locationGuidance, description);
+                Event event = new Event(id, createdByUserId, title, totalTickets, ticketsIssued, startDate, startTime, endDate, endTime, street, zipCode, locationGuidance, description);
                 allEvents.add(event);
             }
             return allEvents;
@@ -91,7 +96,7 @@ public class EventDAO implements IEventDataAccess {
 
     @Override
     public Event createEvent(Event newEvent) throws Exception {
-        String sql = "INSERT INTO Event (Title, StartDate, StartTime, EndDate, EndTime, Street, ZipCode, LocationGuidance, Description, TotalTickets, TicketsIssued, UserId) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
+        String sql = "INSERT INTO Event (Title, StartDate, StartTime, EndDate, EndTime, Street, ZipCode, LocationGuidance, Description, TotalTickets, TicketsIssued, CreatedByUserId) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
 
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -107,7 +112,7 @@ public class EventDAO implements IEventDataAccess {
             stmt.setString(9, newEvent.getEventDescription());
             stmt.setInt(10, newEvent.getTotalTickets());
             stmt.setInt(11, newEvent.getTicketsIssued());
-            stmt.setInt(12, newEvent.getUserId());
+            stmt.setInt(12, newEvent.getCreatedByUserId());
 
             stmt.executeUpdate();
 
@@ -118,7 +123,10 @@ public class EventDAO implements IEventDataAccess {
                 id = rs.getInt(1);
             }
 
-            Event createdEvent = new Event(id, newEvent.getUserId(), newEvent.getTitle(), newEvent.getTotalTickets(), newEvent.getTicketsIssued(), newEvent.getStartDate(), newEvent.getStartTime(), newEvent.getEndDate(), newEvent.getEndTime(), newEvent.getStreet(), newEvent.getZipCode(), newEvent.getLocationGuidance(), newEvent.getEventDescription());
+            Event createdEvent = new Event(id, newEvent.getCreatedByUserId(), newEvent.getTitle(), newEvent.getTotalTickets(), newEvent.getTicketsIssued(), newEvent.getStartDate(), newEvent.getStartTime(), newEvent.getEndDate(), newEvent.getEndTime(), newEvent.getStreet(), newEvent.getZipCode(), newEvent.getLocationGuidance(), newEvent.getEventDescription());
+
+            addUserToEvent(createdEvent.getCreatedByUserId(), createdEvent.getId());
+
             return createdEvent;
         }
     }
@@ -160,5 +168,18 @@ public class EventDAO implements IEventDataAccess {
             stmt.executeUpdate();
         }
 
+    }
+
+    private void addUserToEvent(int userId, int eventId) throws SQLException {
+        String sql = "INSERT INTO UserEvent (UserId, EventId) VALUES (?,?)";
+
+        try (Connection conn = databaseConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, userId);
+            stmt.setInt(2, eventId);
+
+            stmt.executeUpdate();
+        }
     }
 }

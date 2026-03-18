@@ -24,8 +24,6 @@ public class UserManager {
         return userDAO.getUsersByRole(Role.EVENT);
     }
 
-
-
     public User loginUser(String email, String password) throws Exception {
 
         if (email == null || password == null)
@@ -36,10 +34,9 @@ public class UserManager {
         if (user == null)
             return null;
 
-        if (Encrypter.verifyPassword(password, user.getPassword()))
-            return user;
+        Encrypter.verifyPassword(password, user.getPassword());
 
-        return null;
+        return user;
     }
 
     public User createUser(String firstName,

@@ -52,7 +52,7 @@ public enum ViewHandler {
             return stage;
         } catch (Exception e) {
             AlertHelper.showError("Error", "Failed to open: " + title);
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }
@@ -101,5 +101,11 @@ public enum ViewHandler {
             scene = new Scene(loader.load());
         }
         return scene;
+    }
+
+    public void close() {
+        if (stage != null) {
+            stage.close();
+        }
     }
 }

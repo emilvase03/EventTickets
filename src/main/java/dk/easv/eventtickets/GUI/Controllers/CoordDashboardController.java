@@ -6,16 +6,15 @@ import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.BLL.UTIL.UserSession;
 import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
+import dk.easv.eventtickets.GUI.Utils.ViewHandler;
 
 // MaterialFX imports
 import dk.easv.eventtickets.GUI.Utils.Validator;
-import dk.easv.eventtickets.GUI.Utils.ViewHandler;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import io.github.palexdev.mfxcore.controls.Label;
-import static dk.easv.eventtickets.GUI.Utils.ViewHandler.COORD_DASHBOARD;
-import static dk.easv.eventtickets.GUI.Utils.ViewHandler.NEW_EVENT;
 
 // Java imports
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,6 +44,14 @@ public class CoordDashboardController {
 
     @FXML
     private void initialize() {
+        if (!UserSession.getInstance().isLoggedIn()) {
+            Platform.runLater(() -> {
+                ViewHandler.COORD_DASHBOARD.close();
+                ViewHandler.LOGIN.show();
+            });
+            return;
+        }
+
         instance = this;
         currentUser = UserSession.getInstance().getCurrentUser();
         lblUsername.setText("Welcome, " + currentUser.getFirstName());
@@ -69,7 +76,7 @@ public class CoordDashboardController {
 
     @FXML
     private void onCreateEvent(ActionEvent event) {
-            NEW_EVENT.show();
+        ViewHandler.NEW_EVENT.show();
     }
 
     @FXML

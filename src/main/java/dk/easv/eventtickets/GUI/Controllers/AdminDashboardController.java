@@ -1,10 +1,18 @@
 package dk.easv.eventtickets.GUI.Controllers;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+// Project imports
+import dk.easv.eventtickets.BE.User;
+import dk.easv.eventtickets.GUI.Models.UserModel;
+import dk.easv.eventtickets.GUI.Utils.AlertHelper;
+import dk.easv.eventtickets.GUI.Utils.ViewHandler;
 
-//java imports
+// MaterialFX imports
+import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
+import io.github.palexdev.materialfx.controls.MFXTableColumn;
+import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
+
+// Java imports
+import dk.easv.eventtickets.BLL.UTIL.UserSession;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -17,20 +25,11 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
-import io.github.palexdev.materialfx.controls.MFXTableColumn;
-import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
-
-//project imports
-import dk.easv.eventtickets.BE.User;
-import dk.easv.eventtickets.GUI.Models.UserModel;
-import dk.easv.eventtickets.GUI.Utils.AlertHelper;
-import dk.easv.eventtickets.GUI.Utils.ViewHandler;
-
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class AdminDashboardController implements Initializable {
-
 
     @FXML private MFXPaginatedTableView<User> coordContainer;
     @FXML private MFXTableColumn<User> colFirstName;
@@ -40,16 +39,20 @@ public class AdminDashboardController implements Initializable {
 
     private final UserModel userModel = new UserModel();
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        if (!UserSession.getInstance().isLoggedIn()) {
+            Platform.runLater(() -> {
+                ViewHandler.ADMIN_DASHBOARD.close();
+                ViewHandler.LOGIN.show();
+            });
+            return;
+        }
+
         setupTable();
-
         loadContainer();
-
         userModel.loadCoordinators();
     }
-
 
      public void loadContainer(){
             userModel.getCoordinators().addListener((ListChangeListener<User>) c ->
@@ -143,12 +146,15 @@ public class AdminDashboardController implements Initializable {
     }
 
     private void setupTableFilters() {
-        coordContainer.getFilters().addAll(
-
-        );
+        coordContainer.getFilters().addAll();
 
         coordContainer.getFilters().addListener((ListChangeListener<Object>) change ->
                 Platform.runLater(() -> coordContainer.setCurrentPage(1))
         );
+    }
+
+    private void closeWindow() {
+        Stage stage = (Stage) coordContainer.getScene().getWindow();
+        stage.close();
     }
 }

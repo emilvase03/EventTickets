@@ -3,6 +3,7 @@ package dk.easv.eventtickets.GUI.Models;
 // Project imports
 import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.BE.Role;
+import dk.easv.eventtickets.BLL.UTIL.UserSession;
 import dk.easv.eventtickets.BLL.UserManager;
 import dk.easv.eventtickets.GUI.Utils.BackgroundExecutor;
 
@@ -42,6 +43,7 @@ public class UserModel {
                     if (user == null) {
                         loginFailed.set(true);
                     } else {
+                        UserSession.getInstance().setCurrentUser(user);
                         loggedInUser.set(user);
                     }
                 },

@@ -95,7 +95,7 @@ public class NewEventController implements Initializable {
 
             int userId = UserSession.getInstance().getCurrentUser().getId();
 
-            Event newEvent = new Event(-1, userId, title, tickets, 0, startDate, startTime, endDate, endTime, street, zipCode, locGuidance, description);
+            Event newEvent = new Event(userId, title, tickets, 0, startDate, startTime, endDate, endTime, street, zipCode, locGuidance, description);
             eventModel.createEvent(newEvent);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Card.fxml"));

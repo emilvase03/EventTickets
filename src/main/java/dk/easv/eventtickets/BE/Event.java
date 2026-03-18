@@ -19,6 +19,21 @@ public class Event {
     private int totalTickets = -1;
     private int ticketsIssued;
 
+    public Event(int createdByUserId, String title, int totalTickets, int ticketsIssued, LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime, String street, String zipCode, String locationGuidance, String eventDescription) {
+        setCreatedByUserId(createdByUserId);
+        setTitle(title);
+        setTotalTickets(totalTickets);
+        setTicketsIssued(ticketsIssued);
+        setStartDate(startDate);
+        setStartTime(startTime);
+        setEndDate(endDate);
+        setEndTime(endTime);
+        setStreet(street);
+        setZipCode(zipCode);
+        setLocationGuidance(locationGuidance);
+        setEventDescription(eventDescription);
+    }
+
     public Event(int id, int createdByUserId, String title, int totalTickets, int ticketsIssued, LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime, String street, String zipCode, String locationGuidance, String eventDescription) {
         setId(id);
         setCreatedByUserId(createdByUserId);

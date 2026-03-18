@@ -34,7 +34,9 @@ public class UserDAO implements IUserDataAccess {
         }
 
         return users;
+
     }
+
 
     @Override
     public User createUser(User newUser) throws Exception {
@@ -140,6 +142,22 @@ public class UserDAO implements IUserDataAccess {
 
             return null;
         }
+    }
+    @Override
+    public List<User> getUsersByRole(Role role) throws Exception {
+        String sql = "SELECT id, firstName, lastName, email, password, role FROM [User] WHERE UPPER(role) = UPPER(?)";
+        List<User> coordinators = new ArrayList<>();
+        try (Connection conn = databaseConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, role.name());
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    coordinators.add(mapUser(rs));
+
+                }
+            }
+        }
+        return coordinators;
     }
 
     private User mapUser(ResultSet rs) throws SQLException {

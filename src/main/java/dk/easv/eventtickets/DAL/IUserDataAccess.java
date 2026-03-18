@@ -1,6 +1,7 @@
 package dk.easv.eventtickets.DAL;
 
 // Project imports
+import dk.easv.eventtickets.BE.Role;
 import dk.easv.eventtickets.BE.User;
 
 // Java imports
@@ -19,4 +20,6 @@ public interface IUserDataAccess {
     boolean emailExists(String email) throws Exception;
 
     User getUserByEmail(String email) throws Exception;
+
+    List<User> getUsersByRole(Role role) throws Exception;
 }

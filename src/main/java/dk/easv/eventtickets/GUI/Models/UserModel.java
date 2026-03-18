@@ -22,6 +22,8 @@ public class UserModel {
     private final BooleanProperty loading = new SimpleBooleanProperty(false);
     private final BooleanProperty loginFailed = new SimpleBooleanProperty(false);
     private final ObservableList<User> users = FXCollections.observableArrayList();
+    private final ObservableList<User> coordinators = FXCollections.observableArrayList();
+
 
     public UserModel() {
         try {
@@ -57,6 +59,18 @@ public class UserModel {
         );
     }
 
+    public void loadCoordinators() {
+        BackgroundExecutor.execute(
+                () -> userManager.getCoordinators(),
+                result -> {
+
+                    coordinators.setAll(result);
+                },
+                e -> { throw new RuntimeException("Failed to load coordinators", e); },
+                loading::set
+        );
+    }
+
     public void createUser(String firstName,
                            String lastName,
                            String email,
@@ -64,7 +78,16 @@ public class UserModel {
                            Role role) {
         BackgroundExecutor.execute(
                 () -> userManager.createUser(firstName, lastName, email, password, role),
-                users::add,
+
+                created -> {
+                    if (created != null) {
+                        users.add(created);
+                        if (created.getRole() == Role.EVENT) {
+                            coordinators.add(created);
+                        }
+                    }
+                },
+
                 e -> { throw new RuntimeException("Failed to create user", e); },
                 loading::set
         );
@@ -76,21 +99,29 @@ public class UserModel {
                 result -> {
                     int index = users.indexOf(user);
                     if (index >= 0) users.set(index, user);
+
+                    coordinators.removeIf(u -> u.getId() == user.getId());
+                    if (user.getRole() == Role.EVENT) coordinators.add(user);
                 },
                 e -> { throw new RuntimeException("Failed to update user", e); },
                 loading::set
         );
     }
 
+
     public void deleteUser(User user) {
         BackgroundExecutor.execute(
                 () -> { userManager.deleteUser(user); return null; },
-                result -> users.remove(user),
+                result -> {
+                    users.remove(user);
+                    coordinators.remove(user);
+                },
                 e -> { throw new RuntimeException("Failed to delete user", e); },
                 loading::set
         );
     }
 
+    public ObservableList<User> getCoordinators ()          { return coordinators; }
     public ObservableList<User> getUsers()                  { return users; }
     public ObjectProperty<User> loggedInUserProperty()      { return loggedInUser; }
     public BooleanProperty loadingProperty()                { return loading; }

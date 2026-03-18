@@ -20,6 +20,12 @@ public class UserManager {
         return userDAO.getAllUsers();
     }
 
+    public List<User> getCoordinators() throws Exception {
+        return userDAO.getUsersByRole(Role.EVENT);
+    }
+
+
+
     public User loginUser(String email, String password) throws Exception {
 
         if (email == null || password == null)
@@ -104,4 +110,5 @@ public class UserManager {
             e.printStackTrace();
         }
     }
+
 }

@@ -43,7 +43,7 @@
       <MFXTextField fx:id="passwordField" floatMode="BORDER" layoutX="20.0" layoutY="304.0" prefHeight="15.0" prefWidth="300.0" />
       <MFXTextField fx:id="emailField" floatMode="BORDER" layoutX="20.0" layoutY="240.0" prefHeight="15.0" prefWidth="300.0" />
       <MFXTextField fx:id="lastNameField" floatMode="BORDER" layoutX="20.0" layoutY="180.0" prefHeight="15.0" prefWidth="300.0" />
-      <MFXButton layoutX="111.0" layoutY="352.0" prefHeight="17.0" prefWidth="79.0" rippleColor="#7a0ed9" style="-fx-background-color: #bebebe;" text="Cancel">
+      <MFXButton layoutX="111.0" layoutY="352.0" onAction="#onBtnCancel" prefHeight="17.0" prefWidth="79.0" rippleColor="#7a0ed9" style="-fx-background-color: #bebebe;" text="Cancel">
          <font>
             <Font name="Roboto" size="14.0" />
          </font>

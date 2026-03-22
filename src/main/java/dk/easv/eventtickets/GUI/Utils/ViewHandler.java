@@ -22,7 +22,6 @@ public enum ViewHandler {
     NEW_COORDINATOR("/views/NewCoordinatorView.fxml", "New Coordinator", Modality.APPLICATION_MODAL),
     EDIT_COORDINATOR("/views/EditCoordView.fxml", "", Modality.APPLICATION_MODAL);
 
-
     private final String path;
     private final String title;
     private final Modality modality;

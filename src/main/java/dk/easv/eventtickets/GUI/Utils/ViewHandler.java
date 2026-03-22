@@ -19,7 +19,8 @@ public enum ViewHandler {
     NORMAL_TICKET("/components/NormalTicket.fxml", "Ticket", Modality.NONE),
     SPECIAL_TICKET("/components/SpecialTicket.fxml", "Special Ticket", Modality.NONE),
     REGISTER_VIEW("/views/RegisterView.fxml", "Register", Modality.APPLICATION_MODAL),
-    NEW_COORDINATOR("/views/NewCoordinatorView.fxml", "New Coordinator", Modality.APPLICATION_MODAL);
+    NEW_COORDINATOR("/views/NewCoordinatorView.fxml", "New Coordinator", Modality.APPLICATION_MODAL),
+    EDIT_COORDINATOR("/views/EditCoordView.fxml", "", Modality.APPLICATION_MODAL);
 
 
     private final String path;

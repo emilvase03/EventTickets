@@ -18,14 +18,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -61,6 +57,9 @@ public class AdminDashboardController implements Initializable {
                 coordContainer.setItems(
                         FXCollections.observableArrayList(userModel.getCoordinators())
                 );
+
+                coordContainer.requestLayout();// rollout for Material
+                coordContainer.setCurrentPage(1);
             })
     );
 }
@@ -123,6 +122,14 @@ public class AdminDashboardController implements Initializable {
 
     private void deleteUser(User user) {
         if (user == null) return;
+
+        boolean confirmed = AlertHelper.showConfirmation(
+                "Delete Coordinator",
+                "Are you sure you want to delete the coordinator \"" + user.getFullName() + "\"?"
+        );
+
+        if (!confirmed) return;
+
         userModel.deleteUser(user);
         coordContainer.getSelectionModel().clearSelection();
     }
@@ -130,17 +137,15 @@ public class AdminDashboardController implements Initializable {
     private void editUser(User user) {
         if (user == null) return;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/EditCoordinatorView.fxml"));
-            Scene scene = new Scene(loader.load());
+            ViewHandler.EDIT_COORDINATOR.reset();
+            ViewHandler.EDIT_COORDINATOR.preLoad();
 
-            Stage stage = new Stage();
-            stage.setTitle("Edit Coordinator");
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setResizable(false);
-            stage.showAndWait();
+            EditCoordController ctrl = ViewHandler.EDIT_COORDINATOR.getController();
+            ctrl.init(userModel, user);
 
-        } catch (IOException e) {
+            ViewHandler.EDIT_COORDINATOR.showAndWait();
+        } catch (Exception e) {
+
             AlertHelper.showError("Error", "Failed to open EditCoordinatorView");
         }
     }

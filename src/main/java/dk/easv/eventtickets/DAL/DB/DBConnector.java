@@ -12,7 +12,7 @@ import java.util.Properties;
 public class DBConnector {
 
     private static final String PROP_FILE = "config/database.settings";
-    private SQLServerDataSource dataSource;
+    private final SQLServerDataSource dataSource;
 
     public DBConnector() throws IOException {
         Properties databaseProperties = new Properties();

@@ -55,7 +55,7 @@
             </VBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="79.0" prefWidth="223.0" HBox.hgrow="ALWAYS">
                <children>
-                  <MFXButton buttonType="RAISED" rippleColor="#7a0ed9" text="Logout">
+                  <MFXButton buttonType="RAISED" rippleColor="#7a0ed9" text="Logout" onAction="#onBtnLogOut">
                      <graphic>
                         <ImageView fitHeight="25.6" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>

@@ -23,6 +23,7 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 
 public class AdminDashboardController implements Initializable {
@@ -81,9 +82,18 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
-
     private void setupTable() {
+        // Instantiate columns here instead of via FXML injection
+        colFirstName = new MFXTableColumn<>("First name", true, Comparator.comparing(User::getFirstName));
+        colLastName  = new MFXTableColumn<>("Last name",  true, Comparator.comparing(User::getLastName));
+        colEmail     = new MFXTableColumn<>("Email",      true, Comparator.comparing(User::getEmail));
+        colOptions   = new MFXTableColumn<>("Manage");
 
+        colOptions.setPrefWidth(80);
+        colOptions.setMinWidth(40);
+        colOptions.setMaxWidth(80);
+
+        coordContainer.getTableColumns().addAll(colFirstName, colLastName, colEmail, colOptions);
         coordContainer.setItems(userModel.getCoordinators());
 
         colFirstName.setRowCellFactory(u -> new MFXTableRowCell<>(User::getFirstName));
@@ -119,7 +129,6 @@ public class AdminDashboardController implements Initializable {
 
         setupTableFilters();
     }
-
     private void deleteUser(User user) {
         if (user == null) return;
 
@@ -158,8 +167,18 @@ public class AdminDashboardController implements Initializable {
         );
     }
 
-    private void closeWindow() {
-        Stage stage = (Stage) coordContainer.getScene().getWindow();
-        stage.close();
+    @FXML
+    private void onBtnLogOut(ActionEvent actionEvent) {
+        boolean confirmed = AlertHelper.showConfirmation(
+                "Log out",
+                "Are you sure you want to log out?"
+        );
+
+        if (!confirmed)
+            return;
+
+        UserSession.getInstance().clear();
+        ViewHandler.ADMIN_DASHBOARD.close();
+        ViewHandler.LOGIN.show();
     }
 }

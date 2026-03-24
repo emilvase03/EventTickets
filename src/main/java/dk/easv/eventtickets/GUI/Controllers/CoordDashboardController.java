@@ -168,4 +168,18 @@ public class CoordDashboardController {
         return instance;
     }
 
+    @FXML
+    private void onBtnLogOut(ActionEvent actionEvent) {
+        boolean confirmed = AlertHelper.showConfirmation(
+                "Log out",
+                "Are you sure you want to log out?"
+        );
+
+        if (!confirmed)
+            return;
+
+        UserSession.getInstance().clear();
+        ViewHandler.COORD_DASHBOARD.close();
+        ViewHandler.LOGIN.show();
+    }
 }

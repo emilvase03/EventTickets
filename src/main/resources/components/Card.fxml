@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="card" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="277.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.CardController">
+<VBox fx:id="card" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onEditEventClick" style="-fx-cursor: hand;" prefHeight="210.0" prefWidth="277.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.CardController">
    <children>
       <VBox fx:id="cardHeader" prefHeight="79.0" prefWidth="240.0">
          <children>
@@ -64,15 +64,6 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" spacing="5.0">
                <children>
-                  <MFXButton buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" onAction="#handleEdit" prefHeight="26.0" prefWidth="34.0" text=" ">
-                     <graphic>
-                        <ImageView fitHeight="17.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../icons/BlackEdit.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </MFXButton>
                   <MFXButton buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" onAction="#handleDelete" prefHeight="26.0" prefWidth="34.0" text=" ">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">

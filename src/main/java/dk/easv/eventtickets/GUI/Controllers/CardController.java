@@ -2,10 +2,12 @@ package dk.easv.eventtickets.GUI.Controllers;
 
 // Project imports
 import dk.easv.eventtickets.BE.Event;
+import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 
 // MFX imports
+import dk.easv.eventtickets.GUI.Utils.ViewHandler;
 import io.github.palexdev.mfxcore.controls.Label;
 
 // Java imports
@@ -13,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -47,7 +50,6 @@ public class CardController {
         VBox root = loader.load();
         cardController  = loader.getController();
         cardController.setData(event);
-
         cardController.currentEvent = event;
 
         return root;
@@ -55,6 +57,7 @@ public class CardController {
 
     @FXML
     private void handleDelete(ActionEvent event) {
+        event.consume(); // stops the click from bubbling to the VBox
         if (AlertHelper.showConfirmation("Are you sure?", "Are you sure you want to delete this event?")) {
             try {
                 eventModel.deleteEvent(currentEvent);
@@ -63,22 +66,6 @@ public class CardController {
             } catch (Exception e) {
                 AlertHelper.showError("Error", "Failed to delete event.");
             }
-        }
-    }
-
-    @FXML
-    private void handleEdit(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/EditEventView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = new Stage();
-
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
-        } catch (IOException e) {
-            AlertHelper.showError("Error", "Unable to open EditEventView");
-            throw new RuntimeException(e);
         }
     }
 
@@ -96,4 +83,18 @@ public class CardController {
         lblTicketsIssuedNum.setText(event.getTicketsIssued()+"/"+ event.getTotalTickets());
     }
 
+    @FXML
+    private void onEditEventClick(MouseEvent mouseEvent) {
+        try {
+            ViewHandler.EDIT_EVENT.reset();
+            ViewHandler.EDIT_EVENT.preLoad();
+
+            EditEventController controller = ViewHandler.EDIT_EVENT.getController();
+            controller.init(eventModel, currentEvent);
+
+            ViewHandler.EDIT_EVENT.showAndWait();
+        } catch (Exception e) {
+            AlertHelper.showError("Error", "Unable to open EditEventView.");
+        }
+    }
 }

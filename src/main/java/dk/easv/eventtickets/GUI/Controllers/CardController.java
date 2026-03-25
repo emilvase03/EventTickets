@@ -114,7 +114,7 @@ public class CardController {
             EditEventController controller = ViewHandler.EDIT_EVENT.getController();
             controller.init(eventModel, currentEvent);
 
-            ViewHandler.EDIT_EVENT.showAndWait();
+            ViewHandler.EDIT_EVENT.showAndWait(false);
         } catch (Exception e) {
             AlertHelper.showError("Error", "Unable to open EditEventView.");
         }

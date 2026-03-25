@@ -21,7 +21,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
-import javafx.stage.Stage;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
@@ -41,7 +40,7 @@ public class AdminDashboardController implements Initializable {
         if (!UserSession.getInstance().isLoggedIn()) {
             Platform.runLater(() -> {
                 ViewHandler.ADMIN_DASHBOARD.close();
-                ViewHandler.LOGIN.show();
+                ViewHandler.LOGIN.show(false);
             });
             return;
         }
@@ -74,7 +73,7 @@ public class AdminDashboardController implements Initializable {
             NewCoordinatorController ctrl = ViewHandler.NEW_COORDINATOR.getController();
             ctrl.init(userModel);
 
-            ViewHandler.NEW_COORDINATOR.showAndWait();
+            ViewHandler.NEW_COORDINATOR.showAndWait(false);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -152,7 +151,7 @@ public class AdminDashboardController implements Initializable {
             EditCoordController ctrl = ViewHandler.EDIT_COORDINATOR.getController();
             ctrl.init(userModel, user);
 
-            ViewHandler.EDIT_COORDINATOR.showAndWait();
+            ViewHandler.EDIT_COORDINATOR.showAndWait(false);
         } catch (Exception e) {
 
             AlertHelper.showError("Error", "Failed to open EditCoordinatorView");
@@ -179,6 +178,6 @@ public class AdminDashboardController implements Initializable {
 
         UserSession.getInstance().clear();
         ViewHandler.ADMIN_DASHBOARD.close();
-        ViewHandler.LOGIN.show();
+        ViewHandler.LOGIN.show(false);
     }
 }

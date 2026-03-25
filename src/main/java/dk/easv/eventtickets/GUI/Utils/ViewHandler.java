@@ -20,7 +20,8 @@ public enum ViewHandler {
     SPECIAL_TICKET("/components/SpecialTicket.fxml", "Special Ticket", Modality.NONE),
     REGISTER_VIEW("/views/RegisterView.fxml", "Register", Modality.APPLICATION_MODAL),
     NEW_COORDINATOR("/views/NewCoordinatorView.fxml", "New Coordinator", Modality.APPLICATION_MODAL),
-    EDIT_COORDINATOR("/views/EditCoordView.fxml", "", Modality.APPLICATION_MODAL);
+    EDIT_COORDINATOR("/views/EditCoordView.fxml", "", Modality.APPLICATION_MODAL),
+    EDIT_EVENT("/views/EditEventView.fxml", "Edit Event", Modality.APPLICATION_MODAL);
 
     private final String path;
     private final String title;
@@ -45,9 +46,9 @@ public enum ViewHandler {
         }
     }
 
-    public Stage show() {
+    public Stage show(boolean shouldBeResizable) {
         try {
-            Stage stage = getOrCreateStage();
+            Stage stage = getOrCreateStage(shouldBeResizable);
             stage.show();
             return stage;
         } catch (Exception e) {
@@ -57,9 +58,9 @@ public enum ViewHandler {
         }
     }
 
-    public void showAndWait() {
+    public void showAndWait(boolean shouldBeResizable) {
         try {
-            getOrCreateStage().showAndWait();
+            getOrCreateStage(shouldBeResizable).showAndWait();
         } catch (Exception e) {
             AlertHelper.showError("Error", "Failed to open: " + title);
         }
@@ -84,13 +85,13 @@ public enum ViewHandler {
         return (T) loader.getController();
     }
 
-    private Stage getOrCreateStage() throws IOException {
+    private Stage getOrCreateStage(boolean resizable) throws IOException {
         if (stage == null) {
             stage = new Stage();
             stage.setTitle(title);
             stage.setScene(loadScene());
             stage.initModality(modality);
-            stage.setResizable(false);
+            stage.setResizable(setResizable(resizable));
         }
         return stage;
     }
@@ -101,6 +102,14 @@ public enum ViewHandler {
             scene = new Scene(loader.load());
         }
         return scene;
+    }
+
+    public boolean setResizable(boolean resizable) {
+        if (stage != null) {
+            stage.setResizable(resizable);
+            return true;
+        }
+        return false;
     }
 
     public void close() {

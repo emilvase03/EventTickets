@@ -47,7 +47,7 @@ public class CoordDashboardController {
         if (!UserSession.getInstance().isLoggedIn()) {
             Platform.runLater(() -> {
                 ViewHandler.COORD_DASHBOARD.close();
-                ViewHandler.LOGIN.show();
+                ViewHandler.LOGIN.show(false);
             });
             return;
         }
@@ -76,7 +76,7 @@ public class CoordDashboardController {
 
     @FXML
     private void onCreateEvent(ActionEvent event) {
-        ViewHandler.NEW_EVENT.show();
+        ViewHandler.NEW_EVENT.show(false);
     }
 
     @FXML
@@ -180,6 +180,6 @@ public class CoordDashboardController {
 
         UserSession.getInstance().clear();
         ViewHandler.COORD_DASHBOARD.close();
-        ViewHandler.LOGIN.show();
+        ViewHandler.LOGIN.show(false);
     }
 }

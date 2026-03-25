@@ -37,9 +37,9 @@ public class LoginController {
         userModel.loggedInUserProperty().addListener((obs, oldUser, newUser) -> {
             if (newUser != null) {
                 if (newUser.getRole() == Role.ADMIN) {
-                    ViewHandler.ADMIN_DASHBOARD.show();
+                    ViewHandler.ADMIN_DASHBOARD.show(true);
                 } else {
-                    ViewHandler.COORD_DASHBOARD.show();
+                    ViewHandler.COORD_DASHBOARD.show(true);
                 }
                 closeWindow();
             }

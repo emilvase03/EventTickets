@@ -20,7 +20,7 @@ public class Launcher extends Application {
                 .build()
                 .setGlobal();
 
-        ViewHandler.LOGIN.show();
+        ViewHandler.LOGIN.show(false);
     }
 
     public static void main(String[] args) {

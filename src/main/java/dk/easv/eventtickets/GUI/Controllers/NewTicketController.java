@@ -1,6 +1,9 @@
 package dk.easv.eventtickets.GUI.Controllers;
 
 // Project imports
+import dk.easv.eventtickets.BE.Event;
+import dk.easv.eventtickets.BLL.UTIL.UserSession;
+import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 import dk.easv.eventtickets.GUI.Utils.Validator;
 
@@ -24,8 +27,8 @@ import java.util.ResourceBundle;
 public class NewTicketController implements Initializable {
     @FXML private MFXTextField txtTitle;
     @FXML private MFXTextField txtCustomerName;
-    @FXML private MFXComboBox comboBoxEvent;
-    @FXML private MFXComboBox comboBoxDiscount;
+    @FXML private MFXComboBox<String> comboBoxEvent;
+    @FXML private MFXComboBox<String> comboBoxDiscount;
     @FXML private MFXTextField txtAmountTickets;
     @FXML private MFXToggleButton toggleSpecialTicket;
     @FXML private MFXTextField txtCustomerEmail;
@@ -35,13 +38,22 @@ public class NewTicketController implements Initializable {
     private ObservableList<String> discountOptions = FXCollections.observableArrayList(
             "10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%", "50%", "Free");
 
+    private EventModel eventModel;
+
+    public NewTicketController() {
+        try {
+            eventModel = new EventModel();
+        } catch (Exception e) {
+            AlertHelper.showError("Error", "Failed to initialize EventModel");
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        comboBoxEvent.getItems().add("No Event");
+
+        setupAvailableEvents();
 
         comboBoxDiscount.setItems(discountOptions);
-
 
         txtTitle.managedProperty().bind(txtTitle.visibleProperty());
         txtCustomerName.managedProperty().bind(txtCustomerName.visibleProperty());
@@ -124,13 +136,29 @@ public class NewTicketController implements Initializable {
             comboBoxDiscount.setVisible(true);
             txtCustomerEmail.setVisible(false);
             txtExtraOption.setVisible(false);
+            comboBoxEvent.getItems().add("No event");
         } else {
             txtTitle.setVisible(false);
             txtCustomerName.setVisible(true);
             comboBoxDiscount.setVisible(false);
             txtCustomerEmail.setVisible(true);
             txtExtraOption.setVisible(true);
+            comboBoxEvent.getItems().removeIf(item -> item.equals("No event"));
         }
+    }
+
+    private void setupAvailableEvents() {
+        try {
+            for (Event e : eventModel.getMyEvents(UserSession.getInstance().getCurrentUser()))
+                comboBoxEvent.getItems().add(e.getTitle());
+        } catch (Exception e) {
+            AlertHelper.showError("Error", "Failed to retrieve event titles for current user");
+        }
+    }
+
+    public void preloadWindow(String eventTitle) {
+        if (!eventTitle.isBlank())
+            comboBoxEvent.getSelectionModel().selectItem(eventTitle);
     }
 
     private void handleClose() {

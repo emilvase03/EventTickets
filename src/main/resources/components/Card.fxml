@@ -66,6 +66,16 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" spacing="5.0">
                <children>
+                  <MFXButton buttonType="RAISED" onAction="#handlePrintTickets" text="Print Tickets" />
+                  <MFXButton buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" onAction="#handleEdit" prefHeight="26.0" prefWidth="34.0" text=" ">
+                     <graphic>
+                        <ImageView fitHeight="17.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/BlackEdit.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MFXButton>
                   <MFXButton buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" onAction="#handleDelete" prefHeight="26.0" prefWidth="34.0" text=" ">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">

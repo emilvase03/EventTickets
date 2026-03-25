@@ -5,9 +5,9 @@ import dk.easv.eventtickets.BE.Event;
 import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
+import dk.easv.eventtickets.GUI.Utils.ViewHandler;
 
 // MFX imports
-import dk.easv.eventtickets.GUI.Utils.ViewHandler;
 import io.github.palexdev.materialfx.controls.MFXProgressBar;
 import io.github.palexdev.mfxcore.controls.Label;
 
@@ -106,6 +106,12 @@ public class CardController {
     }
 
     @FXML
+    private void handlePrintTickets(ActionEvent event) {
+        ViewHandler.NEW_TICKET.preLoad();
+        ViewHandler.NEW_TICKET.<NewTicketController>getController().preloadWindow(lblTitle.getText());
+        ViewHandler.NEW_TICKET.show();
+    }  
+      
     private void onEditEventClick(MouseEvent mouseEvent) {
         try {
             ViewHandler.EDIT_EVENT.reset();

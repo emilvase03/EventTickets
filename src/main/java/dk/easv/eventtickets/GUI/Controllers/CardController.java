@@ -109,9 +109,10 @@ public class CardController {
     private void handlePrintTickets(ActionEvent event) {
         ViewHandler.NEW_TICKET.preLoad();
         ViewHandler.NEW_TICKET.<NewTicketController>getController().preloadWindow(lblTitle.getText());
-        ViewHandler.NEW_TICKET.show();
+        ViewHandler.NEW_TICKET.show(false);
     }  
       
+    @FXML
     private void onEditEventClick(MouseEvent mouseEvent) {
         try {
             ViewHandler.EDIT_EVENT.reset();

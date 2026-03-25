@@ -97,9 +97,11 @@ public class CoordDashboardController {
 
     private void setupEventPool(User currentUser) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Card.fxml"));
-            VBox root = loader.load();
-            CardController cardController = loader.getController();
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Card.fxml"));
+//            VBox root = loader.load();
+//            CardController cardController = loader.getController();
+
+            CardController cardController = new CardController();
 
             for (Event e : eventModel.getMyEvents(currentUser)) {
                 getEventContainer().getChildren().add(cardController.createEventCard(e));
@@ -107,9 +109,9 @@ public class CoordDashboardController {
 
         } catch (IOException e) {
             AlertHelper.showError("Error","Failed to get CardController.");
+            System.out.println(e.getMessage());
         } catch (Exception e) {
             AlertHelper.showError("Error","Failed to get my events from event model.");
-            System.out.println(e.getMessage());
         }
     }
 

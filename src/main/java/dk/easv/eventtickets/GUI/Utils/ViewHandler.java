@@ -46,9 +46,9 @@ public enum ViewHandler {
         }
     }
 
-    public Stage show() {
+    public Stage show(boolean shouldBeResizable) {
         try {
-            Stage stage = getOrCreateStage();
+            Stage stage = getOrCreateStage(shouldBeResizable);
             stage.show();
             return stage;
         } catch (Exception e) {
@@ -85,13 +85,13 @@ public enum ViewHandler {
         return (T) loader.getController();
     }
 
-    private Stage getOrCreateStage() throws IOException {
+    private Stage getOrCreateStage(boolean resizable) throws IOException {
         if (stage == null) {
             stage = new Stage();
             stage.setTitle(title);
             stage.setScene(loadScene());
             stage.initModality(modality);
-            stage.setResizable(false);
+            stage.setResizable(setResizable(resizable));
         }
         return stage;
     }
@@ -102,6 +102,14 @@ public enum ViewHandler {
             scene = new Scene(loader.load());
         }
         return scene;
+    }
+
+    public boolean setResizable(boolean resizable) {
+        if (stage != null) {
+            stage.setResizable(resizable);
+            return true;
+        }
+        return false;
     }
 
     public void close() {

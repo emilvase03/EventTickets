@@ -58,9 +58,9 @@ public enum ViewHandler {
         }
     }
 
-    public void showAndWait() {
+    public void showAndWait(boolean shouldBeResizable) {
         try {
-            getOrCreateStage().showAndWait();
+            getOrCreateStage(shouldBeResizable).showAndWait();
         } catch (Exception e) {
             AlertHelper.showError("Error", "Failed to open: " + title);
         }

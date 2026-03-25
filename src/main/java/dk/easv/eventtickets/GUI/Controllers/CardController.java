@@ -6,6 +6,7 @@ import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 
 // MFX imports
+import dk.easv.eventtickets.GUI.Utils.ViewHandler;
 import io.github.palexdev.mfxcore.controls.Label;
 
 // Java imports
@@ -96,4 +97,10 @@ public class CardController {
         lblTicketsIssuedNum.setText(event.getTicketsIssued()+"/"+ event.getTotalTickets());
     }
 
+    @FXML
+    private void handlePrintTickets(ActionEvent event) {
+        ViewHandler.NEW_TICKET.preLoad();
+        ViewHandler.NEW_TICKET.<NewTicketController>getController().preloadWindow(lblTitle.getText());
+        ViewHandler.NEW_TICKET.show();
+    }
 }

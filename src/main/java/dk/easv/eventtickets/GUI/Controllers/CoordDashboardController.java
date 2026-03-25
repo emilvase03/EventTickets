@@ -90,7 +90,7 @@ public class CoordDashboardController {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (IOException e) {
-            AlertHelper.showError("Error", "Unable to open SpecialTicketView");
+            AlertHelper.showError("Error", "Unable to open NewTicketView");
             throw new RuntimeException(e);
         }
     }

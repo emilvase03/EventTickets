@@ -8,6 +8,7 @@ import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 
 // MFX imports
 import dk.easv.eventtickets.GUI.Utils.ViewHandler;
+import io.github.palexdev.materialfx.controls.MFXProgressBar;
 import io.github.palexdev.mfxcore.controls.Label;
 
 // Java imports
@@ -26,7 +27,6 @@ public class CardController {
 
     private EventModel eventModel;
     private Event currentEvent;
-    private CoordDashboardController dashboardController;
     private CardController cardController;
 
     @FXML private VBox card;
@@ -36,6 +36,7 @@ public class CardController {
     @FXML private Label lblAddress;
     @FXML private Label lblDescription;
     @FXML private Label lblTicketsIssuedNum;
+    @FXML private MFXProgressBar ticketBar;
 
     public CardController() {
         try {
@@ -71,16 +72,37 @@ public class CardController {
 
     private void setData(Event event) {
         lblTitle.setText(event.getTitle());
-        lblStartDateAndTime.setText(event.getStartTime().toString()+", "+event.getStartDate().toString());
+        lblStartDateAndTime.setText(event.getStartTime().toString() + ", " + event.getStartDate().toString());
 
         String endDateTime = (event.getEndTime() != null && event.getEndDate() != null)
                 ? event.getEndTime().toString() + ", " + event.getEndDate().toString()
                 : "";
 
         lblEndDateAndTime.setText(endDateTime);
-        lblAddress.setText(event.getStreet()+", "+event.getZipCode());
+        lblAddress.setText(event.getStreet() + ", " + event.getZipCode());
         lblDescription.setText(event.getEventDescription());
-        lblTicketsIssuedNum.setText(event.getTicketsIssued()+"/"+ event.getTotalTickets());
+
+        int issued = event.getTicketsIssued();
+        int total  = event.getTotalTickets();
+        lblTicketsIssuedNum.setText(issued + "/" + total);
+
+        if (total > 0) {
+            double progress = (double) issued / total;
+            ticketBar.setProgress(progress);
+
+            ticketBar.getStyleClass().removeAll("bar-green", "bar-yellow", "bar-red");
+
+            if (progress < 0.5)
+                ticketBar.getStyleClass().add("bar-green");
+            else if (progress < 0.8)
+                ticketBar.getStyleClass().add("bar-yellow");
+            else
+                ticketBar.getStyleClass().add("bar-red");
+        } else {
+            ticketBar.setProgress(0);
+            ticketBar.getStyleClass().removeAll("bar-green", "bar-yellow", "bar-red");
+            ticketBar.getStyleClass().add("bar-green");
+        }
     }
 
     @FXML

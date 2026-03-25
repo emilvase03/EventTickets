@@ -57,6 +57,18 @@ Card / Event Styling
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 5,0.3, 0, 1);
 }
 
+.bar-green .bar1 {
+    -fx-fill: #4CAF50;
+}
+
+.bar-yellow .bar1 {
+    -fx-fill: #FFC107;
+}
+
+.bar-red .bar1 {
+    -fx-fill: #F44336;
+}
+
 /**
 Ticket Styling
  */

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXProgressBar?>
 <?import io.github.palexdev.mfxcore.controls.Label?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.image.Image?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="card" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onEditEventClick" style="-fx-cursor: hand;" prefHeight="210.0" prefWidth="277.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.CardController">
+<VBox fx:id="card" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onEditEventClick" prefHeight="210.0" prefWidth="277.0" style="-fx-cursor: hand;" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.CardController">
    <children>
       <VBox fx:id="cardHeader" prefHeight="79.0" prefWidth="240.0">
          <children>
@@ -46,6 +47,7 @@
                         </Label>
                         <Label fx:id="lblTicketsIssuedNum" prefHeight="15.0" prefWidth="138.0" styleClass="boldRoboto" text="0">
                         </Label>
+                        <MFXProgressBar fx:id="ticketBar" />
                      </children>
                      <HBox.margin>
                         <Insets />

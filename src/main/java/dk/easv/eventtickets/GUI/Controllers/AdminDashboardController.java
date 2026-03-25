@@ -5,6 +5,7 @@ import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.GUI.Models.UserModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 import dk.easv.eventtickets.GUI.Utils.ViewHandler;
+import dk.easv.eventtickets.BLL.UTIL.UserSession;
 
 // MaterialFX imports
 import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
@@ -12,7 +13,6 @@ import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 
 // Java imports
-import dk.easv.eventtickets.BLL.UTIL.UserSession;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;

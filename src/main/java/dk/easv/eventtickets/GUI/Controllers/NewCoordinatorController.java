@@ -1,17 +1,18 @@
 package dk.easv.eventtickets.GUI.Controllers;
 
-//java imports
+// Project imports
+import dk.easv.eventtickets.BE.Role;
+import dk.easv.eventtickets.GUI.Models.UserModel;
+import dk.easv.eventtickets.GUI.Utils.AlertHelper;
+
+// MaterialFX imports
+import io.github.palexdev.materialfx.controls.MFXTextField;
+
+// Java imports
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.stage.Stage;
-
-import io.github.palexdev.materialfx.controls.MFXTextField;
-
-//project imports
-import dk.easv.eventtickets.BE.Role;
-import dk.easv.eventtickets.GUI.Models.UserModel;
-import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 
 
 public class NewCoordinatorController {

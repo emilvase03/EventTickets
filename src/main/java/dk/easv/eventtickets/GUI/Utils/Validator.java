@@ -1,10 +1,13 @@
 package dk.easv.eventtickets.GUI.Utils;
 
+// MaterialFX imports
+import io.github.palexdev.materialfx.controls.MFXTextField;
+
+// Java imports
 import javafx.scene.control.TextFormatter;
 import javafx.util.StringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import java.util.function.UnaryOperator;
-import io.github.palexdev.materialfx.controls.MFXTextField;
 
 public class Validator {
 

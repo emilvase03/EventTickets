@@ -1,5 +1,6 @@
 package dk.easv.eventtickets.BLL;
 
+// Project imports
 import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.BE.Role;
 import dk.easv.eventtickets.BLL.UTIL.Encrypter;

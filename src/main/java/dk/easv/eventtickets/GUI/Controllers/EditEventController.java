@@ -1,9 +1,14 @@
 package dk.easv.eventtickets.GUI.Controllers;
 
+// Project imports
 import dk.easv.eventtickets.BE.Event;
 import dk.easv.eventtickets.GUI.Models.EventModel;
+
+// MaterialFX imports
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+
+// Java imports
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

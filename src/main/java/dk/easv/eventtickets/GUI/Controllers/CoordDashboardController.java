@@ -9,7 +9,6 @@ import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 import dk.easv.eventtickets.GUI.Utils.ViewHandler;
 
 // MaterialFX imports
-import dk.easv.eventtickets.GUI.Utils.Validator;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import io.github.palexdev.mfxcore.controls.Label;
 
@@ -23,7 +22,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -97,10 +95,6 @@ public class CoordDashboardController {
 
     private void setupEventPool(User currentUser) {
         try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Card.fxml"));
-//            VBox root = loader.load();
-//            CardController cardController = loader.getController();
-
             CardController cardController = new CardController();
 
             for (Event e : eventModel.getMyEvents(currentUser)) {

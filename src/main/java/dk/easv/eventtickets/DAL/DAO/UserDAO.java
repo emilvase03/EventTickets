@@ -1,10 +1,12 @@
 package dk.easv.eventtickets.DAL.DAO;
 
+// Project imports
 import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.BE.Role;
 import dk.easv.eventtickets.DAL.DB.DBConnector;
 import dk.easv.eventtickets.DAL.IUserDataAccess;
 
+// Java imports
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

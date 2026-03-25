@@ -6,6 +6,7 @@ import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.DAL.DAO.EventDAO;
 import dk.easv.eventtickets.DAL.IEventDataAccess;
 
+// Java imports
 import java.util.List;
 
 public class EventManager {

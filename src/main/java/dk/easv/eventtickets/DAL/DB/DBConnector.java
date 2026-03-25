@@ -1,6 +1,6 @@
 package dk.easv.eventtickets.DAL.DB;
 
-// Project imports
+// JDBC imports
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 

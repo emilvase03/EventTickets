@@ -1,5 +1,6 @@
 package dk.easv.eventtickets.BLL.UTIL;
 
+// Argon imports
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 

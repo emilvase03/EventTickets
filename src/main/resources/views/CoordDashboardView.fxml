@@ -253,6 +253,12 @@
                   <Insets left="10.0" right="10.0" />
                </VBox.margin>
             </HBox>
+            <HBox fx:id="FilterHBox" alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="900.0">
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+                <fx:include fx:id="filterBar" source="../components/EventFilter.fxml" />
+            </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <children>
                   <MFXScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="254.0" prefWidth="1156.0" styleClass="coordBackground" HBox.hgrow="ALWAYS">
@@ -265,6 +271,9 @@
                      </content>
                   </MFXScrollPane>
                </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
             </HBox>
          </children>
       </VBox>

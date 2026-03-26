@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox styleClass="filter-pill" stylesheets="@../css/style.css"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="dk.easv.eventtickets.GUI.Controllers.EventFilterController">
+
+    <fx:define>
+        <ToggleGroup fx:id="filterGroup"/>
+    </fx:define>
+
+    <ToggleButton fx:id="allEvents" text="All Events"
+                  toggleGroup="$filterGroup" styleClass="filter-tab"
+                  selected="true" />
+    <ToggleButton fx:id="today"     text="Today"
+                  toggleGroup="$filterGroup" styleClass="filter-tab"/>
+    <ToggleButton fx:id="future"    text="Future"
+                  toggleGroup="$filterGroup" styleClass="filter-tab"/>
+    <ToggleButton fx:id="past"      text="Past"
+                  toggleGroup="$filterGroup" styleClass="filter-tab"/>
+</HBox>

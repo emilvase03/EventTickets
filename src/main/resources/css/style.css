@@ -31,6 +31,34 @@ Coordinator Dashboard Styling
     -fx-font-style: italic;
 }
 
+/* Event filter component in CoordDashboardView*/
+.filter-pill {
+    -fx-background-color: #e5e7eb;
+    -fx-background-radius: 14;
+    -fx-padding: 5;
+    -fx-spacing: 4;
+}
+
+.filter-tab {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10;
+    -fx-border-color: transparent;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6b7280;
+    -fx-cursor: hand;
+}
+
+.filter-tab:hover {
+    -fx-background-color: rgba(0,0,0,0.05);
+}
+
+.filter-tab:selected {
+    -fx-background-color: white;
+    -fx-text-fill: #111827;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 8, 0, 0, 2);
+}
+
 /**
 Card / Event Styling
  */

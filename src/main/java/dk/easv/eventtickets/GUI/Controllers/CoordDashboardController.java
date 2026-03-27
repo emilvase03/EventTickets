@@ -5,7 +5,9 @@ import dk.easv.eventtickets.BE.Event;
 import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.BLL.UTIL.UserSession;
 import dk.easv.eventtickets.GUI.Controllers.Components.CardController;
+import dk.easv.eventtickets.GUI.Controllers.Components.EventFilterController;
 import dk.easv.eventtickets.GUI.Models.EventModel;
+import dk.easv.eventtickets.GUI.Models.Filter;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 import dk.easv.eventtickets.GUI.Utils.ViewHandler;
 
@@ -26,6 +28,10 @@ import javafx.scene.layout.TilePane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 
 public class CoordDashboardController {
@@ -34,11 +40,13 @@ public class CoordDashboardController {
     private User currentUser;
     private EventModel eventModel;
     private FXMLLoader newEventLoader;
+    private List<Event> events = new ArrayList<>();
 
     @FXML private MFXScrollPane scrollPane;
     @FXML private TilePane eventContainer;
     @FXML private Label lblNumOfEvents;
     @FXML private Label lblUsername;
+    @FXML private EventFilterController filterBarController;
 
 
     @FXML
@@ -97,8 +105,9 @@ public class CoordDashboardController {
     private void setupEventPool(User currentUser) {
         try {
             CardController cardController = new CardController();
+            events = eventModel.getMyEvents(currentUser);
 
-            for (Event e : eventModel.getMyEvents(currentUser)) {
+            for (Event e : events) {
                 getEventContainer().getChildren().add(cardController.createEventCard(e));
             }
 
@@ -114,17 +123,21 @@ public class CoordDashboardController {
         // Event Pool listener, for total events label
         eventContainer.getChildren().addListener((ListChangeListener<Node>) change -> {
             int numOfEvents = Integer.parseInt(lblNumOfEvents.getText());
-
             while (change.next()) {
-
                 if (change.wasAdded()) {
                     lblNumOfEvents.setText(String.valueOf(numOfEvents+1));
                 }
                 if (change.wasRemoved()) {
                     lblNumOfEvents.setText(String.valueOf(numOfEvents-1));
                 }
-
             }
+        });
+
+        // Listener for event filters
+        filterBarController.getFilterGroup().selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal == null) { filterBarController.getFilterGroup().selectToggle(oldVal); return;}
+            Filter filter = Filter.valueOf((String) newVal.getUserData());
+            applyFilter(filter);
         });
     }
 
@@ -163,6 +176,28 @@ public class CoordDashboardController {
 
     public static CoordDashboardController getInstance() {
         return instance;
+    }
+
+    private void applyFilter(Filter filter) {
+        Comparator<Event> byDateTime = Comparator.comparing(Event::getStartDate)
+                .thenComparing(Event::getStartTime);
+
+        List<Event> filtered = switch (filter) {
+            case TODAY      -> events.stream().filter(e -> e.getStartDate().isEqual(LocalDate.now())).sorted(byDateTime).toList();
+            case FUTURE     -> events.stream().filter(e -> e.getStartDate().isAfter(LocalDate.now())).sorted(byDateTime).toList();
+            case PAST       -> events.stream().filter(e -> e.getStartDate().isBefore(LocalDate.now())).sorted(byDateTime.reversed()).toList();
+            case ALL_EVENTS -> events.stream().sorted(byDateTime).toList();
+        };
+
+        try {
+            CardController cardController = new CardController();
+            eventContainer.getChildren().clear();
+            for (Event e : filtered)
+                eventContainer.getChildren().add(cardController.createEventCard(e));
+        } catch (IOException e) {
+            AlertHelper.showError("Error", "Failed to sort events");
+        }
+
     }
 
     @FXML

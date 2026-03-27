@@ -12,12 +12,16 @@
     </fx:define>
 
     <ToggleButton fx:id="allEvents" text="All Events"
+                  userData="ALL_EVENTS"
                   toggleGroup="$filterGroup" styleClass="filter-tab"
                   selected="true" />
     <ToggleButton fx:id="today"     text="Today"
+                  userData="TODAY"
                   toggleGroup="$filterGroup" styleClass="filter-tab"/>
     <ToggleButton fx:id="future"    text="Future"
+                  userData="FUTURE"
                   toggleGroup="$filterGroup" styleClass="filter-tab"/>
     <ToggleButton fx:id="past"      text="Past"
+                  userData="PAST"
                   toggleGroup="$filterGroup" styleClass="filter-tab"/>
 </HBox>

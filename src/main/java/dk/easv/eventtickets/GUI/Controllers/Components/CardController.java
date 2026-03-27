@@ -1,7 +1,10 @@
-package dk.easv.eventtickets.GUI.Controllers;
+package dk.easv.eventtickets.GUI.Controllers.Components;
 
 // Project imports
 import dk.easv.eventtickets.BE.Event;
+import dk.easv.eventtickets.GUI.Controllers.CoordDashboardController;
+import dk.easv.eventtickets.GUI.Controllers.EditEventController;
+import dk.easv.eventtickets.GUI.Controllers.NewTicketController;
 import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 import dk.easv.eventtickets.GUI.Utils.ViewHandler;

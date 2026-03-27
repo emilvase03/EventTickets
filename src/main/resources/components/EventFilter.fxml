@@ -5,7 +5,7 @@
 
 <HBox styleClass="filter-pill" stylesheets="@../css/style.css"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="dk.easv.eventtickets.GUI.Controllers.EventFilterController">
+      fx:controller="dk.easv.eventtickets.GUI.Controllers.Components.EventFilterController">
 
     <fx:define>
         <ToggleGroup fx:id="filterGroup"/>

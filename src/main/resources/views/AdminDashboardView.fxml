@@ -2,6 +2,7 @@
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
+<?import io.github.palexdev.materialfx.controls.MFXTableColumn?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
@@ -14,359 +15,328 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="589.0" prefWidth="900.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.AdminDashboardController">
-   <opaqueInsets>
-      <Insets />
-   </opaqueInsets>
-   <top>
-      <HBox fx:id="header" alignment="CENTER" prefHeight="79.0" prefWidth="900.0" style="-fx-background-color: white; -fx-border-color: #E5E7EB;" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="33.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../icons/shield-128.png" />
-               </image>
-            </ImageView>
-            <VBox alignment="CENTER_LEFT" prefHeight="61.0" prefWidth="607.0" spacing="5.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS">
-               <children>
-                  <Label prefHeight="29.0" prefWidth="202.0" text="Admin Dashboard">
-                     <font>
-                        <Font name="Roboto Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <HBox prefHeight="17.0" prefWidth="581.0">
-                     <children>
-                        <Label prefHeight="18.0" prefWidth="226.0" text="Welcome, Name">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
+
+
+
+<BorderPane prefHeight="589.0" prefWidth="900.0"
+            stylesheets="@../css/style.css"
+            xmlns="http://javafx.com/javafx/24.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="dk.easv.eventtickets.GUI.Controllers.AdminDashboardController">
+
+    <top>
+        <HBox fx:id="header" alignment="CENTER" prefHeight="79.0"
+              style="-fx-background-color: white; -fx-border-color: #E5E7EB;"
+              BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="33.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                    <image><Image url="@../icons/shield-128.png" /></image>
+                </ImageView>
+                <VBox alignment="CENTER_LEFT" spacing="5.0"
+                      style="-fx-background-color: white;"
+                      HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label text="Admin Dashboard">
+                            <font><Font name="Roboto Bold" size="24.0" /></font>
                         </Label>
-                     </children>
-                  </HBox>
-               </children>
-               <HBox.margin>
-                  <Insets left="5.0" />
-               </HBox.margin>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </VBox>
-            <Region prefHeight="71.0" prefWidth="71.0" HBox.hgrow="ALWAYS" />
-            <HBox alignment="CENTER_RIGHT" prefHeight="79.0" prefWidth="223.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <MFXButton buttonType="RAISED" onAction="#onBtnLogOut" rippleColor="#7a0ed9" text="Logout">
-                     <graphic>
-                        <ImageView fitHeight="25.6" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../icons/Logout.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </MFXButton>
-               </children>
-               <padding>
-                  <Insets right="10.0" />
-               </padding>
-            </HBox>
-         </children>
-         <padding>
-            <Insets left="10.0" />
-         </padding>
-      </HBox>
-   </top>
-   <left>
-      <TabPane prefHeight="510.0" prefWidth="902.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-        <tabs>
-          <Tab text="Manage Coordinators">
-               <content>
-                  <VBox prefHeight="481.0" prefWidth="958.0">
-                     <children>
-                        <HBox alignment="CENTER" fillHeight="false" prefHeight="6.0" prefWidth="900.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <VBox alignment="CENTER_LEFT" prefHeight="154.0" prefWidth="301.0" style="-fx-background-color: white; -fx-background-radius: 15;" styleClass="totalBoxes">
-                                 <children>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="216.0">
-                                       <children>
-                                          <Label prefHeight="19.0" prefWidth="260.0" text="Total Coordinators">
-                                             <font>
-                                                <Font name="Roboto Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <ImageView fitHeight="30.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../icons/user-5-128.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
-                                    </HBox>
-                                    <Label fx:id="lblStatus" prefHeight="45.0" prefWidth="131.0" text="0">
-                                       <font>
-                                          <Font name="Roboto Bold" size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="48.0" prefWidth="142.0" text="Active event coorditator" />
-                                 </children>
-                                 <padding>
-                                    <Insets left="10.0" />
-                                 </padding>
-                                 <HBox.margin>
-                                    <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
-                                 </HBox.margin>
-                              </VBox>
-                              <VBox alignment="CENTER_LEFT" prefHeight="154.0" prefWidth="301.0" style="-fx-background-color: white; -fx-background-radius: 15;" styleClass="totalBoxes">
-                                 <children>
-                                    <HBox alignment="CENTER_LEFT">
-                                       <children>
-                                          <Label prefHeight="19.0" prefWidth="260.0" text="Total Events">
-                                             <font>
-                                                <Font name="Roboto Bold" size="12.0" />
-                                             </font>
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
-                                          </Label>
-                                          <ImageView fitHeight="30.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../icons/user-5-128.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
-                                    </HBox>
-                                    <Label fx:id="lblStatus1" prefHeight="45.0" prefWidth="131.0" text="0">
-                                       <font>
-                                          <Font name="Roboto Bold" size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="48.0" prefWidth="142.0" text="Managed by coordinators" />
-                                 </children>
-                                 <padding>
-                                    <Insets left="10.0" />
-                                 </padding>
-                                 <HBox.margin>
-                                    <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
-                                 </HBox.margin>
-                              </VBox>
-                              <VBox alignment="CENTER_LEFT" prefHeight="154.0" prefWidth="301.0" style="-fx-background-color: white; -fx-background-radius: 15;" styleClass="totalBoxes">
-                                 <children>
-                                    <HBox alignment="CENTER_LEFT">
-                                       <children>
-                                          <Label prefHeight="19.0" prefWidth="260.0" text="Next event">
-                                             <font>
-                                                <Font name="Roboto Bold" size="12.0" />
-                                             </font>
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
-                                          </Label>
-                                          <ImageView fitHeight="30.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../icons/Upcoming.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets top="3.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <Label fx:id="lblNextEvent" prefHeight="45.0" prefWidth="131.0">
-                                       <font>
-                                          <Font name="Roboto Bold" size="24.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <padding>
-                                    <Insets left="10.0" />
-                                 </padding>
-                                 <HBox.margin>
-                                    <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
-                                 </HBox.margin>
-                              </VBox>
-                           </children>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
+                        <HBox>
+                            <children>
+                                <Label text="Welcome, Name">
+                                    <HBox.margin><Insets left="5.0" /></HBox.margin>
+                                </Label>
+                            </children>
                         </HBox>
-                        <HBox prefHeight="43.0" prefWidth="828.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <VBox prefHeight="76.0" prefWidth="744.0" HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <Label prefHeight="23.0" prefWidth="178.0" text="Event Coordinators">
-                                       <font>
-                                          <Font name="Roboto Bold" size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="17.0" prefWidth="222.0" text="Manage Event Coordinator accounts" />
-                                 </children>
-                              </VBox>
-                              <MFXButton buttonType="RAISED" cancelButton="true" onAction="#onBtnAddCoord" prefHeight="28.0" prefWidth="136.0" rippleColor="#7a0ed9" style="-fx-background-color: #228be6;" text="Add Coordinator" textFill="WHITE" HBox.hgrow="ALWAYS">
-                                 <graphic>
-                                    <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../icons/add-user-3-128.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <font>
-                                    <Font name="Roboto Bold" size="12.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets top="5.0" />
-                                 </HBox.margin>
-                              </MFXButton>
-                           </children>
-                           <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </padding>
-                        </HBox>
-                        <HBox maxWidth="1.7976931348623157E308" prefHeight="362.0" prefWidth="880.0" VBox.vgrow="ALWAYS">
-                           <VBox.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" />
-                           </VBox.margin>
-                           <children>
-                               <MFXPaginatedTableView fx:id="coordContainer" maxWidth="1.7976931348623157E308" prefHeight="426.0" prefWidth="880.0" HBox.hgrow="ALWAYS" />
-                     </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </content>
-          </Tab>
-          <Tab text="Events Overview">
-               <content>
-                  <VBox prefHeight="481.0" prefWidth="958.0">
-                     <children>
-                        <HBox alignment="CENTER" fillHeight="false" prefHeight="6.0" prefWidth="900.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <VBox alignment="CENTER_LEFT" prefHeight="154.0" prefWidth="301.0" style="-fx-background-color: white; -fx-background-radius: 15;" styleClass="totalBoxes">
-                                 <children>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="216.0">
-                                       <children>
-                                          <Label prefHeight="19.0" prefWidth="260.0" text="Total Coordinators">
-                                             <font>
-                                                <Font name="Roboto Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <ImageView fitHeight="30.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../icons/user-5-128.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
-                                    </HBox>
-                                    <Label fx:id="lblStatus1" prefHeight="45.0" prefWidth="131.0" text="0">
-                                       <font>
-                                          <Font name="Roboto Bold" size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="48.0" prefWidth="142.0" text="Active event coorditator" />
-                                 </children>
-                                 <padding>
-                                    <Insets left="10.0" />
-                                 </padding>
-                                 <HBox.margin>
-                                    <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
-                                 </HBox.margin>
-                              </VBox>
-                              <VBox alignment="CENTER_LEFT" prefHeight="154.0" prefWidth="301.0" style="-fx-background-color: white; -fx-background-radius: 15;" styleClass="totalBoxes">
-                                 <children>
-                                    <HBox alignment="CENTER_LEFT">
-                                       <children>
-                                          <Label prefHeight="19.0" prefWidth="260.0" text="Total Events">
-                                             <font>
-                                                <Font name="Roboto Bold" size="12.0" />
-                                             </font>
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
-                                          </Label>
-                                          <ImageView fitHeight="30.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../icons/user-5-128.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
-                                    </HBox>
-                                    <Label fx:id="lblStatus11" prefHeight="45.0" prefWidth="131.0" text="0">
-                                       <font>
-                                          <Font name="Roboto Bold" size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="48.0" prefWidth="142.0" text="Managed by coordinators" />
-                                 </children>
-                                 <padding>
-                                    <Insets left="10.0" />
-                                 </padding>
-                                 <HBox.margin>
-                                    <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
-                                 </HBox.margin>
-                              </VBox>
-                              <VBox alignment="CENTER_LEFT" prefHeight="154.0" prefWidth="301.0" style="-fx-background-color: white; -fx-background-radius: 15;" styleClass="totalBoxes">
-                                 <children>
-                                    <HBox alignment="CENTER_LEFT">
-                                       <children>
-                                          <Label prefHeight="19.0" prefWidth="260.0" text="Next event">
-                                             <font>
-                                                <Font name="Roboto Bold" size="12.0" />
-                                             </font>
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
-                                          </Label>
-                                          <ImageView fitHeight="30.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../icons/Upcoming.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets top="3.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <Label fx:id="lblNextEvent1" prefHeight="45.0" prefWidth="131.0">
-                                       <font>
-                                          <Font name="Roboto Bold" size="24.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <padding>
-                                    <Insets left="10.0" />
-                                 </padding>
-                                 <HBox.margin>
-                                    <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
-                                 </HBox.margin>
-                              </VBox>
-                           </children>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </HBox>
-                        <HBox prefHeight="43.0" prefWidth="828.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <VBox prefHeight="76.0" prefWidth="744.0" HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <Label prefHeight="23.0" prefWidth="178.0" text="Events">
-                                       <font>
-                                          <Font name="Roboto Bold" size="18.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                           </children>
-                           <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </padding>
-                        </HBox>
-                        <HBox maxWidth="1.7976931348623157E308" prefHeight="362.0" prefWidth="880.0" VBox.vgrow="ALWAYS">
-                           <VBox.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" />
-                           </VBox.margin>
-                           <children>
-                              <MFXPaginatedTableView fx:id="eventsContainer" maxWidth="1.7976931348623157E308" prefHeight="426.0" prefWidth="880.0" HBox.hgrow="ALWAYS" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </content>
-          </Tab>
-        </tabs>
-      </TabPane>
-   </left>
+                    </children>
+                    <HBox.margin><Insets left="5.0" /></HBox.margin>
+                    <padding><Insets bottom="5.0" left="5.0" right="5.0" top="5.0" /></padding>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <HBox alignment="CENTER_RIGHT" prefHeight="79.0" HBox.hgrow="NEVER">
+                    <children>
+                        <MFXButton buttonType="RAISED" onAction="#onBtnLogOut"
+                                   rippleColor="#7a0ed9" text="Logout">
+                            <graphic>
+                                <ImageView fitHeight="25.6" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                    <image><Image url="@../icons/Logout.png" /></image>
+                                </ImageView>
+                            </graphic>
+                        </MFXButton>
+                    </children>
+                    <padding><Insets right="10.0" /></padding>
+                </HBox>
+            </children>
+            <padding><Insets left="10.0" /></padding>
+        </HBox>
+    </top>
+
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <tabs>
+
+                <Tab text="Manage Coordinators">
+                    <content>
+                        <VBox VBox.vgrow="ALWAYS">
+                            <children>
+                                <HBox alignment="CENTER" fillHeight="false" VBox.vgrow="NEVER">
+                                    <children>
+
+                                        <VBox alignment="CENTER_LEFT" prefHeight="154.0"
+                                              style="-fx-background-color: white; -fx-background-radius: 15;"
+                                              styleClass="totalBoxes"
+                                              HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308">
+                                            <children>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="216.0">
+                                                    <children>
+                                                        <Label prefHeight="19.0" prefWidth="260.0" text="Total Coordinators">
+                                                            <font><Font name="Roboto Bold" size="12.0"/></font>
+                                                        </Label>
+                                                        <ImageView fitHeight="30.0" fitWidth="27.0" preserveRatio="true">
+                                                            <image><Image url="@../icons/user-5-128.png"/></image>
+                                                        </ImageView>
+                                                    </children>
+                                                </HBox>
+                                                <Label fx:id="lblStatus" text="0">
+                                                    <font><Font name="Roboto Bold" size="24.0" /></font>
+                                                </Label>
+                                                <Label text="Active event coordinator" />
+                                            </children>
+                                            <padding><Insets left="10.0" right="10.0" /></padding>
+                                            <HBox.margin><Insets bottom="20.0" left="10.0" right="10.0" top="20.0" /></HBox.margin>
+                                        </VBox>
+
+                                        <VBox alignment="CENTER_LEFT" prefHeight="154.0"
+                                              style="-fx-background-color: white; -fx-background-radius: 15;"
+                                              styleClass="totalBoxes"
+                                              HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308">
+                                            <children>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="216.0">
+                                                    <children>
+                                                        <Label prefHeight="19.0" prefWidth="260.0" text="Total Coordinators">
+                                                            <font><Font name="Roboto Bold" size="12.0"/></font>
+                                                        </Label>
+                                                        <ImageView fitHeight="30.0" fitWidth="27.0" preserveRatio="true">
+                                                            <image><Image url="@../icons/user-5-128.png"/></image>
+                                                        </ImageView>
+                                                    </children>
+                                                </HBox>
+                                                <Label fx:id="lblStatus1" text="0">
+                                                    <font><Font name="Roboto Bold" size="24.0" /></font>
+                                                </Label>
+                                                <Label text="Managed by coordinators" />
+                                            </children>
+                                            <padding><Insets left="10.0" right="10.0" /></padding>
+                                            <HBox.margin><Insets bottom="20.0" left="10.0" right="10.0" top="20.0" /></HBox.margin>
+                                        </VBox>
+
+                                        <VBox alignment="CENTER_LEFT" prefHeight="154.0"
+                                              style="-fx-background-color: white; -fx-background-radius: 15;"
+                                              styleClass="totalBoxes"
+                                              HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308">
+                                            <children>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="216.0">
+                                                    <children>
+                                                        <Label prefHeight="19.0" prefWidth="260.0"  text="Next event" >
+                                                            <font><Font name="Roboto Bold" size="12.0" /></font>
+                                                        </Label>
+                                                        <ImageView fitHeight="30.0" fitWidth="27.0" preserveRatio="true">
+                                                            <image><Image url="@../icons/Upcoming.png" /></image>
+                                                        </ImageView>
+                                                    </children>
+                                                    <VBox.margin><Insets top="3.0" /></VBox.margin>
+                                                </HBox>
+                                                <Label fx:id="lblNextEvent">
+                                                    <font><Font name="Roboto Bold" size="24.0" /></font>
+                                                </Label>
+                                            </children>
+                                            <padding><Insets left="10.0" right="10.0" /></padding>
+                                            <HBox.margin><Insets bottom="20.0" left="10.0" right="10.0" top="20.0" /></HBox.margin>
+                                        </VBox>
+
+                                    </children>
+                                </HBox>
+
+                                <HBox VBox.vgrow="NEVER"
+                                      minHeight="28"
+                                      maxHeight="28"
+                                      alignment="CENTER_LEFT">
+
+                                <children>
+
+                                    <VBox spacing="1" HBox.hgrow="ALWAYS">
+                                        <children>
+                                                <Label text="Event Coordinators">
+                                                    <font><Font name="Roboto Bold" size="16.0" /></font>
+                                                </Label>
+                                                <Label text="Manage Event Coordinator accounts" style="-fx-font-size: 11px;"/>
+                                            </children>
+                                        </VBox>
+                                        <MFXButton buttonType="RAISED" cancelButton="true"
+                                                   onAction="#onBtnAddCoord"
+                                                   prefHeight="28.0" prefWidth="136.0"
+                                                   rippleColor="#7a0ed9"
+                                                   style="-fx-background-color: #228be6;"
+                                                   text="Add Coordinator" textFill="WHITE">
+                                            <graphic>
+                                                <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image><Image url="@../icons/AddCoordinator.png" /></image>
+                                                </ImageView>
+                                            </graphic>
+                                            <font><Font name="Roboto Bold" size="12.0" /></font>
+                                        </MFXButton>
+                                    </children>
+                                    <padding><Insets bottom="8.0" left="10.0" right="10.0" top="8.0" /></padding>
+                                </HBox>
+                                <VBox VBox.vgrow="ALWAYS">
+                                    <VBox.margin><Insets bottom="10.0" left="10.0" right="10.0" /></VBox.margin>
+                                    <children>
+                                        <MFXPaginatedTableView fx:id="coordContainer"
+                                                               prefHeight="300.0"
+                                                               maxWidth="1.7976931348623157E308"
+                                                               maxHeight="1.7976931348623157E308"
+                                                               VBox.vgrow="ALWAYS"
+                                                               HBox.hgrow="ALWAYS">
+                                            <tableColumns>
+                                                <MFXTableColumn fx:id="colFirstName" text="First name" />
+                                                <MFXTableColumn fx:id="colLastName"  text="Last name" />
+                                                <MFXTableColumn fx:id="colEmail"     text="Email" />
+                                                <MFXTableColumn fx:id="colOptions"   text="Manage"
+                                                                prefWidth="120.0" minWidth="120.0" maxWidth="150.0" />
+                                            </tableColumns>
+                                        </MFXPaginatedTableView>
+                                    </children>
+                                </VBox>
+
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+                <Tab text="Events Overview">
+                    <content>
+                        <VBox VBox.vgrow="ALWAYS">
+                            <children>
+
+                                <HBox alignment="CENTER" fillHeight="false" VBox.vgrow="NEVER">
+                                    <children>
+
+                                        <VBox alignment="CENTER_LEFT" prefHeight="154.0"
+                                              style="-fx-background-color: white; -fx-background-radius: 15;"
+                                              styleClass="totalBoxes"
+                                              HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308">
+                                            <children>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="216.0">
+                                                    <children>
+                                                        <Label prefHeight="19.0" prefWidth="260.0" text="Total Coordinators">
+                                                            <font><Font name="Roboto Bold" size="12.0"/></font>
+                                                        </Label>
+                                                        <ImageView fitHeight="30.0" fitWidth="27.0" preserveRatio="true">
+                                                            <image><Image url="@../icons/user-5-128.png"/></image>
+                                                        </ImageView>
+                                                    </children>
+                                                </HBox>
+                                                <Label fx:id="lblStatus2" text="0">
+                                                    <font><Font name="Roboto Bold" size="24.0" /></font>
+                                                </Label>
+                                                <Label text="Active event coordinator" />
+                                            </children>
+                                            <padding><Insets left="10.0" right="10.0" /></padding>
+                                            <HBox.margin><Insets bottom="20.0" left="10.0" right="10.0" top="20.0" /></HBox.margin>
+                                        </VBox>
+
+                                        <VBox alignment="CENTER_LEFT" prefHeight="154.0"
+                                              style="-fx-background-color: white; -fx-background-radius: 15;"
+                                              styleClass="totalBoxes"
+                                              HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308">
+                                            <children>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="216.0">
+                                                    <children>
+                                                        <Label prefHeight="19.0" prefWidth="260.0" text="Total Coordinators">
+                                                            <font><Font name="Roboto Bold" size="12.0"/></font>
+                                                        </Label>
+                                                        <ImageView fitHeight="30.0" fitWidth="27.0" preserveRatio="true">
+                                                            <image><Image url="@../icons/user-5-128.png"/></image>
+                                                        </ImageView>
+                                                    </children>
+                                                </HBox>
+                                                <Label fx:id="lblStatus3" text="0">
+                                                    <font><Font name="Roboto Bold" size="24.0" /></font>
+                                                </Label>
+                                                <Label text="Managed by coordinators" />
+                                            </children>
+                                            <padding><Insets left="10.0" right="10.0" /></padding>
+                                            <HBox.margin><Insets bottom="20.0" left="10.0" right="10.0" top="20.0" /></HBox.margin>
+                                        </VBox>
+
+                                        <VBox alignment="CENTER_LEFT" prefHeight="154.0"
+                                              style="-fx-background-color: white; -fx-background-radius: 15;"
+                                              styleClass="totalBoxes"
+                                              HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308">
+                                            <children>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="216.0">
+                                                    <children>
+                                                        <Label prefHeight="19.0" prefWidth="260.0"  text="Next event" >
+                                                            <font><Font name="Roboto Bold" size="12.0" /></font>
+                                                        </Label>
+                                                        <ImageView fitHeight="30.0" fitWidth="27.0" preserveRatio="true">
+                                                            <image><Image url="@../icons/Upcoming.png" /></image>
+                                                        </ImageView>
+                                                    </children>
+                                                    <VBox.margin><Insets top="3.0" /></VBox.margin>
+                                                </HBox>
+                                                <Label fx:id="lblNextEvent1">
+                                                    <font><Font name="Roboto Bold" size="24.0" /></font>
+                                                </Label>
+                                            </children>
+                                            <padding><Insets left="10.0" right="10.0" /></padding>
+                                            <HBox.margin><Insets bottom="20.0" left="10.0" right="10.0" top="20.0" /></HBox.margin>
+                                        </VBox>
+
+                                    </children>
+                                </HBox>
+                                <!-- COMPACT HEADER ABOVE EVENTS TABLE -->
+                                <HBox VBox.vgrow="NEVER"
+                                      minHeight="28"
+                                      maxHeight="28"
+                                      alignment="CENTER_LEFT">
+
+                                    <children>
+                                        <Label text="Events">
+                                            <font><Font name="Roboto Bold" size="14.0"/></font>
+                                        </Label>
+                                    </children>
+
+                                    <padding>
+                                        <Insets top="2" bottom="2" left="10" right="10"/>
+                                    </padding>
+
+                                </HBox>
+                                <VBox VBox.vgrow="ALWAYS">
+                                    <VBox.margin><Insets bottom="10.0" left="10.0" right="10.0" /></VBox.margin>
+                                    <children>
+                                        <MFXPaginatedTableView fx:id="eventsContainer"
+                                                               prefHeight="300.0"
+                                                               maxWidth="1.7976931348623157E308"
+                                                               maxHeight="1.7976931348623157E308"
+                                                               VBox.vgrow="ALWAYS"
+                                                               HBox.hgrow="ALWAYS">
+                                            <tableColumns>
+                                                <MFXTableColumn fx:id="colTitle"        text="Title" />
+                                                <MFXTableColumn fx:id="colStartDate"    text="Start Date" />
+                                                <MFXTableColumn fx:id="colTickets"      text="Tickets Issued" />
+                                                <MFXTableColumn fx:id="colEventOptions" text="Manage"
+                                                                prefWidth="120.0" minWidth="120.0" maxWidth="150.0" />
+                                            </tableColumns>
+                                        </MFXPaginatedTableView>
+                                    </children>
+                                </VBox>
+
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+
+            </tabs>
+        </TabPane>
+    </center>
+
 </BorderPane>
+

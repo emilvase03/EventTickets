@@ -3,12 +3,14 @@ package dk.easv.eventtickets.GUI.Controllers;
 // Project imports
 import dk.easv.eventtickets.BE.Event;
 import dk.easv.eventtickets.BE.User;
+import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Models.UserModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 import dk.easv.eventtickets.GUI.Utils.ViewHandler;
 import dk.easv.eventtickets.BLL.UTIL.UserSession;
 
 // MaterialFX imports
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
@@ -20,29 +22,37 @@ import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class AdminDashboardController implements Initializable {
 
-    //Cordinators tab
+    //Coordinators tab
     @FXML private MFXPaginatedTableView<User> coordContainer;
-    @FXML private MFXTableColumn<User> colFirstName;
-    @FXML private MFXTableColumn<User> colLastName;
-    @FXML private MFXTableColumn<User> colEmail;
-    @FXML private MFXTableColumn<User> colOptions;
+    @FXML private MFXTableColumn<User>        colFirstName;
+    @FXML private MFXTableColumn<User>        colLastName;
+    @FXML private MFXTableColumn<User>        colEmail;
+    @FXML private MFXTableColumn<User>        colOptions;
 
-    //Events tab
+    //  Events tab
     @FXML private MFXPaginatedTableView<Event> eventsContainer;
-    private MFXTableColumn<Event> colTitle;
-    private MFXTableColumn<Event> colStartDate;
-    private MFXTableColumn<Event> colTickets;
+    @FXML private MFXTableColumn<Event>        colTitle;
+    @FXML private MFXTableColumn<Event>        colStartDate;
+    @FXML private MFXTableColumn<Event>        colTickets;
+    @FXML private MFXTableColumn<Event>        colEventOptions;
 
     private final UserModel userModel = new UserModel();
+    private EventModel eventModel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -54,13 +64,28 @@ public class AdminDashboardController implements Initializable {
             return;
         }
 
+
         setupCoordinatorsTable();
-        setupEventsTable();
-        loadContainer();
+        loadCoordinatorContainer();
         userModel.loadCoordinators();
 
+
+        try {
+            eventModel = new EventModel();
+        } catch (Exception e) {
+            AlertHelper.showError("Error", "Failed to initialize EventModel.");
+            return;
+        }
+
+        setupEventsTable();
+        eventsContainer.setItems(eventModel.getEvents());
+        loadEventContainer();
+        eventModel.loadAllEvents();
     }
 
+    /**
+     *Coordinators tab
+     */
 
     @FXML
     private void onBtnAddCoord(ActionEvent actionEvent) {
@@ -72,7 +97,6 @@ public class AdminDashboardController implements Initializable {
             ctrl.init(userModel);
 
             ViewHandler.NEW_COORDINATOR.showAndWait(false);
-
         } catch (Exception e) {
             e.printStackTrace();
             AlertHelper.showError("Error", "Failed to open NewCoordinatorView");
@@ -90,7 +114,6 @@ public class AdminDashboardController implements Initializable {
 
             ViewHandler.EDIT_COORDINATOR.showAndWait(false);
         } catch (Exception e) {
-
             AlertHelper.showError("Error", "Failed to open EditCoordinatorView");
         }
     }
@@ -109,26 +132,21 @@ public class AdminDashboardController implements Initializable {
         coordContainer.getSelectionModel().clearSelection();
     }
 
-    /**
-     * Set up for Coordinators tab
-     * */
-
     private void setupCoordinatorsTable() {
+        coordContainer.setItems(userModel.getCoordinators());
         createCoordinatorColumns();
-        addCoordinatorColumnsToTable();
         setupCoordinatorCellFactories();
         bindCoordinatorColumnWidths();
-        setupTableFilters();
+        setupCoordinatorTableFilters();
     }
 
-    public void loadContainer(){
+    public void loadCoordinatorContainer() {
         userModel.getCoordinators().addListener((ListChangeListener<User>) c ->
                 Platform.runLater(() -> {
                     coordContainer.setItems(null);
                     coordContainer.setItems(
                             FXCollections.observableArrayList(userModel.getCoordinators())
                     );
-
                     coordContainer.requestLayout();
                     coordContainer.setCurrentPage(1);
                 })
@@ -136,49 +154,36 @@ public class AdminDashboardController implements Initializable {
     }
 
     private void createCoordinatorColumns() {
-
-        colFirstName = new MFXTableColumn<>("First name", true, Comparator.comparing(User::getFirstName));
-        colLastName  = new MFXTableColumn<>("Last name",  true, Comparator.comparing(User::getLastName));
-        colEmail     = new MFXTableColumn<>("Email",      true, Comparator.comparing(User::getEmail));
-        colOptions   = new MFXTableColumn<>("Manage");
+        colFirstName.setComparator(Comparator.comparing(User::getFirstName));
+        colLastName.setComparator(Comparator.comparing(User::getLastName));
+        colEmail.setComparator(Comparator.comparing(User::getEmail));
 
         colOptions.setPrefWidth(80);
-        colOptions.setMinWidth(40);
+        colOptions.setMinWidth(80);
         colOptions.setMaxWidth(80);
     }
 
-    private void addCoordinatorColumnsToTable() {
-        coordContainer.getTableColumns().addAll(
-                colFirstName,
-                colLastName,
-                colEmail,
-                colOptions
-        );
-        coordContainer.setItems(userModel.getCoordinators());
-    }
-       //move to fxml later
     private void setupCoordinatorCellFactories() {
-
         colFirstName.setRowCellFactory(u -> new MFXTableRowCell<>(User::getFirstName));
         colLastName.setRowCellFactory(u -> new MFXTableRowCell<>(User::getLastName));
         colEmail.setRowCellFactory(u -> new MFXTableRowCell<>(User::getEmail));
 
         colOptions.setRowCellFactory(item -> new MFXTableRowCell<>(u -> "") {
 
-            final MenuButton menu;
             private User currentUser = item;
 
+            final MFXButton btnEdit   = createIconButton("BlueEdit.png",    "Edit ");
+            final MFXButton btnDelete = createIconButton("delete-128.png",  "Delete ");
+            final HBox box;
+
             {
-                MenuItem edit   = new MenuItem("Edit");
-                MenuItem delete = new MenuItem("Delete");
+                btnEdit.setOnAction(e -> onBtnEditUser(currentUser));
+                btnDelete.setOnAction(e -> onBtnDeleteUser(currentUser));
 
-                edit.setOnAction(e   -> onBtnEditUser(currentUser));
-                delete.setOnAction(e -> onBtnDeleteUser(currentUser));
-
-                menu = new MenuButton("⋮");
-                menu.getItems().addAll(edit, delete);
-
-                setGraphic(menu);
+                box = new HBox(6, btnEdit, btnDelete);
+                box.setAlignment(Pos.CENTER);
+                box.setPadding(new Insets(0, 4, 0, 4));
+                setGraphic(box);
             }
 
             @Override
@@ -190,48 +195,68 @@ public class AdminDashboardController implements Initializable {
     }
 
     private void bindCoordinatorColumnWidths() {
-
-        var available = coordContainer
-                .widthProperty()
+        var available = coordContainer.widthProperty()
                 .subtract(colOptions.widthProperty());
 
-        colFirstName.prefWidthProperty().bind(available.multiply(0.32));
-        colLastName.prefWidthProperty().bind(available.multiply(0.35));
-        colEmail.prefWidthProperty().bind(available.multiply(0.27));
+        colFirstName.prefWidthProperty().bind(available.multiply(0.33));
+        colLastName.prefWidthProperty().bind(available.multiply(0.30));
+        colEmail.prefWidthProperty().bind(available.multiply(0.30));
     }
 
+    private void setupCoordinatorTableFilters() {
+        coordContainer.getFilters().addAll();
+        coordContainer.getFilters().addListener((ListChangeListener<Object>) change ->
+                Platform.runLater(() -> coordContainer.setCurrentPage(1))
+        );
+    }
+
+
+
     /**
-     * Set up for Events tab
-     * */
+     * Evets tab
+     */
+
+
+    private void onBtnDeleteEvent(Event currentEvent) {
+
+    }
+
+    private void onBtnAssignCoordinator(Event currentEvent) {
+
+    }
 
 
     private void setupEventsTable() {
         createEventColumns();
-        addEventColumnsToTable();
         setupEventCellFactories();
         bindEventColumnWidths();
         setupEventsTableFilters();
     }
 
-
-    private void createEventColumns() {
-        colTitle     = new MFXTableColumn<>("Title", true, Comparator.comparing(Event::getTitle));
-        colStartDate = new MFXTableColumn<>("Start Date", true, Comparator.comparing(Event::getStartDate));
-        colTickets   = new MFXTableColumn<>("Tickets Issued");
-
-    }
-
-    private void addEventColumnsToTable() {
-        eventsContainer.getTableColumns().addAll(
-                colTitle,
-                colStartDate,
-                colTickets
+    public void loadEventContainer() {
+        eventModel.getEvents().addListener((ListChangeListener<Event>) c ->
+                Platform.runLater(() -> {
+                    eventsContainer.setItems(null);
+                    eventsContainer.setItems(
+                            FXCollections.observableArrayList(eventModel.getEvents())
+                    );
+                    eventsContainer.requestLayout();
+                    eventsContainer.setCurrentPage(1);
+                })
         );
     }
 
 
-    private void setupEventCellFactories() {
+    private void createEventColumns() {
+        colTitle.setComparator(Comparator.comparing(Event::getTitle));
+        colStartDate.setComparator(Comparator.comparing(Event::getStartDate));
 
+        colEventOptions.setPrefWidth(80);
+        colEventOptions.setMinWidth(80);
+        colEventOptions.setMaxWidth(80);
+    }
+
+    private void setupEventCellFactories() {
         colTitle.setRowCellFactory(e ->
                 new MFXTableRowCell<>(Event::getTitle)
         );
@@ -242,42 +267,54 @@ public class AdminDashboardController implements Initializable {
                 )
         );
 
-
         colTickets.setRowCellFactory(e ->
                 new MFXTableRowCell<>(event ->
                         event.getTicketsIssued() + " / " + event.getTotalTickets()
                 )
         );
+
+        colEventOptions.setRowCellFactory(item -> new MFXTableRowCell<Event, String>(event -> "") {
+
+            private Event currentEvent;
+
+            final MFXButton btnAssign      = createIconButton("Assign.png",    "Assign coordinator");
+            final MFXButton btnDeleteEvent = createIconButton("delete-128.png",  "Delete event");
+            final HBox box;
+
+            {
+                btnAssign.setOnAction(ev -> onBtnAssignCoordinator(currentEvent));
+                btnDeleteEvent.setOnAction(ev -> onBtnDeleteEvent(currentEvent));
+
+                box = new HBox(6, btnAssign, btnDeleteEvent);
+                box.setAlignment(Pos.CENTER);
+                box.setPadding(new Insets(0, 4, 0, 4));
+                setGraphic(box);
+            }
+
+            @Override
+            public void update(Event event) {
+                super.update(event);
+                currentEvent = event;
+            }
+        });
     }
 
     private void bindEventColumnWidths() {
-
-        var available = eventsContainer.widthProperty();
+        var available = eventsContainer.widthProperty()
+                .subtract(colEventOptions.widthProperty());
 
         colTitle.prefWidthProperty().bind(available.multiply(0.33));
-        colStartDate.prefWidthProperty().bind(available.multiply(0.33));
-        colTickets.prefWidthProperty().bind(available.multiply(0.34));
+        colStartDate.prefWidthProperty().bind(available.multiply(0.30));
+        colTickets.prefWidthProperty().bind(available.multiply(0.30));
     }
-
 
     private void setupEventsTableFilters() {
         eventsContainer.getFilters().addAll();
-
         eventsContainer.getFilters().addListener((ListChangeListener<Object>) change ->
                 Platform.runLater(() -> eventsContainer.setCurrentPage(1))
         );
     }
 
-
-
-
-    private void setupTableFilters() {
-        coordContainer.getFilters().addAll();
-
-        coordContainer.getFilters().addListener((ListChangeListener<Object>) change ->
-                Platform.runLater(() -> coordContainer.setCurrentPage(1))
-        );
-    }
 
     @FXML
     private void onBtnLogOut(ActionEvent actionEvent) {
@@ -286,11 +323,31 @@ public class AdminDashboardController implements Initializable {
                 "Are you sure you want to log out?"
         );
 
-        if (!confirmed)
-            return;
+        if (!confirmed) return;
 
         UserSession.getInstance().clear();
         ViewHandler.ADMIN_DASHBOARD.close();
         ViewHandler.LOGIN.show(false);
+    }
+
+
+    private MFXButton createIconButton(String fileName,  String tooltip) {
+        MFXButton btn = new MFXButton("");
+
+        try {
+            Image image = new Image(
+                    Objects.requireNonNull(getClass().getResourceAsStream("/icons/" + fileName))
+            );
+            ImageView icon = new ImageView(image);
+            icon.setFitWidth(18);
+            icon.setFitHeight(18);
+            btn.setGraphic(icon);
+        } catch (Exception e) {
+            System.err.println("⚠ Icon not found: " + fileName);
+            btn.setText("?");
+        }
+
+        btn.setTooltip(new Tooltip(tooltip));
+        return btn;
     }
 }

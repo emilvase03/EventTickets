@@ -4,19 +4,33 @@ package dk.easv.eventtickets.GUI.Models;
 import dk.easv.eventtickets.BE.Event;
 import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.BLL.EventManager;
+import dk.easv.eventtickets.GUI.Utils.BackgroundExecutor;
 
 // Java imports
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import java.util.List;
 
 public class EventModel {
-    EventManager eventManager;
+
+    private final EventManager eventManager;
+    private final ObservableList<Event> allEvents = FXCollections.observableArrayList();
 
     public EventModel() throws Exception {
         eventManager = new EventManager();
     }
 
-    public List<Event> getAllEvents() throws Exception {
-        return eventManager.getAllEvents();
+    public void loadAllEvents() {
+        BackgroundExecutor.execute(
+                () -> eventManager.getAllEvents(),
+                result -> allEvents.setAll(result),
+                e -> { throw new RuntimeException("Failed to load events", e); },
+                ignored -> {}
+        );
+    }
+
+    public ObservableList<Event> getEvents() {
+        return allEvents;
     }
 
     public List<Event> getMyEvents(User currentUser) throws Exception {
@@ -34,5 +48,4 @@ public class EventModel {
     public void deleteEvent(Event event) throws Exception {
         eventManager.deleteEvent(event);
     }
-
 }

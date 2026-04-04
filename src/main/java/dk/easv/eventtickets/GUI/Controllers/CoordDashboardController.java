@@ -2,10 +2,12 @@ package dk.easv.eventtickets.GUI.Controllers;
 
 // Project imports
 import dk.easv.eventtickets.BE.Event;
+import dk.easv.eventtickets.BE.TicketData;
 import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.BLL.UTIL.UserSession;
 import dk.easv.eventtickets.GUI.Controllers.Components.CardController;
 import dk.easv.eventtickets.GUI.Controllers.Components.EventFilterController;
+import dk.easv.eventtickets.GUI.Controllers.Components.TicketController;
 import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Models.Filter;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
@@ -141,7 +143,7 @@ public class CoordDashboardController {
         });
     }
 
-    public void launchTicketsWindow(int ticketsAmount, boolean specialTicket) {
+    public void launchTicketsWindow(int ticketsAmount, TicketData ticketData) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/PrintTicketsView.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
@@ -152,17 +154,19 @@ public class CoordDashboardController {
 
 
             String ticketPath;
-            if (!specialTicket) {
+            if (!ticketData.isSpecial()) {
                 ticketPath = "/components/NormalTicket.fxml";
             } else {
                 ticketPath = "/components/SpecialTicket.fxml";
             }
 
+            PrintTicketController printController = fxmlLoader.getController();
+
             for (int i = 0; i < ticketsAmount; i++) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(ticketPath));
+                loader.setController(new TicketController(ticketData));
                 Parent ticketRoot = loader.load();
-                PrintTicketController controller = fxmlLoader.getController();
-                controller.getTicketsContainer().getChildren().add(ticketRoot);
+                printController.getTicketsContainer().getChildren().add(ticketRoot);
             }
         } catch (Exception e) {
             AlertHelper.showError("Error", "Failed to display tickets." + e.getMessage());

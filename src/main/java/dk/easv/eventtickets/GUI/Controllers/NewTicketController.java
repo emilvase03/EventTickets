@@ -2,6 +2,7 @@ package dk.easv.eventtickets.GUI.Controllers;
 
 // Project imports
 import dk.easv.eventtickets.BE.Event;
+import dk.easv.eventtickets.BE.TicketData;
 import dk.easv.eventtickets.BLL.UTIL.UserSession;
 import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
@@ -22,12 +23,14 @@ import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 public class NewTicketController implements Initializable {
     @FXML private MFXTextField txtTitle;
     @FXML private MFXTextField txtCustomerName;
-    @FXML private MFXComboBox<String> comboBoxEvent;
+    @FXML private MFXComboBox<Event> comboBoxEvent;
     @FXML private MFXComboBox<String> comboBoxDiscount;
     @FXML private MFXTextField txtAmountTickets;
     @FXML private MFXToggleButton toggleSpecialTicket;
@@ -95,14 +98,45 @@ public class NewTicketController implements Initializable {
 
     private void printTickets(int ticketsAmount, boolean specialTicket) {
         try {
+            TicketData ticketData;
+            Event event = comboBoxEvent.getSelectionModel().getSelectedItem();
+
+            if (specialTicket) {
+                ticketData = new TicketData(
+                        true,
+                        null,
+                        null,
+                        null,
+                        event.getTitle(),
+                        null,
+                        null,
+                        event.getStreet() + ", " + event.getZipCode(),
+                        txtTitle.getText().trim(),
+                        comboBoxDiscount.getSelectedItem()
+                );
+            } else {
+                ticketData = new TicketData(
+                        false,
+                        txtExtraOption.getText().trim(),
+                        txtCustomerName.getText().trim(),
+                        txtCustomerEmail.getText().trim(),
+                        event.getTitle(),
+                        event.getStartDate(),
+                        event.getStartTime(),
+                        event.getStreet() + ", " + event.getZipCode(),
+                        txtTitle.getText().trim(),
+                        comboBoxDiscount.getSelectedItem()
+                );
+            }
+
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/CoordDashboardView.fxml"));
             fxmlLoader.load();
             CoordDashboardController controller = fxmlLoader.getController();
-            controller.launchTicketsWindow(ticketsAmount, specialTicket);
+            controller.launchTicketsWindow(ticketsAmount, ticketData);
 
             handleClose();
         } catch (IOException e) {
-            AlertHelper.showError("Error", "Confirmation error - could not create tickets.");
+            AlertHelper.showError("Error", "Confirmation error - could not create tickets");
         }
     }
 
@@ -130,35 +164,38 @@ public class NewTicketController implements Initializable {
     }
 
     private void updateTicketState(boolean isSelected) {
+        Event noEvent = new Event(-1, "No Event", 0, 0, LocalDate.MIN, LocalTime.MIN, LocalDate.MIN, LocalTime.MIN, "No Event", "0000", "No Event", "No Event");
+
         if (isSelected) {
             txtTitle.setVisible(true);
             txtCustomerName.setVisible(false);
             comboBoxDiscount.setVisible(true);
             txtCustomerEmail.setVisible(false);
             txtExtraOption.setVisible(false);
-            comboBoxEvent.getItems().add("No event");
+            comboBoxEvent.getItems().add(noEvent);
         } else {
             txtTitle.setVisible(false);
             txtCustomerName.setVisible(true);
             comboBoxDiscount.setVisible(false);
             txtCustomerEmail.setVisible(true);
             txtExtraOption.setVisible(true);
-            comboBoxEvent.getItems().removeIf(item -> item.equals("No event"));
+            comboBoxEvent.getItems().remove(noEvent);
         }
     }
 
     private void setupAvailableEvents() {
         try {
             for (Event e : eventModel.getMyEvents(UserSession.getInstance().getCurrentUser()))
-                comboBoxEvent.getItems().add(e.getTitle());
+                comboBoxEvent.getItems().add(e);
         } catch (Exception e) {
             AlertHelper.showError("Error", "Failed to retrieve event titles for current user");
         }
     }
 
-    public void preloadWindow(String eventTitle) {
-        if (!eventTitle.isBlank())
-            comboBoxEvent.getSelectionModel().selectItem(eventTitle);
+    public void preloadWindow(Event event) {
+        if (event != null) {
+            comboBoxEvent.getSelectionModel().selectItem(event);
+        }
     }
 
     private void handleClose() {

@@ -107,7 +107,7 @@ public class CardController {
     @FXML
     private void handlePrintTickets(ActionEvent event) {
         ViewHandler.NEW_TICKET.preLoad();
-        ViewHandler.NEW_TICKET.<NewTicketController>getController().preloadWindow(lblTitle.getText());
+        ViewHandler.NEW_TICKET.<NewTicketController>getController().preloadWindow(currentEvent);
         ViewHandler.NEW_TICKET.show(false);
     }  
       

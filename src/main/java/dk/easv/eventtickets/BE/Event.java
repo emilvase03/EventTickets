@@ -162,4 +162,19 @@ public class Event {
     private void setTicketsIssued(int ticketsIssued) {
             this.ticketsIssued = ticketsIssued;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if(!(o instanceof Event))
+            return false;
+        Event event = (Event) o;
+        return this.id == event.getId();
+    }
+
+    @Override
+    public String toString() {
+        return getTitle();
+    }
 }

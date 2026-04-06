@@ -7,6 +7,8 @@ import dk.easv.eventtickets.BLL.EventManager;
 import dk.easv.eventtickets.GUI.Utils.BackgroundExecutor;
 
 // Java imports
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.List;
@@ -15,7 +17,6 @@ public class EventModel {
 
     private final EventManager eventManager;
     private final ObservableList<Event> allEvents = FXCollections.observableArrayList();
-
     public EventModel() throws Exception {
         eventManager = new EventManager();
     }
@@ -45,7 +46,18 @@ public class EventModel {
         eventManager.updateEvent(event);
     }
 
-    public void deleteEvent(Event event) throws Exception {
-        eventManager.deleteEvent(event);
+    public void deleteEvent(Event event) {
+        BackgroundExecutor.execute(
+                () -> {
+                    eventManager.deleteEvent(event);
+                    return null;
+                },
+                result -> {
+                    allEvents.remove(event);
+                },
+                e -> {
+                    throw new RuntimeException("Failed to delete event", e);
+                }
+        );
     }
 }

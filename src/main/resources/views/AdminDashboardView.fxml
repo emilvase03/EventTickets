@@ -190,6 +190,7 @@
                                     <VBox.margin><Insets bottom="10.0" left="10.0" right="10.0" /></VBox.margin>
                                     <children>
                                         <MFXPaginatedTableView fx:id="coordContainer"
+                                                               stylesheets="@../css/style.css"
                                                                prefHeight="300.0"
                                                                maxWidth="1.7976931348623157E308"
                                                                maxHeight="1.7976931348623157E308"
@@ -313,6 +314,7 @@
                                     <VBox.margin><Insets bottom="10.0" left="10.0" right="10.0" /></VBox.margin>
                                     <children>
                                         <MFXPaginatedTableView fx:id="eventsContainer"
+                                                               stylesheets="@../css/style.css"
                                                                prefHeight="300.0"
                                                                maxWidth="1.7976931348623157E308"
                                                                maxHeight="1.7976931348623157E308"

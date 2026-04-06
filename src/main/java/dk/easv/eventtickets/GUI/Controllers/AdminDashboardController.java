@@ -14,8 +14,12 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
+import io.github.palexdev.materialfx.filter.StringFilter;
+import io.github.palexdev.materialfx.filter.base.AbstractFilter;
+import javafx.collections.ListChangeListener;
 
 // Java imports
+import io.github.palexdev.materialfx.filter.StringFilter;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -152,6 +156,20 @@ public class AdminDashboardController implements Initializable {
                 })
         );
     }
+    private void setupCoordinatorTableFilters() {
+
+        coordContainer.getFilters().addAll(
+                new StringFilter<>("First name", User::getFirstName),
+                new StringFilter<>("Last name", User::getLastName),
+                new StringFilter<>("Email", User::getEmail)
+        );
+
+        coordContainer.getFilters().addListener(
+                (ListChangeListener<? super AbstractFilter<User, ?>>) change ->
+                        Platform.runLater(() -> coordContainer.setCurrentPage(1))
+        );
+    }
+
 
     private void createCoordinatorColumns() {
         colFirstName.setComparator(Comparator.comparing(User::getFirstName));
@@ -203,21 +221,29 @@ public class AdminDashboardController implements Initializable {
         colEmail.prefWidthProperty().bind(available.multiply(0.30));
     }
 
-    private void setupCoordinatorTableFilters() {
-        coordContainer.getFilters().addAll();
-        coordContainer.getFilters().addListener((ListChangeListener<Object>) change ->
-                Platform.runLater(() -> coordContainer.setCurrentPage(1))
-        );
-    }
-
-
-
     /**
      * Evets tab
      */
 
 
-    private void onBtnDeleteEvent(Event currentEvent) {
+    private void onBtnDeleteEvent(Event event) {
+        if (event == null) return;
+
+        boolean confirmed = AlertHelper.showConfirmation(
+                "Delete Event",
+                "Are you sure you want to delete the event \"" + event.getTitle() + "\"?"
+        );
+
+
+        if (!confirmed) return;
+
+        try {
+            eventModel.deleteEvent(event);
+            eventsContainer.getSelectionModel().clearSelection();
+        } catch (Exception e) {
+            AlertHelper.showError("Error", "Failed to delete event.");
+            e.printStackTrace();
+        }
 
     }
 
@@ -245,7 +271,6 @@ public class AdminDashboardController implements Initializable {
                 })
         );
     }
-
 
     private void createEventColumns() {
         colTitle.setComparator(Comparator.comparing(Event::getTitle));
@@ -309,12 +334,13 @@ public class AdminDashboardController implements Initializable {
     }
 
     private void setupEventsTableFilters() {
-        eventsContainer.getFilters().addAll();
-        eventsContainer.getFilters().addListener((ListChangeListener<Object>) change ->
-                Platform.runLater(() -> eventsContainer.setCurrentPage(1))
+
+        eventsContainer.getFilters().addAll(
+                new StringFilter<>("Title", Event::getTitle),
+                new StringFilter<>("Starts", e -> e.getStartDate().toString()),
+                new StringFilter<>("Tickets", e -> String.valueOf(e.getTicketsIssued()))
         );
     }
-
 
     @FXML
     private void onBtnLogOut(ActionEvent actionEvent) {
@@ -329,7 +355,6 @@ public class AdminDashboardController implements Initializable {
         ViewHandler.ADMIN_DASHBOARD.close();
         ViewHandler.LOGIN.show(false);
     }
-
 
     private MFXButton createIconButton(String fileName,  String tooltip) {
         MFXButton btn = new MFXButton("");

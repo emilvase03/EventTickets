@@ -126,25 +126,3 @@ Ticket Styling
 #specialTicketBg {
     -fx-background-color: #F0EDCC;
 }
-
-/**
- * ─── MFXPaginatedTableView  —  compact bottom bar ───────────────────────────
- *
- * The hierarchy inside the control is:
- *   MFXPaginatedTableView
- *     └─ HBox  (the bottom bar — no published style class, so we target it
- *               as a direct HBox child)
- *          ├─ filter icon buttons
- *          └─ MFXPaginator
- *               └─ MFXPaginationWrapper
- */
-
-/* Outer bottom bar */
-.mfx-paginated-table-view > .bottom-bar,
-.mfx-paginated-table-view > HBox {
-    -fx-min-height:  32 !important;
-    -fx-pref-height: 32 !important;
-    -fx-max-height:  32 !important;
-    -fx-padding:      2 6 2 6 !important;
-    -fx-alignment:   center-left;
-}

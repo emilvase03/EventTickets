@@ -129,13 +129,9 @@ Ticket Styling
 
 
 
-
-
-
-
-/* ============================================================
-   ICON BUTTONS (filters, actions)
-   ============================================================ */
+/*
+Admin dashboard
+*/
 
 .icon-button {
     -fx-background-color: transparent;
@@ -153,30 +149,17 @@ Ticket Styling
 }
 
 
-/* ============================================================
-   TABLE VIEW – TRANSPARENT, LIST-LIKE
-   ============================================================ */
-
 .table-view {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-background-insets: 0;
 }
-/* ============================================================
-   FILTER DIALOG – FLOATING SURFACE
-   ============================================================ */
 
 .filter-pane {
-    /* Slightly stronger surface than table */
     -fx-background-color: rgba(255, 255, 255, 0.98);
-
-    /* Rounded like cards */
     -fx-background-radius: 14;
-
-    /* Inner spacing */
     -fx-padding: 14 16 16 16;
 
-    /* STRONGER elevation than table */
     -fx-effect: dropshadow(
             gaussian,
             rgba(0, 0, 0, 0.28),

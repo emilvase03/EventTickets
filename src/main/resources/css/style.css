@@ -126,3 +126,74 @@ Ticket Styling
 #specialTicketBg {
     -fx-background-color: #F0EDCC;
 }
+
+
+
+
+
+
+
+/* ============================================================
+   ICON BUTTONS (filters, actions)
+   ============================================================ */
+
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-padding: 6;
+    -fx-min-width: 32;
+    -fx-min-height: 32;
+}
+
+.icon-button:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.05);
+}
+
+.icon-button.danger:hover {
+    -fx-background-color: rgba(239, 68, 68, 0.12);
+}
+
+
+/* ============================================================
+   TABLE VIEW – TRANSPARENT, LIST-LIKE
+   ============================================================ */
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+}
+/* ============================================================
+   FILTER DIALOG – FLOATING SURFACE
+   ============================================================ */
+
+.filter-pane {
+    /* Slightly stronger surface than table */
+    -fx-background-color: rgba(255, 255, 255, 0.98);
+
+    /* Rounded like cards */
+    -fx-background-radius: 14;
+
+    /* Inner spacing */
+    -fx-padding: 14 16 16 16;
+
+    /* STRONGER elevation than table */
+    -fx-effect: dropshadow(
+            gaussian,
+            rgba(0, 0, 0, 0.28),
+            36,
+            0.30,
+            0,
+            14
+    );
+}
+.text-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ef4444;
+    -fx-font-weight: 600;
+}
+
+.text-button:hover {
+    -fx-background-color: rgba(239, 68, 68, 0.08);
+}
+
+

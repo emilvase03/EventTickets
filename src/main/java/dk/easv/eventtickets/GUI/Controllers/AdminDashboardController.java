@@ -3,63 +3,78 @@ package dk.easv.eventtickets.GUI.Controllers;
 // Project imports
 import dk.easv.eventtickets.BE.Event;
 import dk.easv.eventtickets.BE.User;
+import dk.easv.eventtickets.BLL.UTIL.UserSession;
 import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Models.UserModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 import dk.easv.eventtickets.GUI.Utils.ViewHandler;
-import dk.easv.eventtickets.BLL.UTIL.UserSession;
 
 // MaterialFX imports
 import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
-import io.github.palexdev.materialfx.controls.MFXTableColumn;
-import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
-import io.github.palexdev.materialfx.filter.StringFilter;
-import io.github.palexdev.materialfx.filter.base.AbstractFilter;
-import javafx.collections.ListChangeListener;
+import io.github.palexdev.materialfx.controls.MFXPopup;
 
-// Java imports
-import io.github.palexdev.materialfx.filter.StringFilter;
+// javafx imports
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
+//Java imports
 import java.net.URL;
-import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+
 public class AdminDashboardController implements Initializable {
-
-    //Coordinators tab
-    @FXML private MFXPaginatedTableView<User> coordContainer;
-    @FXML private MFXTableColumn<User>        colFirstName;
-    @FXML private MFXTableColumn<User>        colLastName;
-    @FXML private MFXTableColumn<User>        colEmail;
-    @FXML private MFXTableColumn<User>        colOptions;
-
-    //  Events tab
-    @FXML private MFXPaginatedTableView<Event> eventsContainer;
-    @FXML private MFXTableColumn<Event>        colTitle;
-    @FXML private MFXTableColumn<Event>        colStartDate;
-    @FXML private MFXTableColumn<Event>        colTickets;
-    @FXML private MFXTableColumn<Event>        colEventOptions;
 
     private final UserModel userModel = new UserModel();
     private EventModel eventModel;
 
+    //COORDINATORS
+
+    @FXML private TableView<User> coordinatorsContainer;
+    @FXML private TableColumn<User, String> colFirstName;
+    @FXML private TableColumn<User, String> colLastName;
+    @FXML private TableColumn<User, String> colEmail;
+    @FXML private TableColumn<User, Void> colManageCoord;
+
+    @FXML private MFXButton btnOpenCoordFilters;
+    @FXML private MFXButton btnClearCoordFilters;
+
+    private FilteredList<User> filteredUsers;
+    private MFXPopup coordinatorFilterPopup;
+    private TextField tfFilterFirst;
+    private TextField tfFilterLast;
+    private TextField tfFilterEmail;
+
+  //EVENTS
+
+    @FXML private TableView<Event> eventsContainer;
+    @FXML private TableColumn<Event, String> colTitle;
+    @FXML private TableColumn<Event, String> colStartDate;
+    @FXML private TableColumn<Event, String> colTickets;
+    @FXML private TableColumn<Event, Void> colManageEvents;
+
+    @FXML private MFXButton btnOpenEventFilters;
+    @FXML private MFXButton btnClearEventFilters;
+
+    private FilteredList<Event> filteredEvents;
+    private MFXPopup eventFilterPopup;
+    private TextField tfEventTitle;
+    private TextField tfEventStartDate;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         if (!UserSession.getInstance().isLoggedIn()) {
             Platform.runLater(() -> {
                 ViewHandler.ADMIN_DASHBOARD.close();
@@ -68,42 +83,270 @@ public class AdminDashboardController implements Initializable {
             return;
         }
 
-
-        setupCoordinatorsTable();
-        loadCoordinatorContainer();
+        setupCoordinatorTable();
+        setupCoordinatorFilterPopup();
+        setupCoordinatorFiltering();
         userModel.loadCoordinators();
-
 
         try {
             eventModel = new EventModel();
         } catch (Exception e) {
-            AlertHelper.showError("Error", "Failed to initialize EventModel.");
+            AlertHelper.showError("Error", "Failed to initialize EventModel");
             return;
         }
 
-        setupEventsTable();
-        eventsContainer.setItems(eventModel.getEvents());
-        loadEventContainer();
+        setupEventTable();
+        setupEventFilterPopup();
+        setupEventFiltering();
         eventModel.loadAllEvents();
     }
 
-    /**
-     *Coordinators tab
-     */
+    // try to move to fxml again
+
+    private void setupCoordinatorTable() {
+
+        colFirstName.setCellValueFactory(d ->
+                new SimpleStringProperty(d.getValue().getFirstName()));
+
+        colLastName.setCellValueFactory(d ->
+                new SimpleStringProperty(d.getValue().getLastName()));
+
+        colEmail.setCellValueFactory(d ->
+                new SimpleStringProperty(d.getValue().getEmail()));
+
+        colManageCoord.setCellFactory(col -> new TableCell<>() {
+
+            private final MFXButton btnEdit =
+                    createIconButton("BlueEdit.png", "Edit coordinator");
+            private final MFXButton btnDelete =
+                    createIconButton("delete-128.png", "Delete coordinator");
+
+            private final HBox box = new HBox(6, btnEdit, btnDelete);
+
+            {
+                box.setAlignment(Pos.CENTER);
+
+                btnEdit.setOnAction(e ->
+                        onBtnEditUser(getSafeItem(getIndex(), coordinatorsContainer)));
+
+                btnDelete.setOnAction(e ->
+                        onBtnDeleteUser(getSafeItem(getIndex(), coordinatorsContainer)));
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : box);
+            }
+        });
+    }
+    private void setupCoordinatorFilterPopup() {
+
+        tfFilterFirst = new TextField();
+        tfFilterFirst.setPromptText("First name");
+
+        tfFilterLast = new TextField();
+        tfFilterLast.setPromptText("Last name");
+
+        tfFilterEmail = new TextField();
+        tfFilterEmail.setPromptText("Email");
+
+        MFXButton popupClearBtn = new MFXButton("Clear filters");
+        popupClearBtn.getStyleClass().add("text-button");
+
+        popupClearBtn.setOnAction(e -> {
+            clearCoordinatorFilters();
+            coordinatorFilterPopup.hide();
+        });
+
+        VBox pane = new VBox(10,
+                new Label("Filter by"),
+                tfFilterFirst,
+                tfFilterLast,
+                tfFilterEmail,
+                popupClearBtn
+        );
+        pane.getStyleClass().add("filter-pane");
+
+        coordinatorFilterPopup = new MFXPopup(pane);
+
+        btnOpenCoordFilters.setOnAction(e -> {
+            coordinatorFilterPopup.show(coordinatorsContainer);
+            Platform.runLater(() -> {
+
+                double popupWidth = pane.getBoundsInLocal().getWidth();
+                double tableWidth = coordinatorsContainer.getBoundsInLocal().getWidth();
+
+                pane.setTranslateX((tableWidth - popupWidth) / 2);
+                pane.setTranslateY(-pane.getBoundsInLocal().getHeight() - 12);
+            });
+        });
+        btnClearCoordFilters.setOnAction(e -> clearCoordinatorFilters());
+    }
+
+    private void setupCoordinatorFiltering() {
+
+        filteredUsers = new FilteredList<>(
+                userModel.getCoordinators(), u -> true);
+
+        coordinatorsContainer.setItems(filteredUsers);
+
+        ChangeListener<String> listener =
+                (obs, o, n) -> applyCoordinatorFilter();
+
+        tfFilterFirst.textProperty().addListener(listener);
+        tfFilterLast.textProperty().addListener(listener);
+        tfFilterEmail.textProperty().addListener(listener);
+    }
+
+    private void applyCoordinatorFilter() {
+
+        String first = tfFilterFirst.getText().toLowerCase();
+        String last  = tfFilterLast.getText().toLowerCase();
+        String email = tfFilterEmail.getText().toLowerCase();
+
+        filteredUsers.setPredicate(u ->
+                (first.isEmpty() || u.getFirstName().toLowerCase().contains(first)) &&
+                        (last.isEmpty()  || u.getLastName().toLowerCase().contains(last)) &&
+                        (email.isEmpty() || u.getEmail().toLowerCase().contains(email))
+        );
+    }
+
+    private void clearCoordinatorFilters() {
+        tfFilterFirst.clear();
+        tfFilterLast.clear();
+        tfFilterEmail.clear();
+    }
+
+    private void setupEventTable() {
+
+        colTitle.setCellValueFactory(d ->
+                new SimpleStringProperty(d.getValue().getTitle()));
+
+        colStartDate.setCellValueFactory(d ->
+                new SimpleStringProperty(d.getValue().getStartDate().toString()));
+
+        colTickets.setCellValueFactory(d ->
+                new SimpleStringProperty(
+                        d.getValue().getTicketsIssued() + " / " +
+                                d.getValue().getTotalTickets()));
+
+        colManageEvents.setCellFactory(col -> new TableCell<>() {
+
+            private final MFXButton btnAssign =
+                    createIconButton("Assign.png", "Assign coordinator");
+            private final MFXButton btnDelete =
+                    createIconButton("delete-128.png", "Delete event");
+
+            private final HBox box = new HBox(6, btnAssign, btnDelete);
+
+            {
+                box.setAlignment(Pos.CENTER);
+
+                btnAssign.setOnAction(e ->
+                        onBtnAssignCoordinator(getSafeItem(getIndex(), eventsContainer)));
+
+                btnDelete.setOnAction(e ->
+                        onBtnDeleteEvent(getSafeItem(getIndex(), eventsContainer)));
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : box);
+            }
+        });
+    }
+
+    private void setupEventFilterPopup() {
+
+        tfEventTitle = new TextField();
+        tfEventTitle.setPromptText("Event title");
+
+        tfEventStartDate = new TextField();
+        tfEventStartDate.setPromptText("Start date");
+        MFXButton popupClearBtn = new MFXButton("Clear filters");
+        popupClearBtn.getStyleClass().add("text-button");
+
+        popupClearBtn.setOnAction(e -> {
+            clearEventFilters();
+            eventFilterPopup.hide();
+        });
+
+        VBox pane = new VBox(10,
+                new Label("Filter by"),
+                tfEventTitle,
+                tfEventStartDate,
+                popupClearBtn
+        );
+        pane.getStyleClass().add("filter-pane");
+
+        eventFilterPopup = new MFXPopup(pane);
+        eventFilterPopup.setAutoHide(true);
+        btnOpenEventFilters.setOnAction(e -> {
+            eventFilterPopup.show(eventsContainer);
+            Platform.runLater(() -> {
+
+                double popupWidth = pane.getBoundsInLocal().getWidth();
+                double popupHeight = pane.getBoundsInLocal().getHeight();
+                double tableWidth = eventsContainer.getBoundsInLocal().getWidth();
+                pane.setTranslateX((tableWidth - popupWidth) / 2);
+                pane.setTranslateY(-popupHeight - 12);
+            });
+        });
+        btnClearEventFilters.setOnAction(e -> {
+            clearEventFilters();
+            eventFilterPopup.hide();
+        });
+    }
+
+    private void setupEventFiltering() {
+
+        filteredEvents = new FilteredList<>(
+                eventModel.getEvents(), e -> true);
+
+        eventsContainer.setItems(filteredEvents);
+
+        ChangeListener<String> listener =
+                (obs, o, n) -> applyEventFilter();
+
+        tfEventTitle.textProperty().addListener(listener);
+        tfEventStartDate.textProperty().addListener(listener);
+
+    }
+
+    private void applyEventFilter() {
+
+        String title = tfEventTitle.getText().toLowerCase();
+        String date  = tfEventStartDate.getText().toLowerCase();
+
+        filteredEvents.setPredicate(e ->
+                (title.isEmpty() || e.getTitle().toLowerCase().contains(title)) &&
+                        (date.isEmpty()  || e.getStartDate().toString().contains(date))
+        );
+    }
+
+    private void clearEventFilters() {
+        tfEventTitle.clear();
+        tfEventStartDate.clear();
+    }
+
 
     @FXML
-    private void onBtnAddCoord(ActionEvent actionEvent) {
+    private void onBtnAddCoord(ActionEvent event) {
         try {
             ViewHandler.NEW_COORDINATOR.reset();
             ViewHandler.NEW_COORDINATOR.preLoad();
 
-            NewCoordinatorController ctrl = ViewHandler.NEW_COORDINATOR.getController();
-            ctrl.init(userModel);
+            NewCoordinatorController controller =
+                    ViewHandler.NEW_COORDINATOR.getController();
+            controller.init(userModel);
 
             ViewHandler.NEW_COORDINATOR.showAndWait(false);
+            applyCoordinatorFilter();
+
         } catch (Exception e) {
-            e.printStackTrace();
-            AlertHelper.showError("Error", "Failed to open NewCoordinatorView");
+            AlertHelper.showError("Error", "Failed to open New Coordinator window");
         }
     }
 
@@ -124,254 +367,48 @@ public class AdminDashboardController implements Initializable {
 
     private void onBtnDeleteUser(User user) {
         if (user == null) return;
-
-        boolean confirmed = AlertHelper.showConfirmation(
-                "Delete Coordinator",
-                "Are you sure you want to delete the coordinator \"" + user.getFullName() + "\"?"
-        );
-
-        if (!confirmed) return;
-
-        userModel.deleteUser(user);
-        coordContainer.getSelectionModel().clearSelection();
+        if (AlertHelper.showConfirmation("Delete", "Delete " + user.getFullName() + "?")) {
+            userModel.deleteUser(user);
+        }
     }
 
-    private void setupCoordinatorsTable() {
-        coordContainer.setItems(userModel.getCoordinators());
-        createCoordinatorColumns();
-        setupCoordinatorCellFactories();
-        bindCoordinatorColumnWidths();
-        setupCoordinatorTableFilters();
+    private void onBtnAssignCoordinator(Event event) {
+
     }
-
-    public void loadCoordinatorContainer() {
-        userModel.getCoordinators().addListener((ListChangeListener<User>) c ->
-                Platform.runLater(() -> {
-                    coordContainer.setItems(null);
-                    coordContainer.setItems(
-                            FXCollections.observableArrayList(userModel.getCoordinators())
-                    );
-                    coordContainer.requestLayout();
-                    coordContainer.setCurrentPage(1);
-                })
-        );
-    }
-    private void setupCoordinatorTableFilters() {
-
-        coordContainer.getFilters().addAll(
-                new StringFilter<>("First name", User::getFirstName),
-                new StringFilter<>("Last name", User::getLastName),
-                new StringFilter<>("Email", User::getEmail)
-        );
-
-        coordContainer.getFilters().addListener(
-                (ListChangeListener<? super AbstractFilter<User, ?>>) change ->
-                        Platform.runLater(() -> coordContainer.setCurrentPage(1))
-        );
-    }
-
-
-    private void createCoordinatorColumns() {
-        colFirstName.setComparator(Comparator.comparing(User::getFirstName));
-        colLastName.setComparator(Comparator.comparing(User::getLastName));
-        colEmail.setComparator(Comparator.comparing(User::getEmail));
-
-        colOptions.setPrefWidth(80);
-        colOptions.setMinWidth(80);
-        colOptions.setMaxWidth(80);
-    }
-
-    private void setupCoordinatorCellFactories() {
-        colFirstName.setRowCellFactory(u -> new MFXTableRowCell<>(User::getFirstName));
-        colLastName.setRowCellFactory(u -> new MFXTableRowCell<>(User::getLastName));
-        colEmail.setRowCellFactory(u -> new MFXTableRowCell<>(User::getEmail));
-
-        colOptions.setRowCellFactory(item -> new MFXTableRowCell<>(u -> "") {
-
-            private User currentUser = item;
-
-            final MFXButton btnEdit   = createIconButton("BlueEdit.png",    "Edit ");
-            final MFXButton btnDelete = createIconButton("delete-128.png",  "Delete ");
-            final HBox box;
-
-            {
-                btnEdit.setOnAction(e -> onBtnEditUser(currentUser));
-                btnDelete.setOnAction(e -> onBtnDeleteUser(currentUser));
-
-                box = new HBox(6, btnEdit, btnDelete);
-                box.setAlignment(Pos.CENTER);
-                box.setPadding(new Insets(0, 4, 0, 4));
-                setGraphic(box);
-            }
-
-            @Override
-            public void update(User user) {
-                super.update(user);
-                currentUser = user;
-            }
-        });
-    }
-
-    private void bindCoordinatorColumnWidths() {
-        var available = coordContainer.widthProperty()
-                .subtract(colOptions.widthProperty());
-
-        colFirstName.prefWidthProperty().bind(available.multiply(0.33));
-        colLastName.prefWidthProperty().bind(available.multiply(0.30));
-        colEmail.prefWidthProperty().bind(available.multiply(0.30));
-    }
-
-    /**
-     * Evets tab
-     */
-
 
     private void onBtnDeleteEvent(Event event) {
         if (event == null) return;
 
-        boolean confirmed = AlertHelper.showConfirmation(
+        if (AlertHelper.showConfirmation(
                 "Delete Event",
-                "Are you sure you want to delete the event \"" + event.getTitle() + "\"?"
-        );
-
-
-        if (!confirmed) return;
-
-        try {
+                "Delete event \"" + event.getTitle() + "\"?")) {
             eventModel.deleteEvent(event);
-            eventsContainer.getSelectionModel().clearSelection();
-        } catch (Exception e) {
-            AlertHelper.showError("Error", "Failed to delete event.");
-            e.printStackTrace();
         }
-
-    }
-
-    private void onBtnAssignCoordinator(Event currentEvent) {
-
-    }
-
-
-    private void setupEventsTable() {
-        createEventColumns();
-        setupEventCellFactories();
-        bindEventColumnWidths();
-        setupEventsTableFilters();
-    }
-
-    public void loadEventContainer() {
-        eventModel.getEvents().addListener((ListChangeListener<Event>) c ->
-                Platform.runLater(() -> {
-                    eventsContainer.setItems(null);
-                    eventsContainer.setItems(
-                            FXCollections.observableArrayList(eventModel.getEvents())
-                    );
-                    eventsContainer.requestLayout();
-                    eventsContainer.setCurrentPage(1);
-                })
-        );
-    }
-
-    private void createEventColumns() {
-        colTitle.setComparator(Comparator.comparing(Event::getTitle));
-        colStartDate.setComparator(Comparator.comparing(Event::getStartDate));
-
-        colEventOptions.setPrefWidth(80);
-        colEventOptions.setMinWidth(80);
-        colEventOptions.setMaxWidth(80);
-    }
-
-    private void setupEventCellFactories() {
-        colTitle.setRowCellFactory(e ->
-                new MFXTableRowCell<>(Event::getTitle)
-        );
-
-        colStartDate.setRowCellFactory(e ->
-                new MFXTableRowCell<>(event ->
-                        event.getStartDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-                )
-        );
-
-        colTickets.setRowCellFactory(e ->
-                new MFXTableRowCell<>(event ->
-                        event.getTicketsIssued() + " / " + event.getTotalTickets()
-                )
-        );
-
-        colEventOptions.setRowCellFactory(item -> new MFXTableRowCell<Event, String>(event -> "") {
-
-            private Event currentEvent;
-
-            final MFXButton btnAssign      = createIconButton("Assign.png",    "Assign coordinator");
-            final MFXButton btnDeleteEvent = createIconButton("delete-128.png",  "Delete event");
-            final HBox box;
-
-            {
-                btnAssign.setOnAction(ev -> onBtnAssignCoordinator(currentEvent));
-                btnDeleteEvent.setOnAction(ev -> onBtnDeleteEvent(currentEvent));
-
-                box = new HBox(6, btnAssign, btnDeleteEvent);
-                box.setAlignment(Pos.CENTER);
-                box.setPadding(new Insets(0, 4, 0, 4));
-                setGraphic(box);
-            }
-
-            @Override
-            public void update(Event event) {
-                super.update(event);
-                currentEvent = event;
-            }
-        });
-    }
-
-    private void bindEventColumnWidths() {
-        var available = eventsContainer.widthProperty()
-                .subtract(colEventOptions.widthProperty());
-
-        colTitle.prefWidthProperty().bind(available.multiply(0.33));
-        colStartDate.prefWidthProperty().bind(available.multiply(0.30));
-        colTickets.prefWidthProperty().bind(available.multiply(0.30));
-    }
-
-    private void setupEventsTableFilters() {
-
-        eventsContainer.getFilters().addAll(
-                new StringFilter<>("Title", Event::getTitle),
-                new StringFilter<>("Starts", e -> e.getStartDate().toString()),
-                new StringFilter<>("Tickets", e -> String.valueOf(e.getTicketsIssued()))
-        );
     }
 
     @FXML
-    private void onBtnLogOut(ActionEvent actionEvent) {
-        boolean confirmed = AlertHelper.showConfirmation(
-                "Log out",
-                "Are you sure you want to log out?"
-        );
-
-        if (!confirmed) return;
-
+    private void onBtnLogOut(ActionEvent e) {
         UserSession.getInstance().clear();
         ViewHandler.ADMIN_DASHBOARD.close();
         ViewHandler.LOGIN.show(false);
     }
 
-    private MFXButton createIconButton(String fileName,  String tooltip) {
+    //getIndex() is not always valid when a button inside a cell is clicked.prevent crashes
+
+    private <T> T getSafeItem(int index, TableView<T> table) {
+        if (index < 0 || index >= table.getItems().size()) return null;
+        return table.getItems().get(index);
+    }
+
+    private MFXButton createIconButton(String file, String tooltip) {
         MFXButton btn = new MFXButton("");
-
-        try {
-            Image image = new Image(
-                    Objects.requireNonNull(getClass().getResourceAsStream("/icons/" + fileName))
-            );
-            ImageView icon = new ImageView(image);
-            icon.setFitWidth(18);
-            icon.setFitHeight(18);
-            btn.setGraphic(icon);
-        } catch (Exception e) {
-            System.err.println("⚠ Icon not found: " + fileName);
-            btn.setText("?");
-        }
-
+        Image img = new Image(
+                Objects.requireNonNull(
+                        getClass().getResourceAsStream("/icons/" + file)));
+        ImageView iv = new ImageView(img);
+        iv.setFitWidth(18);
+        iv.setFitHeight(18);
+        btn.setGraphic(iv);
         btn.setTooltip(new Tooltip(tooltip));
         return btn;
     }

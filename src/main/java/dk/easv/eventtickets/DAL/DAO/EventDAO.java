@@ -131,10 +131,9 @@ public class EventDAO implements IEventDataAccess {
         }
     }
 
-
     @Override
     public void updateEvent(Event event) throws Exception {
-        String sql = "UPDATE Event (Title, StartDate, StartTime, EndDate, EndTime, Street, ZipCode, LocationGuidance, Description, TotalTickets, TicketsIssued) VALUES (?,?,?,?,?,?,?,?,?,?,?) WHERE id = ?";
+        String sql = "UPDATE Event SET Title = ?, StartDate = ?, StartTime = ?, EndDate = ?, EndTime = ?, Street = ?, ZipCode = ?, LocationGuidance = ?, Description = ?, TotalTickets = ?, TicketsIssued = ? WHERE id = ?";
 
         try (Connection conn = databaseConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -150,7 +149,6 @@ public class EventDAO implements IEventDataAccess {
             stmt.setString(9, event.getEventDescription());
             stmt.setInt(10, event.getTotalTickets());
             stmt.setInt(11, event.getTicketsIssued());
-
             stmt.setInt(12, event.getId());
 
             stmt.executeUpdate();

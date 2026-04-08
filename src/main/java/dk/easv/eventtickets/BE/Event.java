@@ -63,7 +63,7 @@ public class Event {
         return createdByUserId;
     }
 
-    private void setCreatedByUserId(int createdByUserId) {
+    public void setCreatedByUserId(int createdByUserId) {
         if (createdByUserId != -1)
             this.createdByUserId = createdByUserId;
     }
@@ -72,7 +72,7 @@ public class Event {
         return title;
     }
 
-    private void setTitle(String title) {
+    public void setTitle(String title) {
         if (!title.isBlank())
             this.title = title;
     }
@@ -81,7 +81,7 @@ public class Event {
         return startDate;
     }
 
-    private void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDate startDate) {
         if (startDate != null)
             this.startDate = startDate;
     }
@@ -90,7 +90,7 @@ public class Event {
         return startTime;
     }
 
-    private void setStartTime(LocalTime startTime) {
+    public void setStartTime(LocalTime startTime) {
         if (startTime != null)
             this.startTime = startTime;
     }
@@ -99,7 +99,7 @@ public class Event {
         return endDate;
     }
 
-    private void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -107,7 +107,7 @@ public class Event {
         return endTime;
     }
 
-    private void setEndTime(LocalTime endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
@@ -115,7 +115,7 @@ public class Event {
         return street;
     }
 
-    private void setStreet(String street) {
+    public void setStreet(String street) {
         if (!street.isBlank())
             this.street = street;
     }
@@ -124,7 +124,7 @@ public class Event {
         return zipCode;
     }
 
-    private void setZipCode(String zipCode) {
+    public void setZipCode(String zipCode) {
         if (!zipCode.isBlank())
             this.zipCode = zipCode;
     }
@@ -133,7 +133,7 @@ public class Event {
         return locationGuidance;
     }
 
-    private void setLocationGuidance(String locationGuidance) {
+    public void setLocationGuidance(String locationGuidance) {
         this.locationGuidance = locationGuidance;
     }
 
@@ -141,7 +141,7 @@ public class Event {
         return eventDescription;
     }
 
-    private void setEventDescription(String eventDescription) {
+    public void setEventDescription(String eventDescription) {
         if (!eventDescription.isBlank())
             this.eventDescription = eventDescription;
     }
@@ -150,7 +150,7 @@ public class Event {
         return totalTickets;
     }
 
-    private void setTotalTickets(int totalTickets) {
+    public void setTotalTickets(int totalTickets) {
         if (totalTickets != -1)
             this.totalTickets = totalTickets;
     }
@@ -159,7 +159,7 @@ public class Event {
         return ticketsIssued;
     }
 
-    private void setTicketsIssued(int ticketsIssued) {
+    public void setTicketsIssued(int ticketsIssued) {
             this.ticketsIssued = ticketsIssued;
     }
 

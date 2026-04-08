@@ -44,6 +44,13 @@ public class EventModel {
 
     public void updateEvent(Event event) throws Exception {
         eventManager.updateEvent(event);
+
+        for (int i = 0; i < allEvents.size(); i++) {
+            if (allEvents.get(i).getId() == event.getId()) {
+                allEvents.set(i, event);
+                break;
+            }
+        }
     }
 
     public void deleteEvent(Event event) {

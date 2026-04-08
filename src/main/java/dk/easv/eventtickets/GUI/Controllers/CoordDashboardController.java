@@ -218,4 +218,21 @@ public class CoordDashboardController {
         ViewHandler.COORD_DASHBOARD.close();
         ViewHandler.LOGIN.show(false);
     }
+
+    public void refreshEvents() {
+        try {
+            eventContainer.getChildren().clear();
+
+            events = eventModel.getMyEvents(currentUser);
+
+            CardController cardController = new CardController();
+
+            for (Event e : events) {
+                eventContainer.getChildren().add(cardController.createEventCard(e));
+            }
+
+        } catch (Exception e) {
+            AlertHelper.showError("Error", "Failed to refresh events.");
+        }
+    }
 }

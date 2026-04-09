@@ -124,15 +124,8 @@ public class CoordDashboardController {
     private void setupListeners() {
         // Event Pool listener, for total events label
         eventContainer.getChildren().addListener((ListChangeListener<Node>) change -> {
-            int numOfEvents = Integer.parseInt(lblNumOfEvents.getText());
-            while (change.next()) {
-                if (change.wasAdded()) {
-                    lblNumOfEvents.setText(String.valueOf(numOfEvents+1));
-                }
-                if (change.wasRemoved()) {
-                    lblNumOfEvents.setText(String.valueOf(numOfEvents-1));
-                }
-            }
+            int eventsAmount = eventContainer.getChildren().size();
+            lblNumOfEvents.setText(String.valueOf(eventsAmount));
         });
 
         // Listener for event filters

@@ -179,4 +179,69 @@ Admin dashboard
     -fx-background-color: rgba(239, 68, 68, 0.08);
 }
 
+/**
+Assign Coordinator Modal
+ */
 
+.assign-header {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #E5E7EB;
+    -fx-border-width: 0 0 1 0;
+}
+
+.assign-subtitle {
+    -fx-text-fill: #6B7280;
+}
+
+.assign-footer {
+    -fx-background-color: #F9FAFB;
+    -fx-border-color: #E5E7EB;
+    -fx-border-width: 1 0 0 0;
+}
+
+.assign-list {
+    -fx-border-color: #E5E7EB;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-pref-height: 200;
+}
+
+.assign-list .virtual-flow .clipped-container .sheet .list-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent transparent #E5E7EB transparent;
+    -fx-padding: 10 14 10 14;
+    -fx-font-family: Roboto;
+    -fx-font-size: 13px;
+}
+
+.assign-list .virtual-flow .clipped-container .sheet .list-cell:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+.assign-list .virtual-flow .clipped-container .sheet .list-cell:selected {
+    -fx-background-color: #dbeafe;
+    -fx-text-fill: #1e40af;
+}
+
+/* MFX buttons need -mfx-button-bg or inline style — use raised button track */
+.btn-primary {
+    -fx-background-color: #228be6;
+    -fx-text-fill: white;
+}
+
+.btn-primary .mfx-button {
+    -fx-background-color: #228be6;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #1c7ed6;
+}
+
+.btn-danger {
+    -fx-background-color: #fa5252;
+    -fx-text-fill: white;
+}
+
+.btn-danger:hover {
+    -fx-background-color: #f03e3e;
+}

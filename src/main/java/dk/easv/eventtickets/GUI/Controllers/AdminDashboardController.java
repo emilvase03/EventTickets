@@ -373,7 +373,18 @@ public class AdminDashboardController implements Initializable {
     }
 
     private void onBtnAssignCoordinator(Event event) {
+        if (event == null) return;
+        try {
+            ViewHandler.ASSIGN_COORDINATOR.reset();
+            ViewHandler.ASSIGN_COORDINATOR.preLoad();
 
+            AssignCoordinatorController ctrl = ViewHandler.ASSIGN_COORDINATOR.getController();
+            ctrl.setup(userModel.getCoordinators(), event.getId());
+
+            ViewHandler.ASSIGN_COORDINATOR.showAndWait(false);
+        } catch (Exception e) {
+            AlertHelper.showError("Error", "Failed to open Assign Coordinator window");
+        }
     }
 
     private void onBtnDeleteEvent(Event event) {

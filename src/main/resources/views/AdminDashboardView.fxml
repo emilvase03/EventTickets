@@ -66,7 +66,7 @@
                     <content>
                         <VBox VBox.vgrow="ALWAYS">
                             <children>
-                                <HBox alignment="CENTER" fillHeight="false" VBox.vgrow="NEVER">
+                                <HBox alignment="CENTER" fillHeight="false" prefHeight="0.0" prefWidth="900.0" VBox.vgrow="NEVER">
                                     <children>
 
                                         <VBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" prefHeight="154.0" style="-fx-background-color: white; -fx-background-radius: 15;" styleClass="totalBoxes" HBox.hgrow="ALWAYS">

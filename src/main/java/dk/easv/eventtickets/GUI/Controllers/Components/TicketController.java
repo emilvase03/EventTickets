@@ -82,15 +82,18 @@ public class TicketController implements Initializable {
         }
         int checksum = (10 - (sum % 10)) % 10;
         String data = twelveDigits + checksum;
+        String qrData = (ticketData.customerEmail() != null && !ticketData.customerEmail().isBlank()
+                ? ticketData.customerEmail()
+                : ticketData.ticketTitle());
 
         try {
-            barcodeHbox.getChildren().add(BarcodeGenerator.generateBarcode(ticketData.customerEmail(), BarcodeFormat.QR_CODE, 200, 200));
+            barcodeHbox.getChildren().add(BarcodeGenerator.generateBarcode(qrData, BarcodeFormat.QR_CODE, 200, 200));
         } catch (WriterException e) {
             AlertHelper.showError("Error", "Failed to generate QR code for ticket");
         }
 
         try {
-            barcodeHbox.getChildren().add(BarcodeGenerator.generateBarcode(data, BarcodeFormat.EAN_13, 150, 180));
+            barcodeHbox.getChildren().add(BarcodeGenerator.generateBarcode(data, BarcodeFormat.EAN_13, 100, 180));
         } catch (WriterException e) {
             AlertHelper.showError("Error", "Failed to generate barcode for ticket");
         }

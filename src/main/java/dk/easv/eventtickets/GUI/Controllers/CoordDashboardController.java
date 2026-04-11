@@ -162,7 +162,7 @@ public class CoordDashboardController {
                 printController.getTicketsContainer().getChildren().add(ticketRoot);
             }
         } catch (Exception e) {
-            AlertHelper.showError("Error", "Failed to display tickets." + e.getMessage());
+            AlertHelper.showError("Error", "Failed to display tickets.");
         }
 
     }

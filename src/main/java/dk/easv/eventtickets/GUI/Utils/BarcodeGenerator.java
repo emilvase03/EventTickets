@@ -21,7 +21,7 @@ public class BarcodeGenerator {
     public static ImageView generateBarcode(String data, BarcodeFormat format, int width, int height) throws WriterException {
         Map<EncodeHintType, Object> hints = new HashMap<>();
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
-        hints.put(EncodeHintType.MARGIN, 1);
+        hints.put(EncodeHintType.MARGIN, 0);
 
         BitMatrix matrix = new MultiFormatWriter().encode(data, format, width, height, hints);
 

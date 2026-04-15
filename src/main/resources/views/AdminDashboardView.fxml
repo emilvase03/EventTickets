@@ -93,7 +93,7 @@
                                             <children>
                                                 <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="216.0">
                                                     <children>
-                                                        <Label prefHeight="19.0" prefWidth="260.0" text="Total Coordinators">
+                                                        <Label prefHeight="19.0" prefWidth="260.0" text="Total Events">
                                                             <font><Font name="Roboto Bold" size="12.0" /></font>
                                                         </Label>
                                                         <ImageView fitHeight="30.0" fitWidth="27.0" preserveRatio="true">
@@ -257,7 +257,7 @@
                                  <children>
                                     <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="216.0">
                                        <children>
-                                          <Label prefHeight="19.0" prefWidth="260.0" text="Total Coordinators">
+                                          <Label prefHeight="19.0" prefWidth="260.0" text="Total Events">
                                              <font>
                                                 <Font name="Roboto Bold" size="12.0" />
                                              </font>

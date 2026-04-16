@@ -2,10 +2,12 @@ package dk.easv.eventtickets.GUI.Controllers.Components;
 
 // Project imports
 import dk.easv.eventtickets.BE.Event;
+import dk.easv.eventtickets.GUI.Controllers.AssignCoordinatorController;
 import dk.easv.eventtickets.GUI.Controllers.CoordDashboardController;
 import dk.easv.eventtickets.GUI.Controllers.EditEventController;
 import dk.easv.eventtickets.GUI.Controllers.NewTicketController;
 import dk.easv.eventtickets.GUI.Models.EventModel;
+import dk.easv.eventtickets.GUI.Models.UserModel;
 import dk.easv.eventtickets.GUI.Utils.AlertHelper;
 import dk.easv.eventtickets.GUI.Utils.ViewHandler;
 
@@ -25,6 +27,7 @@ import java.io.IOException;
 public class CardController {
 
     private EventModel eventModel;
+    private UserModel userModel;
     private Event currentEvent;
     private CardController cardController;
 
@@ -40,8 +43,10 @@ public class CardController {
     public CardController() {
         try {
             eventModel = new EventModel();
+            userModel = new UserModel();
+            userModel.loadCoordinators();
         } catch (Exception e) {
-            AlertHelper.showError("Error", "EventModel failed in CardController.");
+            AlertHelper.showError("Error", "Models failed in CardController.");
         }
     }
 
@@ -53,6 +58,12 @@ public class CardController {
         cardController.currentEvent = event;
 
         return root;
+    }
+
+    @FXML
+    private void handleAssignCoordinators(ActionEvent event) {
+        event.consume(); // stops the click from bubbling to the VBox
+        assignCoordinators(currentEvent);
     }
 
     @FXML
@@ -112,7 +123,8 @@ public class CardController {
     }  
       
     @FXML
-    private void onEditEventClick(MouseEvent mouseEvent) {
+    private void onEditEventClick(MouseEvent event) {
+        event.consume(); // stops the click from bubbling to the VBox
         try {
             ViewHandler.EDIT_EVENT.reset();
             ViewHandler.EDIT_EVENT.preLoad();
@@ -123,6 +135,24 @@ public class CardController {
             ViewHandler.EDIT_EVENT.showAndWait(false);
         } catch (Exception e) {
             AlertHelper.showError("Error", "Unable to open EditEventView.");
+        }
+    }
+
+    private void assignCoordinators(Event event) {
+        if (event == null)
+            return;
+
+        try {
+            ViewHandler.ASSIGN_COORDINATOR.reset();
+            ViewHandler.ASSIGN_COORDINATOR.preLoad();
+
+            AssignCoordinatorController ctrl = ViewHandler.ASSIGN_COORDINATOR.getController();
+            System.out.println(userModel.getCoordinators().size());
+            ctrl.setup(userModel.getCoordinators(), event.getId());
+
+            ViewHandler.ASSIGN_COORDINATOR.showAndWait(false);
+        } catch (Exception e) {
+            AlertHelper.showError("Error", "Failed to open Assign Coordinator window");
         }
     }
 }

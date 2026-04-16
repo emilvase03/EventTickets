@@ -2,7 +2,6 @@
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXComboBox?>
-<?import io.github.palexdev.materialfx.controls.MFXListView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -12,6 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.ListView?>
 <VBox prefHeight="480.0" prefWidth="460.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.AssignCoordinatorController">
 
     <HBox alignment="CENTER_LEFT" styleClass="assign-header">
@@ -54,14 +54,14 @@
             <Label styleClass="assign-subtitle" text="Coordinators currently assigned to this event">
                 <font><Font name="Roboto" size="11.0" /></font>
             </Label>
-            <MFXListView fx:id="assignedList" prefHeight="200.0" prefWidth="400.0" styleClass="assign-list" VBox.vgrow="ALWAYS" />
+            <ListView fx:id="assignedList" prefHeight="200.0" prefWidth="400.0" styleClass="assign-list" VBox.vgrow="ALWAYS" />
         </VBox>
 
     </VBox>
 
     <HBox alignment="CENTER_RIGHT" spacing="10.0" styleClass="assign-footer">
         <padding><Insets bottom="14.0" left="24.0" right="24.0" top="14.0" /></padding>
-        <MFXButton onAction="#handleClose" prefHeight="28.0" prefWidth="80.0" styleClass="boldRoboto" text="Close" />
+        <MFXButton fx:id="closeButton" onAction="#handleClose" prefHeight="28.0" prefWidth="80.0" styleClass="boldRoboto" text="Close" />
     </HBox>
 
 </VBox>

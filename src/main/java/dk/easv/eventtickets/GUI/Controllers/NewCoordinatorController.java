@@ -56,6 +56,7 @@ public class NewCoordinatorController {
 
     @FXML
     private void onBtnCancel(ActionEvent actionEvent) {
+
         close(actionEvent);
     }
 

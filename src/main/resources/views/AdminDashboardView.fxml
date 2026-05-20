@@ -85,7 +85,7 @@
                                                         </ImageView>
                                                     </children>
                                                 </HBox>
-                                                <Label fx:id="lblStatus" text="0">
+                                                <Label fx:id="lblTotalCoord" text="0">
                                                     <font><Font name="Roboto Bold" size="24.0" /></font>
                                                 </Label>
                                             </children>
@@ -105,7 +105,7 @@
                                                         </ImageView>
                                                     </children>
                                                 </HBox>
-                                                <Label fx:id="lblStat" text="0">
+                                                <Label fx:id="lblTotalEvents" text="0">
                                                     <font><Font name="Roboto Bold" size="24.0" /></font>
                                                 </Label>
                                             </children>
@@ -189,11 +189,7 @@
                                                     </graphic>
                                                     <tooltip><Tooltip text="Search" /></tooltip>
                                                 </MFXButton>
-                                                <TextField fx:id="tfCoordSearch"
-                                                           promptText="Search by name or email…"
-                                                           prefWidth="260"
-                                                           visible="false"
-                                                           managed="false" />
+                                                <TextField fx:id="tfCoordSearch" managed="false" prefWidth="260" promptText="Search by name or email…" visible="false" />
                                             </children>
                                         </HBox>
 
@@ -304,11 +300,7 @@
                                                     </graphic>
                                                     <tooltip><Tooltip text="Search" /></tooltip>
                                                 </MFXButton>
-                                                <TextField fx:id="tfEventSearch"
-                                                           promptText="Search by title or date"
-                                                           prefWidth="260"
-                                                           visible="false"
-                                                           managed="false" />
+                                                <TextField fx:id="tfEventSearch" managed="false" prefWidth="260" promptText="Search by title or date" visible="false" />
                                             </children>
                                         </HBox>
 

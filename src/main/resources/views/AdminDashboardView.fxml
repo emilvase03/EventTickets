@@ -63,13 +63,11 @@
         <TabPane tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
 
-                <!-- ═══════════════════ MANAGE COORDINATORS TAB ═══════════════════ -->
                 <Tab text="Manage Coordinators">
                     <content>
                         <VBox VBox.vgrow="ALWAYS">
                             <children>
 
-                                <!-- Stats row -->
                                 <HBox alignment="CENTER" fillHeight="false" prefHeight="0.0" prefWidth="900.0" VBox.vgrow="NEVER">
                                     <children>
 
@@ -137,7 +135,6 @@
                                     </children>
                                 </HBox>
 
-                                <!-- Section header -->
                                 <HBox alignment="CENTER_LEFT" maxHeight="28" minHeight="28" VBox.vgrow="NEVER">
                                     <children>
                                         <VBox spacing="1" HBox.hgrow="ALWAYS">
@@ -160,7 +157,6 @@
                                     <padding><Insets bottom="8.0" left="10.0" right="10.0" top="8.0" /></padding>
                                 </HBox>
 
-                                <!-- Table card -->
                                 <VBox styleClass="table-card" VBox.vgrow="ALWAYS">
                                     <VBox.margin><Insets bottom="5.0" left="10.0" right="10.0" /></VBox.margin>
                                     <children>
@@ -177,7 +173,6 @@
                                             </columnResizePolicy>
                                         </TableView>
 
-                                        <!-- Search bar row -->
                                         <HBox alignment="CENTER_LEFT" prefHeight="42.0" spacing="8">
                                             <padding><Insets bottom="8" left="10" right="10" top="8" /></padding>
                                             <children>
@@ -219,7 +214,7 @@
                                                         </ImageView>
                                                     </children>
                                                 </HBox>
-                                                <Label fx:id="lblStatus11" text="0">
+                                                <Label fx:id="lblTotalCoord1" text="0">
                                                     <font><Font name="Roboto Bold" size="24.0" /></font>
                                                 </Label>
                                             </children>
@@ -238,7 +233,7 @@
                                                         </ImageView>
                                                     </children>
                                                 </HBox>
-                                                <Label fx:id="lblStatus1" text="0">
+                                                <Label fx:id="lblTotalEvents1" text="0">
                                                     <font><Font name="Roboto Bold" size="24.0" /></font>
                                                 </Label>
                                             </children>

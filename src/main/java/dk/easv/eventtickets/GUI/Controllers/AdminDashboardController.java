@@ -82,6 +82,12 @@ public class AdminDashboardController implements Initializable {
     private Label lblTotalEvents;
     @FXML
     private Label lblNextEvent;
+    @FXML
+    private Label lblTotalCoord1;
+    @FXML
+    private Label lblTotalEvents1;
+    @FXML
+    private Label lblNextEvent1;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -344,10 +350,12 @@ public class AdminDashboardController implements Initializable {
 
         int totalCoords = userModel.getCoordinators().size();
         lblTotalCoord.setText(String.valueOf(totalCoords));
+        lblTotalCoord1.setText(String.valueOf(totalCoords));
 
 
         int totalEvents = eventModel.getEvents().size();
         lblTotalEvents.setText(String.valueOf(totalEvents));
+        lblTotalEvents1.setText(String.valueOf(totalEvents));
 
         Event nextEvent = eventModel.getEvents().stream()
                 .filter(e -> e.getStartDate().isAfter(java.time.LocalDate.now())
@@ -362,21 +370,17 @@ public class AdminDashboardController implements Initializable {
                 : "No upcoming";
 
         lblNextEvent.setText(nextEventText);
+        lblNextEvent1.setText(nextEventText);
 
     }
 
     private void setupStatisticsListeners() {
 
-        filteredUsers.addListener((javafx.collections.ListChangeListener<User>) change -> {
-            lblTotalCoord.setText(String.valueOf(filteredUsers.size()));
+        filteredUsers.addListener(
+                (javafx.collections.ListChangeListener<User>) change -> updateStatistics());
 
-        });
-
-        filteredEvents.addListener((javafx.collections.ListChangeListener<Event>) change -> {
-            lblTotalEvents.setText(String.valueOf(filteredEvents.size()));
-
-        });
-
+        filteredEvents.addListener(
+                (javafx.collections.ListChangeListener<Event>) change -> updateStatistics());
     }
 
 }

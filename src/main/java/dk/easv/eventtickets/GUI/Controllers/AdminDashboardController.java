@@ -27,6 +27,7 @@ import javafx.scene.layout.HBox;
 
 // Java imports
 import java.net.URL;
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -38,29 +39,49 @@ public class AdminDashboardController implements Initializable {
 
     // COORDINATORS
 
-    @FXML private TableView<User>          coordinatorsContainer;
-    @FXML private TableColumn<User, String> colFirstName;
-    @FXML private TableColumn<User, String> colLastName;
-    @FXML private TableColumn<User, String> colEmail;
-    @FXML private TableColumn<User, Void>   colManageCoord;
+    @FXML
+    private TableView<User> coordinatorsContainer;
+    @FXML
+    private TableColumn<User, String> colFirstName;
+    @FXML
+    private TableColumn<User, String> colLastName;
+    @FXML
+    private TableColumn<User, String> colEmail;
+    @FXML
+    private TableColumn<User, Void> colManageCoord;
 
-    @FXML private MFXButton btnToggleCoordSearch;
-    @FXML private TextField  tfCoordSearch;
+    @FXML
+    private MFXButton btnToggleCoordSearch;
+    @FXML
+    private TextField tfCoordSearch;
 
     private FilteredList<User> filteredUsers;
 
     // EVENTS
 
-    @FXML private TableView<Event>           eventsContainer;
-    @FXML private TableColumn<Event, String> colTitle;
-    @FXML private TableColumn<Event, String> colStartDate;
-    @FXML private TableColumn<Event, String> colTickets;
-    @FXML private TableColumn<Event, Void>   colManageEvents;
+    @FXML
+    private TableView<Event> eventsContainer;
+    @FXML
+    private TableColumn<Event, String> colTitle;
+    @FXML
+    private TableColumn<Event, String> colStartDate;
+    @FXML
+    private TableColumn<Event, String> colTickets;
+    @FXML
+    private TableColumn<Event, Void> colManageEvents;
 
-    @FXML private MFXButton btnToggleEventSearch;
-    @FXML private TextField  tfEventSearch;
+    @FXML
+    private MFXButton btnToggleEventSearch;
+    @FXML
+    private TextField tfEventSearch;
 
     private FilteredList<Event> filteredEvents;
+    @FXML
+    private Label lblTotalCoord;
+    @FXML
+    private Label lblTotalEvents;
+    @FXML
+    private Label lblNextEvent;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -74,8 +95,7 @@ public class AdminDashboardController implements Initializable {
         }
 
         setupCoordinatorTable();
-        setupCoordinatorSearch();
-        userModel.loadCoordinators();
+        setupEventTable();
 
         try {
             eventModel = new EventModel();
@@ -84,9 +104,14 @@ public class AdminDashboardController implements Initializable {
             return;
         }
 
-        setupEventTable();
+        setupCoordinatorSearch();
         setupEventSearch();
+        userModel.loadCoordinators();
         eventModel.loadAllEvents();
+
+        setupStatisticsListeners();
+
+        updateStatistics();
     }
 
     // COORDINATOR TABLE
@@ -104,9 +129,9 @@ public class AdminDashboardController implements Initializable {
 
         colManageCoord.setCellFactory(col -> new TableCell<>() {
 
-            private final MFXButton btnEdit   = createIconButton("BlueEdit.png",    "Edit coordinator");
-            private final MFXButton btnDelete = createIconButton("delete-128.png",  "Delete coordinator");
-            private final HBox      box       = new HBox(6, btnEdit, btnDelete);
+            private final MFXButton btnEdit = createIconButton("BlueEdit.png", "Edit coordinator");
+            private final MFXButton btnDelete = createIconButton("delete-128.png", "Delete coordinator");
+            private final HBox box = new HBox(6, btnEdit, btnDelete);
 
             {
                 box.setAlignment(Pos.CENTER);
@@ -168,9 +193,9 @@ public class AdminDashboardController implements Initializable {
 
         colManageEvents.setCellFactory(col -> new TableCell<>() {
 
-            private final MFXButton btnAssign = createIconButton("Assign.png",       "Assign coordinator");
-            private final MFXButton btnDelete = createIconButton("delete-128.png",   "Delete event");
-            private final HBox      box       = new HBox(6, btnAssign, btnDelete);
+            private final MFXButton btnAssign = createIconButton("Assign.png", "Assign coordinator");
+            private final MFXButton btnDelete = createIconButton("delete-128.png", "Delete event");
+            private final HBox box = new HBox(6, btnAssign, btnDelete);
 
             {
                 box.setAlignment(Pos.CENTER);
@@ -225,6 +250,7 @@ public class AdminDashboardController implements Initializable {
 
             ViewHandler.NEW_COORDINATOR.showAndWait(false);
             applyCoordinatorFilter();
+            updateStatistics();
 
         } catch (Exception e) {
             AlertHelper.showError("Error", "Failed to open New Coordinator window");
@@ -248,8 +274,16 @@ public class AdminDashboardController implements Initializable {
 
     private void onBtnDeleteUser(User user) {
         if (user == null) return;
+
         if (AlertHelper.showConfirmation("Delete", "Delete " + user.getFullName() + "?")) {
-            userModel.deleteUser(user);
+            try {
+                userModel.deleteUser(user);
+                updateStatistics();
+            } catch (Exception e) {
+
+                AlertHelper.showError("Delete failed",
+                        "Could not delete " + user.getFullName() + ".\n" + e.getMessage());
+            }
         }
     }
 
@@ -271,10 +305,13 @@ public class AdminDashboardController implements Initializable {
 
     private void onBtnDeleteEvent(Event event) {
         if (event == null) return;
+
         if (AlertHelper.showConfirmation(
                 "Delete Event",
                 "Delete event \"" + event.getTitle() + "\"?")) {
+
             eventModel.deleteEvent(event);
+            updateStatistics();
         }
     }
 
@@ -302,4 +339,44 @@ public class AdminDashboardController implements Initializable {
         btn.setTooltip(new Tooltip(tooltip));
         return btn;
     }
+
+    private void updateStatistics() {
+
+        int totalCoords = userModel.getCoordinators().size();
+        lblTotalCoord.setText(String.valueOf(totalCoords));
+
+
+        int totalEvents = eventModel.getEvents().size();
+        lblTotalEvents.setText(String.valueOf(totalEvents));
+
+        Event nextEvent = eventModel.getEvents().stream()
+                .filter(e -> e.getStartDate().isAfter(java.time.LocalDate.now())
+                        || e.getStartDate().isEqual(java.time.LocalDate.now()))
+                .sorted(Comparator.comparing(Event::getStartDate)
+                        .thenComparing(Event::getStartTime))
+                .findFirst()
+                .orElse(null);
+
+        String nextEventText = (nextEvent != null)
+                ? nextEvent.getTitle()
+                : "No upcoming";
+
+        lblNextEvent.setText(nextEventText);
+
+    }
+
+    private void setupStatisticsListeners() {
+
+        filteredUsers.addListener((javafx.collections.ListChangeListener<User>) change -> {
+            lblTotalCoord.setText(String.valueOf(filteredUsers.size()));
+
+        });
+
+        filteredEvents.addListener((javafx.collections.ListChangeListener<Event>) change -> {
+            lblTotalEvents.setText(String.valueOf(filteredEvents.size()));
+
+        });
+
+    }
+
 }

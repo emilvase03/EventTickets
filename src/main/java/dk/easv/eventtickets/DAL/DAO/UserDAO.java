@@ -102,13 +102,28 @@ public class UserDAO implements IUserDataAccess {
     @Override
     public void deleteUser(User user) throws Exception {
 
-        String sql = "DELETE FROM [User] WHERE id = ?";
+        String unlinkSql = "DELETE FROM [UserEvent] WHERE userId = ?";
+        String deleteSql = "DELETE FROM [User] WHERE id = ?";
 
-        try (Connection conn = databaseConnector.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = databaseConnector.getConnection()) {
 
-            stmt.setInt(1, user.getId());
-            stmt.executeUpdate();
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement unlinkStmt = conn.prepareStatement(unlinkSql)) {
+                unlinkStmt.setInt(1, user.getId());
+                unlinkStmt.executeUpdate();
+            }
+
+            try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
+                deleteStmt.setInt(1, user.getId());
+                deleteStmt.executeUpdate();
+            }
+
+            conn.commit();
+
+        } catch (SQLException e) {
+
+            throw new Exception("Could not delete user id=" + user.getId() + ": " + e.getMessage(), e);
         }
     }
 
@@ -170,7 +185,7 @@ public class UserDAO implements IUserDataAccess {
                 rs.getString("lastName"),
                 rs.getString("email"),
                 rs.getString("password"),
-                Role.valueOf(rs.getString("role").toUpperCase()) // String → ENUM
+                Role.valueOf(rs.getString("role").toUpperCase())
         );
     }
 }
